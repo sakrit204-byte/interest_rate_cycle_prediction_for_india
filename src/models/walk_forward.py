@@ -200,7 +200,7 @@ def metrics_table(pred: pd.DataFrame, by: str | None = None) -> pd.DataFrame:
     return pd.DataFrame(out)
 
 
-def dm_table(pred: pd.DataFrame, pairs: list[tuple[str, str]]) -> pd.DataFrame:
+def dm_table(pred: pd.DataFrame, pairs: list[tuple[str, str]], horizon: int = 1) -> pd.DataFrame:
     """Diebold Mariano tests on per decision log loss for the given model pairs."""
     out = []
     for a, b in pairs:
@@ -208,7 +208,7 @@ def dm_table(pred: pd.DataFrame, pairs: list[tuple[str, str]]) -> pd.DataFrame:
         gb = pred[pred["model"] == b].set_index("date").loc[ga.index]
         la = log_loss(ga["y"].to_numpy(), ga[["p_cut", "p_hold", "p_hike"]].to_numpy())
         lb = log_loss(gb["y"].to_numpy(), gb[["p_cut", "p_hold", "p_hike"]].to_numpy())
-        stat, p = diebold_mariano(la, lb)
+        stat, p = diebold_mariano(la, lb, horizon)
         out.append({"model_a": a, "model_b": b, "mean_loss_a": la.mean(), "mean_loss_b": lb.mean(),
                     "dm_stat_hln": stat, "p_value": p, "n": len(la)})
     return pd.DataFrame(out)
