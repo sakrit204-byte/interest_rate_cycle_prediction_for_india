@@ -1,0 +1,61 @@
+variable_id,country,family,variable,proposed_role,source_institution,source_url,frequency,publication_lag_note,status,reason,research_questions,coverage_verified
+IN001,India,policy,Repo rate (LAF) decision and level,target,RBI,https://www.rbi.org.in,decision,Announced at decision,core,Official signal rate; primary target,RQ1 RQ3,no
+IN002,India,policy,Policy stance wording,secondary target,RBI,https://www.rbi.org.in,decision,Announced at decision,candidate,Leading indicator of direction; needs hand coding rule,RQ1,no
+IN003,India,policy,Reverse repo; SDF; MSF; CRR,context,RBI,https://www.rbi.org.in,decision,Announced at decision,candidate,Recorded separately; never relabelled as repo decisions,RQ1,no
+IN004,India,money market,Weighted average call rate,feature and secondary target,RBI DBIE,https://data.rbi.org.in,daily,Next day,core,Operating target; spread to repo signals liquidity stance,RQ1 RQ3 RQ4,no
+IN005,India,money market,91 day Treasury bill yield,feature,RBI DBIE,https://data.rbi.org.in,weekly,Auction day,candidate,Market expectation of near term policy,RQ1,no
+IN006,India,money market,10 year government bond yield,feature,RBI DBIE / FRED,https://data.rbi.org.in,daily,Next day,candidate,Term premium and expectations; overlaps with T bill,RQ1,no
+IN007,India,prices,CPI combined headline inflation,feature,MoSPI,https://esankhyiki.mospi.gov.in,monthly,About 12 days after month end,core,Inflation target variable; base break 2012 to 2024 in Feb 2026 needs linking,RQ1 RQ5,no
+IN008,India,prices,CPI food and beverages inflation,feature,MoSPI,https://esankhyiki.mospi.gov.in,monthly,About 12 days,candidate,Food drives headline volatility; collinear with headline,RQ1 RQ5,no
+IN009,India,prices,CPI fuel and light inflation,feature,MoSPI,https://esankhyiki.mospi.gov.in,monthly,About 12 days,robustness,Supply shock channel; collinear,RQ5,no
+IN010,India,prices,Core CPI (excluding food and fuel) constructed,feature,MoSPI (derived),https://esankhyiki.mospi.gov.in,monthly,About 12 days,candidate,Underlying inflation; construction must be documented,RQ1,no
+IN011,India,prices,WPI inflation,feature,Office of the Economic Adviser,https://eaindustry.nic.in,monthly,About 14 days,robustness,Pipeline pressure; not the target index since 2016,RQ1,no
+IN012,India,expectations,RBI Household Inflation Expectations Survey,feature,RBI,https://www.rbi.org.in,bimonthly,Released with policy,candidate,Forward looking; release timing must be checked against cutoff,RQ1,no
+IN013,India,expectations,RBI Survey of Professional Forecasters,feature,RBI,https://www.rbi.org.in,bimonthly,Released with policy,candidate,Forward looking; same timing issue,RQ1,no
+IN014,India,activity,Real GDP growth,feature,MoSPI,https://esankhyiki.mospi.gov.in,quarterly,About 2 months; heavily revised,candidate,Output gap; long lag and revisions; base revision to check,RQ1 RQ6,no
+IN015,India,activity,Index of Industrial Production,feature,MoSPI,https://esankhyiki.mospi.gov.in,monthly,About 6 weeks,core,Monthly activity proxy for output gap,RQ1 RQ6,no
+IN016,India,activity,Manufacturing and services PMI,feature,S&P Global,,monthly,First working days,pending_feasibility,Timely but proprietary; free history access doubtful,RQ1,no
+IN017,India,activity,GST collections,feature,Ministry of Finance,,monthly,First day of month,robustness,Timely but only since 2017,RQ1,no
+IN018,India,credit,Scheduled commercial bank credit growth,feature,RBI DBIE,https://data.rbi.org.in,fortnightly,About 2 weeks,candidate,Credit channel and demand,RQ1 RQ4,no
+IN019,India,external,USD/INR exchange rate,feature,RBI / FRED,https://data.rbi.org.in,daily,Same day,core,Exchange rate pressure,RQ1 RQ4,no
+IN020,India,external,Foreign exchange reserves,feature,RBI DBIE,https://data.rbi.org.in,weekly,About 1 week,candidate,External buffer,RQ1,no
+IN021,India,external,Current account balance,feature,RBI,https://www.rbi.org.in,quarterly,About 3 months,robustness,Long lag,RQ1,no
+IN022,India,external,Net FPI flows,feature,NSDL,,daily,Next day,pending_feasibility,Capital flow pressure; access terms to check,RQ1,no
+IN023,India,fiscal,Union fiscal deficit,feature,CGA / Ministry of Finance,,monthly,About 1 month,robustness,Fiscal stance; slow moving,RQ1,no
+IN024,India,supply,Monsoon rainfall departure from normal,feature and regime,IMD,https://mausam.imd.gov.in,weekly / seasonal,Near real time,candidate,Food inflation driver; regime indicator,RQ5,no
+IN025,India,political,Lok Sabha and major state election dates,event,Election Commission of India,https://eci.gov.in,event,Announcement date,candidate,RQ2 test; announcement versus polling dates kept separate,RQ2,no
+IN026,India,political,Union Budget dates and major fiscal announcements,event,Ministry of Finance,https://www.indiabudget.gov.in,event,Same day,candidate,Fiscal channel,RQ2,no
+IN027,India,political,Economic Policy Uncertainty index,feature,Baker Bloom Davis via FRED,https://fred.stlouisfed.org/series/INDEPUINDXM,monthly,After month end,candidate,Constructed uncertainty measure; check FRED and source revisions,RQ2 RQ5,no
+IN028,India,causal,High frequency RBI monetary policy shocks,shock,Lakdawala and Sengupta,,decision,Research dataset,pending_feasibility,Identified shocks for local projections; ends 2020,RQ4,no
+NP001,Nepal,policy,Policy rate (corridor midpoint) decision,target,NRB,https://www.nrb.org.np,annual plus quarterly review,At announcement,core,Primary target but only about 6 years of history,RQ1 RQ3,no
+NP002,Nepal,policy,Bank rate; deposit collection rate; CRR; SLR,target and context,NRB,https://www.nrb.org.np,annual plus quarterly review,At announcement,core,Longer history for stance index,RQ1 RQ3,no
+NP003,Nepal,money market,Interbank rate,target and feature,NRB,https://www.nrb.org.np,monthly (daily may exist),About 1 month,core,Feasible continuous training target,RQ1 RQ3 RQ4,no
+NP004,Nepal,money market,91 day T bill rate,feature,NRB,https://www.nrb.org.np,monthly,About 1 month,candidate,Market rate,RQ4,no
+NP005,Nepal,money market,Weighted average lending and deposit rates,feature,NRB,https://www.nrb.org.np,monthly,About 1 month,candidate,Pass through measure,RQ4,no
+NP006,Nepal,prices,CPI headline inflation,feature,NRB,https://www.nrb.org.np,monthly,About 1 month,core,Inflation objective,RQ1 RQ4,no
+NP007,Nepal,prices,CPI food and non food inflation,feature,NRB,https://www.nrb.org.np,monthly,About 1 month,candidate,Imported and food inflation channel,RQ4 RQ5,no
+NP008,Nepal,activity,Real GDP growth,feature,National Statistics Office Nepal,https://nsonepal.gov.np,annual (quarterly limited),Long,robustness,Too infrequent for decision level features,RQ4 RQ6,no
+NP009,Nepal,credit,Private sector credit growth,feature,NRB,https://www.nrb.org.np,monthly,About 1 month,core,Credit channel; NRB watches closely,RQ1 RQ4,no
+NP010,Nepal,credit,Deposit growth and credit to deposit ratio,feature,NRB,https://www.nrb.org.np,monthly,About 1 month,candidate,Liquidity stress,RQ4,no
+NP011,Nepal,external,NPR per INR official rate,institutional,NRB,https://www.nrb.org.np,daily,Same day,core,Peg representation; expected constant at 1.6 since 1993 to verify,RQ3 RQ4,no
+NP012,Nepal,external,Gross foreign exchange reserves and months of import cover,feature,NRB,https://www.nrb.org.np,monthly,About 1 month,core,Peg sustainability,RQ3 RQ4,no
+NP013,Nepal,external,Remittance inflows,feature,NRB,https://www.nrb.org.np,monthly,About 1 month,core,Major liquidity and BOP source,RQ4,no
+NP014,Nepal,external,Imports total and from India,feature,NRB / Department of Customs,https://www.nrb.org.np,monthly,About 1 month,candidate,Trade exposure and reserve drain,RQ4,no
+NP015,Nepal,external,Balance of payments overall balance,feature,NRB,https://www.nrb.org.np,monthly,About 1 month,candidate,Liquidity driver,RQ4,no
+NP016,Nepal,fiscal,Government expenditure and domestic borrowing,feature,Ministry of Finance / NRB,https://mof.gov.np,monthly,About 1 month,candidate,Fiscal liquidity effect,RQ4,no
+NP017,Nepal,political,Government formation and collapse dates,event,Official records and news,,event,Announcement date,candidate,Frequent changes; RQ2,RQ2 RQ5,no
+NP018,Nepal,political,Election dates,event,Election Commission Nepal,https://election.gov.np,event,Announcement date,candidate,RQ2,RQ2,no
+NP019,Nepal,political,Protests and civil unrest episodes,event,Official records and news,,event,Announcement date,candidate,Must be verified from multiple sources,RQ2 RQ5,no
+NP020,Nepal,political,Economic policy uncertainty index,feature,None found,,,,excluded,No published index found; constructing one is out of scope for now,RQ2,no
+X001,Cross border,policy,India repo change as Nepal feature,feature,Derived,,decision,Known at RBI announcement,core,RQ3 test,RQ3,no
+X002,Cross border,money market,Interest differential India call rate minus Nepal interbank,feature,Derived,,monthly,Max of component lags,core,Peg arbitrage pressure,RQ3 RQ4,no
+X003,Cross border,prices,India minus Nepal inflation differential,feature,Derived,,monthly,Max of component lags,candidate,Real exchange rate under the peg,RQ4,no
+GL001,International,global rates,Federal funds effective rate,feature,FRED,https://fred.stlouisfed.org/series/FEDFUNDS,monthly,Next day,candidate,Global monetary cycle,RQ1 RQ5,no
+GL002,International,global rates,US 10 year Treasury yield,feature,FRED,https://fred.stlouisfed.org/series/DGS10,daily,Next day,robustness,Collinear with Fed funds,RQ1,no
+GL003,International,commodities,Brent crude oil price,feature,FRED,https://fred.stlouisfed.org/series/DCOILBRENTEU,daily,Next day,core,Imported inflation for both,RQ1 RQ5 RQ6,no
+GL004,International,risk,VIX,feature,FRED,https://fred.stlouisfed.org/series/VIXCLS,daily,Next day,robustness,Global risk; weak direct channel,RQ5,no
+GL005,International,currency,Broad US dollar index,feature,FRED,https://fred.stlouisfed.org/series/DTWEXBGS,daily,Next day,robustness,Dollar cycle,RQ1,no
+GL006,International,commodities,FAO food price index,feature,FAO,https://www.fao.org/worldfoodsituation/foodpricesindex,monthly,Early next month,candidate,Global food shock,RQ5,no
+EX001,India,markets,Equity index returns,feature,NSE / BSE,,daily,,excluded,No clear policy channel at decision frequency; adds noise to small sample,RQ1,no
+EX002,India,text,News sentiment from paid APIs,feature,Commercial,,,,excluded,Violates zero cost budget,RQ2,no
+EX003,Both,text,LLM classified news events,feature,Commercial LLM,,,,excluded,Paid inference and reproducibility concerns; manual coding instead,RQ2,no

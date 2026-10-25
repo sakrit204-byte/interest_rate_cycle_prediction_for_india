@@ -1,0 +1,16 @@
+# DRAFT. Not yet frozen. The SHA256 of the final version is recorded in the commit
+# that freezes it, before the blind window is unlocked (see docs/research_protocol.md).
+status: draft
+training_information_cutoff: "2021-10-31"
+blind_window_start: "2021-11-01"
+forecast_cutoff_days_before_decision: [7, 1, 30]   # first value is the main design
+india:
+  target: repo_rate_decision_3class
+  include_inter_meeting_moves: true
+nepal:
+  training_target: interbank_rate_monthly_change
+  evaluation_target: policy_rate_decision_direction
+suggestion_engine:
+  deadband_bp: 12.5
+  classifier_min_top_probability: 0.5
+metrics: [balanced_accuracy, macro_f1, cohen_kappa, log_loss, brier, turning_point_lag]
