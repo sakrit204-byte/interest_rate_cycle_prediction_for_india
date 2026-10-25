@@ -34,8 +34,12 @@ CUTOFF_DAYS = 7
 CPI_FOCUS_START = pd.Timestamp("2014-01-21")
 CLASS_CODE = {"cut": -1, "hold": 0, "hike": 1}
 
+PROJECTIONS = ROOT / "data" / "interim" / "india" / "rbi_projections.csv"
+
 FEATURES = ["infl", "infl_change_3m", "iip_yoy_3m", "repo_level", "real_rate",
             "repo_change_6m", "us_rate_change_6m", "prev_decision", "fit_regime", "mpc_regime"]
+# second model (D025): RBI published projections, known at the cutoff only if published by then
+PROJECTION_FEATURES = ["proj_infl", "proj_revision"]
 
 
 def daily_rate(pattern: str) -> pd.Series:
@@ -55,8 +59,26 @@ def available(macro: pd.DataFrame, value: str, series: str, cutoff: pd.Timestamp
     return macro.loc[ok, value].dropna()
 
 
+def projection_features(proj: pd.DataFrame, cutoff: pd.Timestamp) -> dict:
+    """Latest coded projection published on or before the cutoff, and its revision.
+
+    The revision compares projections for the same measure and horizon only; when the
+    horizon rolls forward (for example from March 2010 to March 2011) it is set to zero.
+    """
+    known = proj[(proj["date"] <= cutoff) & proj["proj_infl"].notna()]
+    if known.empty:
+        return {"proj_infl": np.nan, "proj_revision": np.nan, "proj_date": ""}
+    last = known.iloc[-1]
+    revision = 0.0
+    prev = known.iloc[-2] if len(known) > 1 else None
+    if prev is not None and prev["measure"] == last["measure"] and prev["horizon"] == last["horizon"]:
+        revision = last["proj_infl"] - known.iloc[-2]["proj_infl"]
+    return {"proj_infl": last["proj_infl"], "proj_revision": revision, "proj_date": last["date"].date(),
+            "proj_measure": last["measure"]}
+
+
 def row_features(day: pd.Timestamp, macro: pd.DataFrame, repo: pd.Series, us: pd.Series,
-                 past: pd.DataFrame, cutoff_days: int) -> dict:
+                 past: pd.DataFrame, cutoff_days: int, proj: pd.DataFrame | None = None) -> dict:
     cutoff = day - pd.Timedelta(days=cutoff_days)
     measure, series = ("cpi_yoy", "cpi") if day >= CPI_FOCUS_START else ("wpi_yoy", "wpi")
     infl = available(macro, measure, series, cutoff)
@@ -77,6 +99,11 @@ def row_features(day: pd.Timestamp, macro: pd.DataFrame, repo: pd.Series, us: pd
         "prev_decision": CLASS_CODE[known["decision"].iloc[-1]] if len(known) else np.nan,
     }
     row["real_rate"] = row["repo_level"] - row["infl"]
+    if proj is not None:
+        row.update(projection_features(proj, cutoff))
+        if row.get("proj_measure") and row["proj_measure"].lower() != series:
+            # projection on a different index from the targeted inflation measure (January 2014)
+            row["proj_infl"] = row["proj_revision"] = np.nan
     return row
 
 
@@ -88,9 +115,11 @@ def build(cutoff_days: int = CUTOFF_DAYS) -> pd.DataFrame:
     for series in ("cpi", "wpi", "iip"):
         macro[f"{series}_available_from"] = pd.to_datetime(macro[f"{series}_available_from"])
     repo, us = daily_rate(BIS_IN), daily_rate(BIS_US)
+    proj = pd.read_csv(PROJECTIONS, parse_dates=["decision_date"]).rename(columns={"decision_date": "date"})
+    proj = proj.sort_values("date")
     rows = []
     for _, d in decisions.iterrows():
-        f = row_features(d["date"], macro, repo, us, decisions[decisions["date"] < d["date"]], cutoff_days)
+        f = row_features(d["date"], macro, repo, us, decisions[decisions["date"] < d["date"]], cutoff_days, proj)
         rows.append({"date": d["date"].date(), "decision": d["decision"], "y": CLASS_CODE[d["decision"]],
                      "change_bp": d["change_bp"], "inter_meeting": d["inter_meeting"],
                      "regime": d["regime"], "blind_window": d["blind_window"], **f})
@@ -98,6 +127,7 @@ def build(cutoff_days: int = CUTOFF_DAYS) -> pd.DataFrame:
     out["fit_regime"] = (out["regime"] != "multiple_indicator").astype(int)
     out["mpc_regime"] = (out["regime"] == "mpc").astype(int)
     out["complete"] = out[FEATURES].notna().all(axis=1)
+    out["complete_projection"] = out["complete"] & out[PROJECTION_FEATURES].notna().all(axis=1)
     return out
 
 

@@ -1,0 +1,5 @@
+model_a,model_b,mean_loss_a,mean_loss_b,dm_stat_hln,p_value,n
+ordered_probit_hybrid,persistence,0.876,0.8268,0.5217,0.6034,75
+ordered_probit_hybrid,ordered_probit_taylor,0.876,0.888,-0.4594,0.6473,75
+ordered_probit_hybrid,majority,0.876,1.0079,-1.3116,0.1937,75
+logistic_l2_hybrid,ordered_probit_hybrid,0.917,0.876,0.4329,0.6663,75

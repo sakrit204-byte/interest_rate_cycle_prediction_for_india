@@ -64,3 +64,28 @@ def test_built_table_respects_cutoffs():
         names = series or rows["infl_measure"].str.replace("_yoy", "")
         for month, name, cutoff in zip(months, names if series is None else [series] * len(rows), rows["cutoff"]):
             assert available_from(pd.PeriodIndex([month]), name).iloc[0] <= cutoff
+
+
+def test_projection_known_only_if_published_by_cutoff():
+    proj = pd.DataFrame({"date": pd.to_datetime(["2016-02-02", "2016-04-05"]),
+                         "proj_infl": [5.0, 4.5], "measure": ["CPI", "CPI"],
+                         "horizon": ["March 2017", "March 2017"]})
+    early = bf.projection_features(proj, pd.Timestamp("2016-03-29"))
+    late = bf.projection_features(proj, pd.Timestamp("2016-04-05"))
+    assert early["proj_infl"] == 5.0 and early["proj_revision"] == 0.0
+    assert late["proj_infl"] == 4.5 and late["proj_revision"] == -0.5
+
+
+def test_projection_revision_zero_when_horizon_rolls():
+    proj = pd.DataFrame({"date": pd.to_datetime(["2010-01-29", "2010-04-20"]),
+                         "proj_infl": [8.5, 5.5], "measure": ["WPI", "WPI"],
+                         "horizon": ["end March 2010", "March 2011"]})
+    assert bf.projection_features(proj, pd.Timestamp("2010-07-20"))["proj_revision"] == 0.0
+
+
+def test_handcoded_projection_quotes_verify():
+    from src.features import rbi_projections
+    if not rbi_projections.DOCS.exists():
+        pytest.skip("statement documents not downloaded")
+    coded = rbi_projections.load(verify=True)  # raises if any quote is missing from its document
+    assert coded["proj_infl"].dropna().between(0, 15).all()

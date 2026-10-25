@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 RAW_DIR = ROOT / "data" / "raw" / "india" / "rbi_policy_index"
 OUT = ROOT / "data" / "interim" / "india" / "rbi_policy_index_entries.csv"
 
+LINK = re.compile(r"""<a\s[^>]*href=["']([^"']+)["'][^>]*>(.*?)</a>""", re.IGNORECASE | re.DOTALL)
 HEADER = re.compile(r'<td class="tableheader"><b>(.*?)</b></td>', re.IGNORECASE | re.DOTALL)
 DATE_FORMATS = ("%b %d, %Y", "%B %d, %Y")
 
@@ -40,6 +41,21 @@ def parse_date(text: str):
     return None
 
 
+def links(block: str) -> str:
+    """Links of one entry as 'label | url' lines; the label includes the text before a
+    'Full Document' link, which is where the RBI names the document."""
+    out = []
+    last = 0
+    for m in LINK.finditer(block):
+        text = clean(m.group(2))
+        if text.lower().startswith("full document") or not text:
+            before = clean(block[last:m.start()])
+            text = f"{before[-120:]} {text}".strip()
+        out.append(f"{text} | {m.group(1).strip()}")
+        last = m.end()
+    return " || ".join(out)
+
+
 def entries(html: str) -> list[dict]:
     """Pair each date header with the title header that follows it."""
     out = []
@@ -53,8 +69,9 @@ def entries(html: str) -> list[dict]:
         if parse_date(title) is not None:
             continue
         block_end = headers[i + 2][0] if i + 2 < len(headers) else len(html)
-        body = clean(html[title_end:block_end])
-        out.append({"date": date.isoformat(), "title": title, "body": body[:1500]})
+        block = html[title_end:block_end]
+        body = clean(block)
+        out.append({"date": date.isoformat(), "title": title, "body": body[:1500], "links": links(block)})
     return out
 
 
@@ -67,7 +84,7 @@ def main() -> int:
     rows.sort(key=lambda r: r["date"])
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=["fiscal_year_end", "date", "title", "body", "source_file"])
+        writer = csv.DictWriter(f, fieldnames=["fiscal_year_end", "date", "title", "body", "links", "source_file"])
         writer.writeheader()
         writer.writerows(rows)
     print(f"{len(rows)} entries written to {OUT.relative_to(ROOT)}")

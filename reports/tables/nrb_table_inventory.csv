@@ -1,0 +1,272 @@
+file,upload_month,coverage_months,read_status,n_sheets,first_sheets,cpi,interest_rates,credit,reserves,remittances,trade
+2019_12_CME__Tables_44_Seven__Months_2072_73.xlsx,2019/12,,ok,44,cover; CPI_new; CPI_Y-O-Y; CPI_Nep & Ind.; WPI; WPI YOY,True,True,False,True,False,True
+2019_12_CME__Tables_45_Eight_Months_2015.16_1.xls,2019/12,,ok,45,cover; CPI_new; CPI_Y-O-Y; CPI_Nep & Ind.; WPI; WPI YOY,True,True,False,True,False,True
+2019_12_CME__Tables_45_Eight_Months_2015.16_2.xls,2019/12,,ok,45,cover; CPI_new; CPI_Y-O-Y; CPI_Nep & Ind.; WPI; WPI YOY,True,True,False,True,False,True
+2019_12_CME__Tables_45_Six__Months_2072_73.xls,2019/12,,ok,45,cover; CPI_new; CPI_Y-O-Y ; CPI_Nep & Ind.; WPI ; WPI YOY,True,True,False,True,False,True
+2019_12_CME__Tables_47_Five__Months_2072_73_1_1.xls,2019/12,,ok,46,cover; CPI_new; CPI_Y-O-Y; CPI_Nep & Ind.; WPI; WPI YOY,True,True,False,True,False,True
+2019_12_CME__Tables_47_Five__Months_2072_73_1_1_2.xls,2019/12,,ok,46,cover; CPI_new; CPI_Y-O-Y; CPI_Nep & Ind.; WPI; WPI YOY,True,True,False,True,False,True
+2019_12_CME__Tables_47_Four__Months_2072_73_2.xls,2019/12,,ok,46,cover; CPI_new; CPI_Y-O-Y; CPI_Nep & Ind.; WPI; WPI YOY,True,True,False,True,False,True
+2019_12_CME__Tables_50_Nine_Months_2015_16.xls,2019/12,,ok,50,cover; GDP at Current Prices; GDP at Constant Prices; GDP by Expenditure Catagory; GNI GNDI and Savings; Summary of Macro Eco. Indicator,True,True,False,True,False,True
+2019_12_CME__Tables_50_Nine_Months_2015_16_1.xls,2019/12,,ok,50,cover; GDP at Current Prices; GDP at Constant Prices; GDP by Expenditure Catagory; GNI GNDI and Savings; Summary of Macro Eco. Indicator,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2006_09_Tables_Based_on_first_two_month_data_of_2006_07_1.xls,2019/12,,ok,22,cover; Monetary Survey; Monetary Account; Assets and Liabilities; summary of Share market; Share Mkt Activities,True,False,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2006_11_Tables_Based_on_first_four_month_data_of_2006_07_1.xls,2019/12,,ok,22,cover; Monetary Survey; Monetary Account; Assets and Liabilities; summary of Share market; Share Mkt Activities,True,False,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2007_06_Tables_Based_on_first_nine_months_data_of_2006_07_1.xls,2019/12,,ok,24,cover; Monetary Survey; Monetary Account; Assets and Liabilities; summary of Share market; Public Issue Approval,True,False,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2007_07_Tables_Based_on_first_ten_month_data_of_2006_07_1.xls,2019/12,,ok,27,cover; Monetary Survey; Monetary Account; Assets and Liabilities; Capital Mkt Indicators; Public Issue Approval,True,False,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2007_08_Tables_Based_on_first_Eleven_month_data_of_2006_07_1.xls,2019/12,,ok,27,cover; Monetary Survey; Monetary Account; Assets and Liabilities; Capital Mkt Indicators; Public Issue Approval,True,False,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2007_09_Tables_Based_on_First_Twelve_Month_data_of_2006_07_1.xls,2019/12,,ok,32,Cover; GDP; CPI; CPI annual; YOY CPI; Core Inf.annual,True,False,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2008_02_Tables_Based_on_first_five_month_data_of_2007_08_2.xls,2019/12,,ok,25,cover; MS; M AC; RM; A&L of Com; Stock Market Indicators,True,False,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2008_03_Tables_Based_on_first_six_month_data_of_2007_08_1.xls,2019/12,,ok,39,cover; MS; M AC; RM; A&L of Com; OUTRIGHT,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2008_03_Tables_Based_on_first_six_month_data_of_2007_08_2.xls,2019/12,,ok,39,cover; MS; M AC; RM; A&L of Com; OUTRIGHT,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2008_04_Tables_Based_on_first_seven_month_data_of_2007_08_1.xls,2019/12,,ok,39,cover; MS; M AC; RM; A&L of Com; outright,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2008_04_Tables_Based_on_first_seven_month_data_of_2007_08_2.xls,2019/12,,ok,39,cover; MS; M AC; RM; A&L of Com; outright,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2008_09_Tables_Based_on_Annual_data_of_2007_08_1.xls,2019/12,12,ok,51,cover; RGDP; GDP by Expenditure; manu. Production; CPI; CPI Annual,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2008_09_Tables_Based_on_Annual_data_of_2007_08_2.xls,2019/12,12,ok,51,cover; RGDP; GDP by Expenditure; manu. Production; CPI; CPI Annual,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2008_10_Tables_Based_on_First_Month_data_of_2008_09_2.xls,2019/12,,ok,43,cover; MS; M AC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2008_11_Tables_Based_on_first_two_month_data_of_2008_09_1.xls,2019/12,,ok,43,cover; MS; M AC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2008_12_Tables_Based_on_first_three_month_data_of_2008_09.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_01_Tables_Based_on_first_four_month_data_of_2008_09_1.xls,2019/12,,ok,43,cover; MS; MAC; RM; A & L of COM; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_01_Tables_Based_on_first_four_month_data_of_2008_09_2.xls,2019/12,,ok,43,cover; MS; MAC; RM; A & L of COM; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_02_Tables_Based_on_first_five_month_data_of_2008_09.xls,2019/12,,ok,43,cover; MS; MAC; RM; A & L of COM; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_02_Tables_Based_on_first_five_month_data_of_2008_09_1.xls,2019/12,,ok,43,cover; MS; MAC; RM; A & L of COM; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_03_Tables_Based_on_first_six_month_data_of_2008_09.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_03_Tables_Based_on_first_six_month_data_of_2008_09_1.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_04_Tables_Based_on_first_seven_month_data_of_2008_09_2.xls,2019/12,,ok,43,cover; MS; MAC; RM; A& L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_05_Tables_Based_on_first_eight_month_data_of_2008_09_2.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_06_Tables_Based_on_first_nine_month_data_of_2008_09.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_07_Tables_Based_on_first_ten_month_data_of_2008_09_1.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_07_Tables_Based_on_first_ten_month_data_of_2008_09_2.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_08_Tables_Based_on_first_eleven_month_data_of_2008_09.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_09_Tables_Based_on_Annual_data_of_2008_09_1.xls,2019/12,12,ok,51,cover; RGDP; GDP by Expenditure; Manufacturing Index; CPI; CPI Annual,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_09_Tables_Based_on_Annual_data_of_2008_09_2.xls,2019/12,12,ok,51,cover; RGDP; GDP by Expenditure; Manufacturing Index; CPI; CPI Annual,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_09_Tables__Summary_Based_on_Annual_data_of_2008_09_1.xls,2019/12,12,ok,3,Sheet1; Sheet2; Sheet3,False,False,False,False,False,False
+2019_12_Current_Macroeconomic_Situation_English_2009_10_Tables_Based_on_first_months_data_of_2009_10.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_11_Tables_Based_on_two_Months_data_of_2009_10.xls,2019/12,2,ok,42,cover; MS; MAC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2009_12_Tables_Based_on_first_three_months_data_of_2009_10.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_01_Tables_Based_on_first_four_months_data_of_2009_10.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Comm; Deposits,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_01_Tables_Based_on_first_four_months_data_of_2009_10_1.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Comm; Deposits,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_02_Tables_Based_on_first_five_months_data_of_2009_10.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_02_Tables_Based_on_first_five_months_data_of_2009_10_1.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_03_Tables_Based_on_first_six_months_data_of_2009_10.xls,2019/12,,ok,43,cover; MS; MACs; RM; A&L of Coms; Deposits,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_03_Tables_Based_on_first_six_months_data_of_2009_10_1.xls,2019/12,,ok,43,cover; MS; MACs; RM; A&L of Coms; Deposits,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_04_Tables_Based_on_first_seven_months_data_of_2009_10.xls,2019/12,,ok,20,cover; MS; MAC; A&L of Com; Interest Rate; Stock Indicator,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_04_Tables_Based_on_first_seven_months_data_of_2009_10_1.xls,2019/12,,ok,20,cover; MS; MAC; A&L of Com; Interest Rate; Stock Indicator,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_06_Tables_Based_on_first_nine_months_data_of_2009_10.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of COM; Deposits,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_07_Tables_Based_on_first_eleven_months_data_of_2009_10.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Coms; Deposits,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_07_Tables_Based_on_first_eleven_months_data_of_2009_10_1.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Coms; Deposits,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_07_Tables_Based_on_first_ten_months_data_of_2009_10.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Coms; Deposits,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_07_Tables_Based_on_first_ten_months_data_of_2009_10_1.xls,2019/12,,ok,43,cover; MS; MAC; RM; A&L of Coms; Deposits,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_08_Tables_Based_on_Annual_data_of_2009_10.xls,2019/12,12,ok,50,cover; GDP; GDP by Expenditures; CPI; CPI Annual; CPI YOY,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_09_Tables_Based_on_first_Months_data_of_2010_11_2.xls,2019/12,,ok,46,cover; MS; MAC; RM; A&L of Coms; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_10_Tables_Based_on_Second_Months_data_of_2010_11.xls,2019/12,,ok,41,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_11_Tables_Based_on_first_four_months_data_of_2010_11.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_11_Tables_Based_on_first_four_months_data_of_2010_11_1.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_11_Tables_Based_on_first_three_months_data_of_2010_11.xls,2019/12,,ok,41,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_12_Tables_Based_on_first_five_months_data_of_2010_11.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2010_12_Tables_Based_on_first_five_months_data_of_2010_11_1.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2011_02_Tables_Based_on_first_six_months_data_of_2010_11.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2011_04_Tables_Based_on_first_Eight_months_data_of_2010_11_1.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2011_04_Tables_Based_on_first_Eight_months_data_of_2010_11_2.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2011_04_Tables_Based_on_first_seven_months_data_of_2010_11.xls,2019/12,,ok,20,cover; MS; MAC; A&L of CB; Int; Share Market Indicator,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2011_04_Tables_Based_on_first_seven_months_data_of_2010_11_1.xls,2019/12,,ok,20,cover; MS; MAC; A&L of CB; Int; Share Market Indicator,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2011_05_Tables_Based_on_first_nine_months_data_of_2010_11.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2011_05_Tables_Based_on_first_nine_months_data_of_2010_11_1.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2011_06_Tables_Based_on_first_ten_months_data_of_2010_11_1.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2011_06_Tables_Based_on_ten_months_data_of_2010_11.xls,2019/12,10,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2011_09_Tables_Based_on_Annual_Data_of_2010_11.xls,2019/12,12,ok,48,cover; GDP; GDP by Expenditures; CPI; CPI Annual; CPI YOY,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2011_09_Tables_Based_on_Annual_Data_of_2010_11_1.xls,2019/12,12,ok,48,cover; GDP; GDP by Expenditures; CPI; CPI Annual; CPI YOY,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2068_04_Table_Based_on_First_Eleven_Months_Data_of_2067_68.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2068_04_Table_Based_on_First_Eleven_Months_Data_of_2067_68_1.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of CB; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2068_06_Tables_Based_on_first_months_data_of_2068_69.xls,2019/12,,ok,42,cover; MS; MAC; RM; A&L of Coms; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2068_07_Tables_Based_on_two_months_data_of_2068_69.xls,2019/12,2,ok,42,cover; MS; MAC; RM; A&L of Coms; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2068_07_Tables_Based_on_two_months_data_of_2068_69_1.xls,2019/12,2,ok,42,cover; MS; MAC; RM; A&L of Coms; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2068_08_Tables_Based_on_Three_months_data_of_2068_69.xls,2019/12,3,ok,42,cover; MS; MAC; RM; A&L of Coms; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2068_08_Tables_Based_on_Three_months_data_of_2068_69_1.xls,2019/12,3,ok,42,cover; MS; MAC; RM; A&L of Coms; Deposit,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2068_09_Tables_Based_on_four_months_data_of_2068_69.xls,2019/12,4,ok,44,cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2068_10_Table_Based_on_Five_months_data_of_2068_69_1.xls,2019/12,5,ok,44,cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2068_11_Table_Based_on_Six_Months_Data_of_2068_69.xls,2019/12,6,ok,44,cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2068_12_Table_Based_on_Seven_Months_Data_of_2068_69.xls,2019/12,7,ok,45,cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2068_12_Table_Based_on_Seven_Months_Data_of_2068_69_1.xls,2019/12,7,ok,45,cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2069_01_Table_Based_on_Eight_Months_Data_of_2068_69.xls,2019/12,8,ok,45,cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2069_01_Table_Based_on_Eight_Months_Data_of_2068_69_1.xls,2019/12,8,ok,45,cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2069_02_Table_Based_on_Nine_Months_Data_of_2068_69.xls,2019/12,9,ok,45,cover; BMS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2069_03_Table_Based_on_Ten_Months_Data_of_2068_69.xls,2019/12,10,ok,45,cover; BMS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2069_04_Table_Based_on_Eleven_Months_Data_of_2068_69.xls,2019/12,11,ok,45,cover; BMS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2069_05_Table_Based_on_Annual_Data_of_2068_69.xls,2019/12,12,ok,51,cover; GDP; GDP by Exp Cat; CPI; CPI Annuals; CPI YOY,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2069_06_Table_Based_on_First_Data_of_2069_70_1.xls,2019/12,,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2069_09_Table_44_Based_on_Four__Months__Data_of_2069_70_1.xls,2019/12,,ok,46,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2069_11_Table_44_Based_on_Six__Months__Data_of_2069_70_1.xls,2019/12,,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2069_12_Table_44_Based_on_Seven__Months__Data_of_2069_70_1.xls,2019/12,,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2070_05_Tables_50_Based_on_Annual__Data_of_2069_70_1.xls,2019/12,12,ok,50,cover; GDP; GDP by Exp Cat; CPI; CPI Annuals; CPI YOY,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2070_06_Tables_44_Based_on_First_Month__Data_of_2070_71.xls,2019/12,,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2070_08_Tables_44_Based_on_Three_Months__Data_of_2070_71.xls,2019/12,,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2070_09_Tables_44_Based_on_Four_Months__Data_of_2070_71.xls,2019/12,,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2070_10_Tables_44_Based_on_Five_Months__Data_of_2070_71.xls,2019/12,,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2070_11_Tables_Based_on_Six_Months_Data_of_2070_71.xls,2019/12,6,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2070_11_Tables_Based_on_Six_Months_Data_of_2070_71_1.xls,2019/12,6,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2070_12_Tables_Based_on_Seven_Months_Data_of__2070_71_1.xls,2019/12,7,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_01_Tables_Based_on_Eight_Months_Data_of_2070_71.xls,2019/12,8,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_02_Tables_44_Based_on_Nine__Months__Data_of_2070_71_1.xls,2019/12,,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_03_Tables_44_Based_on_Ten__Months__Data_of_2070_71.xls,2019/12,,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_03_Tables_44_Based_on_Ten__Months__Data_of_2070_71_1.xls,2019/12,,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_04_Tables_44_Based_on_Eleven__Months__Data_of_2070_71.xls,2019/12,,ok,44,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_05_Tables_50_Based_on_Annual__Data_of_2070_71.xls,2019/12,12,ok,50,cover; GDP; GDP by Exp Cat; CPI; CPI Annuals; CPI YOY,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_06_Tables_45_Based_on_First_Month_Data_of_2071_72_2.xls,2019/12,,ok,45,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_07_Tables_45_Based_on_Two_months_Data_of_2071_72.xls,2019/12,2,ok,45,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_07_Tables_45_Based_on_Two_months_Data_of_2071_72_1.xls,2019/12,2,ok,45,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_08_Tables_46_Based_on_Three_months_Data_of_2071_72.xls,2019/12,3,ok,46,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_09_Tables_46_Based_on_Four_months_Data_of_2071_72.xls,2019/12,4,ok,46,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_09_Tables_46_Based_on_Four_months_Data_of_2071_72_1.xls,2019/12,4,ok,46,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_10_Tables_Based_on_first_five_month_data_of_2071_72_2.xls,2019/12,,ok,46,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_11_Tables_46_Based_on_Six_months_Data_of_2071_72.xls,2019/12,6,ok,46,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_12_Tables_46_Based_on_Eight_months_Data_of_2071_72_new_2.xls,2019/12,8,ok,46,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_12_Tables_46_Based_on_Seven_months_Data_of_2071_72_1.xls,2019/12,7,ok,46,Cover; MS ; CBS ; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2071_12_Tables_46_Based_on_Seven_months_Data_of_2071_72_2.xls,2019/12,7,ok,46,Cover; MS ; CBS ; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2072_2_Tables_46_Based_on_Nine_Months_Data_of_2071_72_1.xls,2019/12,9,ok,47,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2072_2_Tables_46_Based_on_Nine_Months_Data_of_2071_72_2.xls,2019/12,9,ok,47,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2072_3_Tables_46_Based_on_Ten_Months_Data_of_2071_72.xls,2019/12,10,ok,46,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2072_3_Tables_46_Based_on_Ten_Months_Data_of_2071_72_1.xls,2019/12,10,ok,46,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2072_4_Tables_46_Based_on_Eleven_Months_Data_of_2071_72.xls,2019/12,11,ok,46,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_English_2072_4_Tables_46_Based_on_Eleven_Months_Data_of_2071_72_1.xls,2019/12,11,ok,46,Cover; MS; CBS; ODCS; CALCB; CALDB,True,True,False,True,False,True
+2019_12_Current_Macroeconomic_Situation_Tables_2008_11_Tables_Based_on_first_two_month_data_of_2008_09.xls,2019/12,,ok,43,cover; MS; M AC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2020_04_Key_Financial_Indicators_2072_73_Mid_August_2015_Mid_April_2016.xls,2020/04,,ok,1,FY 2072-73,False,False,False,False,False,False
+2020_04_Key_Financial_Indicators_2072_73_Mid_August_2015_Mid_July_2016.xls,2020/04,,ok,1,FY 2072-73,False,False,False,False,False,False
+2020_04_Key_Financial_Indicators_2073_74_Mid_Jan_2017.xls,2020/04,,ok,1,Sheet1,False,False,False,False,False,False
+2020_04_Key_Financial_Indicators_2073_74_Mid_July_2017.xls,2020/04,,ok,3,Sheet1; Sheet2; Sheet3,False,False,False,False,False,False
+2020_04_Key_Financial_Indicators_2073_74_Mid_Oct_2016.xls,2020/04,,ok,1,FY 2073-74,False,False,False,False,False,False
+2020_04_Key_Financial_Indicators_2074_75_Mid_April_2018.xls,2020/04,,ok,3,Sheet1; Sheet2; Sheet3,False,False,False,False,False,False
+2020_04_Key_Financial_Indicators_2074_75_Mid_April_2018.xlsx,2020/04,,ok,3,Sheet1; Sheet2; Sheet3,False,False,False,False,False,False
+2020_04_Key_Financial_Indicators_2074_75_Mid_Jan_2018.xls,2020/04,,ok,3,Sheet1; Sheet2; Sheet3,False,False,False,False,False,False
+2020_04_Key_Financial_Indicators_2074_75__Mid_Oct_2017.xls,2020/04,,ok,3,Sheet1; Sheet2; Sheet3,False,False,False,False,False,False
+2020_05_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Nine_Months_Data_of_2019.20.xlsx,2020/05,9,ok,67,Cover; SMIs; CPI; CPI Y_O_Y; CPI_NEP & INDIA; WPI,True,True,False,True,True,True
+2020_07_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Eleven_Months_Data_of_2019.20_3.xlsx,2020/07,11,ok,67,Cover ; SMIs; CPI; CPI YOY; CPI_NEP & INDIA; WPI,True,True,False,True,True,True
+2020_08_Current_Macroeconomic_and_Financial_SItuation._Tables_Based_on_Annual_Data_of_2019.20._1.xlsx,2020/08,12,ok,86,Sheet1; Cover; SMIs; GDP at current price; GDP at constant price; GDP by Expenditure Catagory,True,True,True,True,True,True
+2020_09_Current_Macroeconomic_and_Financial_Situation_Tables_based_on_One_Month_data_2020.21_2.xlsx,2020/09,1,ok,79,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2020_11_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Three_Months_data_2020.21.xlsx,2020/11,3,ok,81,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2020_12_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Four_Months_data_2020.21.xlsx,2020/12,4,ok,82,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2020_12_Macroeconomic_Indicators_of_Nepal_2020_July.xlsx,2020/12,,ok,23,"Cover; Sheet1; Content; 1, 2; 3; 4",True,True,False,True,False,True
+2021_01_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Five_Months_data_2020.21.xlsx,2021/01,5,ok,83,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_03_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Seven_Months_data_2020.21_2.xlsx,2021/03,7,ok,83,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_04_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Eight_Months_data_2020.21_1.xlsx,2021/04,8,ok,81,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,False,True,True,True
+2021_05_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Nine_Months_data_of_2020.21_1.xlsx,2021/05,9,ok,83,Cover ; SMIs ; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_05_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Nine_Months_data_of_2020.21_2.xlsx,2021/05,9,ok,83,Cover ; SMIs ; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_06_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Ten_Months_data_of_2020.21.xlsx,2021/06,10,ok,83,Cover ; SMIs ; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_07_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Eleven_Months_data_of_2020.21.xlsx,2021/07,11,ok,83,Cover ; SMIs ; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_08_Current_Macroeconomic_and_Financial_Situation._Tables._Based_on_Annual_data_of_2020.21_3.xlsx,2021/08,12,ok,93,Sheet1; Cover; SMIs; GDP at current price; GDP at constant price; GDP by Expenditure Catagory,True,True,True,True,True,True
+2021_08_Current_Macroeconomic_and_Financial_Situation._Tables._Based_on_Annual_data_of_2020.21_5.xlsx,2021/08,12,ok,93,Sheet1; Cover; SMIs; GDP at current price; GDP at constant price; GDP by Expenditure Catagory,True,True,True,True,True,True
+2021_08_QEB_2021_April.xlsx,2021/08,,ok,109,Cover; Address; Contents; Notes; Table 1; Table 2,True,True,True,True,False,True
+2021_09_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_One_Month_data_of_2021.22_2.xlsx,2021/09,1,ok,83,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_09_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_One_Month_data_of_2021.22_6.xlsx,2021/09,1,ok,83,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_10_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Two_Months_data_of_2021.22.xlsx,2021/10,2,ok,83,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_10_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Two_Months_data_of_2021.22_2.xlsx,2021/10,2,ok,83,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_11_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Three_Months_data_of_2021.22.xlsx,2021/11,3,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_11_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Three_Months_data_of_2021.22_2.xlsx,2021/11,3,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_12_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Four_Months_data_of_2021.22.xlsx,2021/12,4,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_12_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Four_Months_data_of_2021.22_5.xlsx,2021/12,4,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2021_12_Macroeconomic_Indicators_of_Nepal_2021_July.xlsx,2021/12,,ok,25,"Cover; Map; Content; 1, 2; 3; 4",True,True,False,True,False,True
+2021_12_QEB_2021_July.xlsx,2021/12,,ok,109,Cover; Address; Contents; Notes; Table 1; Table 2,True,True,True,True,False,True
+2022_01_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Five_Months_data_of_2021.22_3.xlsx,2022/01,5,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2022_02_Current_Macroeconomic_Situation_Tables_2007_10_TablesBased_on_first_Month_data_of_2007_08_1.xls,2022/02,,error: AssertionError,,,,,,,,
+2022_02_Current_Macroeconomic_Situation_Tables_2007_12_Tables_based_on_first_three_months_data_of_2007_08.xls,2022/02,,ok,19,cover; MS; M AC; A&L of Com; Stock mkt indicators; Listed co,True,False,False,True,False,False
+2022_02_Current_Macroeconomic_Situation_Tables_2008_06_Tables_Based_on_first_nine_month_data_of_2007_08.xls,2022/02,,ok,35,cover; MS; M AC; RM; A&L of Com; outright,True,True,False,True,False,True
+2022_02_Current_Macroeconomic_Situation_Tables_2008_07_Tables_Based_on_first_ten_month_data_of_2007_08.xls,2022/02,,ok,41,cover; MS; M AC; RM; A&L of Com; Table 5,True,True,False,True,False,True
+2022_02_Current_Macroeconomic_Situation_Tables_2008_08_Tables_Based_on_first_eleven_month_data_of_2007_08_1.xls,2022/02,,ok,42,cover; MS; M AC; RM; A&L of Com; Deposit,True,True,False,True,False,True
+2022_02_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Six_Months_data_of_2021.22.xlsx,2022/02,6,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2022_03_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Seven_Months_data_of_2021.22.xlsx,2022/03,7,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2022_04_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Eight_Months_data_of_2021.22.xlsx,2022/04,8,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2022_05_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Nine_Months_data_of_2021.22.xlsx,2022/05,9,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2022_05_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Nine_Months_data_of_2021.22_1.xlsx,2022/05,9,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2022_05_QEB_2022_January.xlsx,2022/05,,ok,109,Cover; Address; Contents; Notes; Table 1; Table 2,True,True,True,True,False,True
+2022_06_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Ten_Months_data_of_2021.22.xlsx,2022/06,10,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2022_07_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Eleven_Months_data_of_2021.22.xlsx,2022/07,11,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2022_07_QEB_2022_April.xlsx,2022/07,,ok,109,Cover; Address; Contents; Notes; Table 1; Table 2,True,True,True,True,False,True
+2022_08_Current_Macroeconomic_and_Financial_Situation._Tables._Based_on_Annual_data_of_2021.22.xlsx,2022/08,12,ok,94,Sheet1; Cover; SMIs; GDP at current price; GDP at constant price; GDP by Expenditure Catagory,True,True,True,True,True,True
+2022_08_Current_Macroeconomic_and_Financial_Situation._Tables._Based_on_Annual_data_of_2021.22_1.xlsx,2022/08,12,ok,94,Sheet1; Cover; SMIs; GDP at current price; GDP at constant price; GDP by Expenditure Catagory,True,True,True,True,True,True
+2022_08_Current_Macroeconomic_and_Financial_Situation._Tables._Based_on_Annual_data_of_2021.22_2.xlsx,2022/08,12,ok,94,Sheet1; Cover; SMIs; GDP at current price; GDP at constant price; GDP by Expenditure Catagory,True,True,True,True,True,True
+2022_09_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_One_Month_data_of_2022.23.xlsx,2022/09,1,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2022_09_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_One_Month_data_of_2022.23_1.xlsx,2022/09,1,ok,84,Cover ; SMIs; CPI; CPI Y-O-Y; CPI_NEP & INDIA; WPI,True,True,True,True,True,True
+2022_10_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Two_Months_data_of_2022.23.xlsx,2022/10,2,ok,84,Cover ; SMIs; CPI_Bhadra; CPI Y-O-Y; CPI_NEP & INDIA; WPI_Bhadra,True,True,True,True,True,True
+2022_10_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Two_Months_data_of_2022.23_1.xlsx,2022/10,2,ok,84,Cover ; SMIs; CPI_Bhadra; CPI Y-O-Y; CPI_NEP & INDIA; WPI_Bhadra,True,True,True,True,True,True
+2022_10_QEB_2022_July.xlsx,2022/10,,ok,109,Cover; Address; Contents; Notes; Table 1; Table 2,True,True,True,True,False,True
+2022_11_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Three_Months_data_of_2022.23.xlsx,2022/11,3,ok,84,Cover ; SMIs; CPI_Aswin; CPI Y-O-Y; CPI_NEP & INDIA; WPI_Aswin,True,True,True,True,True,True
+2022_11_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Three_Months_data_of_2022.23_2.xlsx,2022/11,3,ok,84,Cover ; SMIs; CPI_Aswin; CPI Y-O-Y; CPI_NEP & INDIA; WPI_Aswin,True,True,True,True,True,True
+2022_11_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Three_Months_data_of_2022.23_4.xlsx,2022/11,3,ok,84,Cover ; SMIs; CPI_Aswin; CPI Y-O-Y; CPI_NEP & INDIA; WPI_Aswin,True,True,True,True,True,True
+2022_11_Macroeconomic_Indicators_of_Nepal_2022_July.xlsx,2022/11,,ok,25,"Cover; Map; Content; 1, 2; 3; 4",True,True,False,True,False,True
+2022_12_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Four_Months_data_of_2022.23.xlsx,2022/12,4,ok,84,Content ; 1.SMIs; 2.CPI_Kartik; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Kartik,True,True,True,True,True,True
+2022_12_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Four_Months_data_of_2022.23_2.xlsx,2022/12,4,ok,84,Content ; 1.SMIs; 2.CPI_Kartik; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Kartik,True,True,True,True,True,True
+2023_01_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Five_Months_data_of_2022.23.xlsx,2023/01,5,ok,83,Content ; 1.SMIs; 2.CPI_Mangsir; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Mangsir,True,True,True,True,True,True
+2023_01_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Five_Months_data_of_2022.23_1.xlsx,2023/01,5,ok,84,Content ; 1.SMIs; 2.CPI_Mangsir; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Mangsir,True,True,True,True,True,True
+2023_01_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Five_Months_data_of_2022.23_3.xlsx,2023/01,5,ok,84,Content ; 1.SMIs; 2.CPI_Mangsir; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Mangsir,True,True,True,True,True,True
+2023_01_QEB_2022_October.xlsx,2023/01,,ok,109,Cover; Address; Contents; Notes; Table 1; Table 2,True,True,True,True,False,True
+2023_02_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Six_Months_data_of_2022.23.xlsx,2023/02,6,ok,84,Content ; 1.SMIs; 2.CPI_Poush; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Poush,True,True,True,True,True,True
+2023_02_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Six_Months_data_of_2022.23_1.xlsx,2023/02,6,ok,84,Content ; 1.SMIs; 2.CPI_Poush; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Poush,True,True,True,True,True,True
+2023_03_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Seven_Months_data_of_2022.23.xlsx,2023/03,7,ok,84,Content ; 1.SMIs; 2.CPI_Magh; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Magh,True,True,True,True,True,True
+2023_03_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Seven_Months_data_of_2022.23_3.xlsx,2023/03,7,ok,84,Content ; 1.SMIs; 2.CPI_Magh; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Magh,True,True,True,True,True,True
+2023_04_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Eight_Months_data_of_2022.23.xlsx,2023/04,8,ok,84,Content ; 1.SMIs; 2.CPI_Falgun; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Falgun,True,True,True,True,True,True
+2023_04_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Eight_Months_data_of_2022.23_4.xlsx,2023/04,8,ok,84,Content ; 1.SMIs; 2.CPI_Falgun; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Falgun,True,True,True,True,True,True
+2023_04_QEB_2023_JAN.xlsx,2023/04,,ok,109,Cover; Address; Contents; Notes; Table 1; Table 2,True,True,True,True,False,True
+2023_05_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Nine_Months_data_of_2022.23_5.xlsx,2023/05,9,ok,84,Content ; 1.SMIs; 2.CPI_Chaitra; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Chaitra,True,True,True,True,True,True
+2023_06_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Ten_Months_data_of_2022.23.xlsx,2023/06,10,ok,84,Content ; 1.SMIs; 2.CPI_Baisakh; 3.CPI Y-O-Y; 4.CPI_NEP & INDIA; 5.WPI_Baisakh,True,True,True,True,True,True
+2023_07_QEB_2023_APRIL.xlsx,2023/07,,ok,109,Cover; Address; Contents; Notes; Table 1; Table 2,True,True,True,True,False,True
+2023_08_Current_Macroeconomic_and_Financial_Situation._Tables._Based_on_Annual_data_of_2022.23_2.xlsx,2023/08,12,ok,94,Sheet1; Cover; 1.SMIs; 2.GDP at current price; 3.GDP at constant price; 4.GDP by Expenditure Catagory,True,True,True,True,True,True
+2023_10_QEB_2023_JULY.xlsx,2023/10,,ok,109,Cover; Address; Contents; Notes; Table 1; Table 2,True,True,True,True,False,True
+2023_11_Current_macroeconomic_situation_Tables_Based_on_Three_Months_data_of_2080.81_1.xlsx,2023/11,3,ok,84,Content ; 1.SMIs; 2.CPI_Asoj; 3.CPI (Y-O-Y); 4.CPI_NEP & INDIA; 5.WPI_Asoj,True,True,True,True,True,True
+2023_11_Current_macroeconomic_situation_Tables_Based_on_Three_Months_data_of_2080.81_2.xlsx,2023/11,3,ok,84,Content ; 1.SMIs; 2.CPI_Asoj; 3.CPI (Y-O-Y); 4.CPI_NEP & INDIA; 5.WPI_Asoj,True,True,True,True,True,True
+2023_12_Current_macroeconomic_situation_Tables_Based_on_Four_Months_data_of_2080.81_1.xlsx,2023/12,4,ok,84,Content ; 1.SMIs; 2.CPI_Kartik; 3.CPI (Y-O-Y); 4.CPI_NEP & INDIA; 5.WPI_Kartik,True,True,True,True,True,True
+2024_01_Macroeconomic_Indicators_of_Nepal_2023_December.xlsx,2024/01,,ok,25,"Cover; Map; Content; 1, 2; 3; 4",True,True,False,True,False,True
+2024_02_Current_macroeconomic_situation_Tables_Based_on_Six_Months_data_of_2080.81_3.xlsx,2024/02,6,ok,84,Content ; 1.SMIs; 2.CPI_Poush; 3.CPI (Y-O-Y); 4.CPI_NEP & INDIA; 5.WPI_Poush,True,True,True,True,True,True
+2024_03_Current_macroeconomic_situation_Tables_Based_on_Seven_Months_data_of_2080.81_1.xlsx,2024/03,7,ok,84,Content ; 1.SMIs; 2.CPI_Magh; 3.CPI (Y-O-Y); 4.CPI_NEP & INDIA; 5.WPI_Magh,True,True,True,True,True,True
+2024_03_QEB_2023_OCT.xlsx,2024/03,,ok,110,Cover; Address; Contents; Notes; Table 1; Table 2,True,True,True,True,False,True
+2024_04_Current_macroeconomic_situation_Tables_Based_on_Eight_Months_data_of_2080.81.xlsx,2024/04,8,ok,84,Content ; 1.SMIs; 2.CPI_Falgun; 3.CPI (Y-O-Y); 4.CPI_NEP & INDIA; 5.WPI_Falgun,True,True,True,True,True,True
+2024_05_Current_macroeconomic_situation_Tables_Based_on_Nine_Months_data_of_2080.81_1.xlsx,2024/05,9,ok,84,Content ; 1.SMIs; 2.CPI_Chaitra; 3.CPI (Y-O-Y); 4.CPI_NEP & INDIA; 5.WPI_Chaitra,True,True,True,True,True,True
+2024_06_Current_macroeconomic_situation_Tables_Based_on_Ten_Months_data_of_2080.81.xlsx,2024/06,10,ok,84,Content ; 1.SMIs; 2.CPI_Baisakh; 3.CPI (Y-O-Y); 4.CPI_NEP & INDIA; 5.WPI_Baisakh,True,True,True,True,True,True
+2024_07_Current_macroeconomic_situation_Tables_Based_on_Eleven_Months_data_of_2080.81.xlsx,2024/07,11,ok,84,Content ; 1.SMIs; 2.CPI_Jestha; 3.CPI (Y-O-Y); 4.CPI_NEP & INDIA; 5.WPI_Jestha,True,True,True,True,True,True
+2024_07_QEB_2024_JAN.xls,2024/07,,error: IndexError,,,,,,,,
+2024_08_Current_macroeconomic_situation_Tables_Based_on_Annual_data_of_2023.24.xlsx,2024/08,12,ok,94,Cover; Contents; 1.SMIs; 2.GDP at current price; 3.GDP at constant price; 4.GDP by Expenditure Category,True,True,True,True,True,True
+2024_08_Current_macroeconomic_situation_Tables_Based_on_Annual_data_of_2023.24_1.xlsx,2024/08,12,ok,94,Cover; Contents; 1.SMIs; 2.GDP at current price; 3.GDP at constant price; 4.GDP by Expenditure Category,True,True,True,True,True,True
+2024_09_Current_macroeconomic_situation_Tables_Based_on_One_Month_data_of_2081.82.xlsx,2024/09,1,ok,83,Content ; 1.SMIs; 2(A).CPI Saun (A); 2(B).CPI Saun (B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2024_09_Current_macroeconomic_situation_Tables_Based_on_One_Month_data_of_2081.82_1.xlsx,2024/09,1,ok,83,Content ; 1.SMIs; 2(A).CPI Saun (A); 2(B).CPI Saun (B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2024_09_Current_macroeconomic_situation_Tables_Based_on_One_Month_data_of_2081.82_3.xlsx,2024/09,1,ok,83,Content ; 1.SMIs; 2(A).CPI Saun (A); 2(B).CPI Saun (B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2024_09_QEB_2024_APR.xlsx,2024/09,,ok,121,Cover; Address; Contents; Notes; Table 1; Table 1 (a),True,True,True,True,False,True
+2024_10_Current_macroeconomic_situation_Tables_Based_on_Two_Months_data_of_2081.82.xlsx,2024/10,2,ok,85,Content ; 1.SMIs; 2A.CPI Bhadau(A); 2B.CPI Bhadau (B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2024_11_Current_macroeconomic_situation_Tables_Based_on_Three_Months_data_of_2081.82.xlsx,2024/11,3,ok,92,Content ; 1.SMIs; 2(A).CPI Asoj ; 2(B).CPI Asoj ; 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2024_11_Current_macroeconomic_situation_Tables_Based_on_Three_Months_data_of_2081.82_1.xlsx,2024/11,3,ok,92,Content ; 1.SMIs; 2(A).CPI Asoj ; 2(B).CPI Asoj ; 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2024_12_Current_macroeconomic_situation_Tables_Based_on_Four_Months_data_of_2081.82.xlsx,2024/12,4,ok,85,Content ; 1.SMIs; 2(A).CPI Kartik ; 2(B).CPI Kartik ; 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2024_12_QEB_2024_JULY.xlsx,2024/12,,ok,121,Cover; Address; Contents; Notes; Table 1; Table 1 (a),True,True,True,True,False,True
+2025_01_Current_macroeconomic_situation_Tables_Based_on_Five_Months_data_of_2081.82.xlsx,2025/01,5,ok,86,Content ; 1.SMIs; 2(A).CPI Mangsir(A); 2(B).CPI Mangsir(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_01_Current_macroeconomic_situation_Tables_Based_on_Five_Months_data_of_2081.82_1.xlsx,2025/01,5,ok,86,Content ; 1.SMIs; 2(A).CPI Mangsir(A); 2(B).CPI Mangsir(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_02_Current_macroeconomic_situation_Tables_Based_on_Six_Months_data_of_2081.82.xlsx,2025/02,6,ok,93,Content ; 1.SMIs; 2(A).CPI Poush(A); 2(B).CPI Poush(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_02_Current_macroeconomic_situation_Tables_Based_on_Six_Months_data_of_2081.82_3.xlsx,2025/02,6,ok,93,Content ; 1.SMIs; 2(A).CPI Poush(A); 2(B).CPI Poush(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_03_Current_macroeconomic_situation_Tables_Based_on_Seven_Months_data_of_2081.82.xlsx,2025/03,7,ok,86,Content ; 1.SMIs; 2(A).CPI Magh(A); 2(B).CPI Magh(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_03_Current_macroeconomic_situation_Tables_Based_on_Seven_Months_data_of_2081.82_2.xlsx,2025/03,7,ok,86,Content ; 1.SMIs; 2(A).CPI Magh(A); 2(B).CPI Magh(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_03_Current_macroeconomic_situation_Tables_Based_on_Seven_Months_data_of_2081.82_3.xlsx,2025/03,7,ok,86,Content ; 1.SMIs; 2(A).CPI Magh(A); 2(B).CPI Magh(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_03_Macroeconomic_Indicators_of_Nepal_2024_December.xlsx,2025/03,,ok,25,"Cover; Map; Content; 1, 2; 3; 4",True,True,False,True,False,True
+2025_03_QEB_2024_OCT.xlsx,2025/03,,ok,127,Cover; Address; Contents; Notes; Table 1; Table 1 (a),True,True,True,True,False,True
+2025_04_Current_macroeconomic_situation_Tables_Based_on_Eight_Months_data_of_2081.82.xlsx,2025/04,8,ok,93,Content ; 1.SMIs; 2(A).CPI Falgun(A); 2(B).CPI Falgun(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_04_Current_macroeconomic_situation_Tables_Based_on_Eight_Months_data_of_2081.82_1.xlsx,2025/04,8,ok,93,Content ; 1.SMIs; 2(A).CPI Falgun(A); 2(B).CPI Falgun(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_05_Current_macroeconomic_situation_Tables_Based_on_Nine_Months_data_of_2081.82.xlsx,2025/05,9,ok,93,Content ; 1.SMIs; 2(A).CPI Chaitra; 2(B).CPI Chaitra; 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_06_Current_macroeconomic_situation_Tables_Based_on_Ten_Months_data_of_2081.82.xlsx,2025/06,10,ok,93,Content ; 1.SMIs; 2(A).CPI Baisakh; 2(B).CPI Baisakh; 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_06_Current_macroeconomic_situation_Tables_Based_on_Ten_Months_data_of_2081.82_1.xlsx,2025/06,10,ok,93,Content ; 1.SMIs; 2(A).CPI Baisakh; 2(B).CPI Baisakh; 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_07_Current_macroeconomic_situation_Tables_Based_on_Eleven_Months_data_of_2081.82.xlsx,2025/07,11,ok,93,Content ; 1.SMIs; 2(A).CPI Jestha; 2(B).CPI Jestha; 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_08_Current_macroeconomic_situation_Tables_Based_on_Annual_data_of_2024.25_1.xlsx,2025/08,12,ok,104,Cover; Contents; 1.SMIs; 2.GDP at current price; 3.GDP at constant price; 4.GDP by Expenditure Category,True,True,True,True,True,True
+2025_08_Current_macroeconomic_situation_Tables_Based_on_Annual_data_of_2024.25_7.xlsx,2025/08,12,ok,104,Cover; Contents; 1.SMIs; 2.GDP at current price; 3.GDP at constant price; 4.GDP by Expenditure Category,True,True,True,True,True,True
+2025_09_Current_macroeconomic_situation_Tables_Based_on_One_Month_data_of_2082.83_1.xlsx,2025/09,1,ok,90,Content ; 1.SMIs; 2(A).CPI Saun(A); 2(B).CPI Saun(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_09_Current_macroeconomic_situation_Tables_Based_on_One_Month_data_of_2082.83_3.xlsx,2025/09,1,ok,90,Content ; 1.SMIs; 2(A).CPI Saun(A); 2(B).CPI Saun(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_09_Current_macroeconomic_situation_Tables_Based_on_One_Month_data_of_2082.83_4.xlsx,2025/09,1,ok,90,Content ; 1.SMIs; 2(A).CPI Saun(A); 2(B).CPI Saun(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_10_Current_macroeconomic_situation_Tables_Based_on_Two_Month_data_of_2082.83.xlsx,2025/10,2,ok,93,Content ; 1.SMIs; 2(A).CPI Bhadau(A); 2(B).CPI Bhadau(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_11_Current_macroeconomic_situation_Tables_Based_on_Three_Month_data_of_2082.83.xlsx,2025/11,3,ok,93,Content ; 1.SMIs; 2(A).CPI Asoj(A) ; 2(B).CPI Asoj(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_11_Current_macroeconomic_situation_Tables_Based_on_Three_Month_data_of_2082.83_2.xlsx,2025/11,3,ok,93,Content ; 1.SMIs; 2(A).CPI Asoj(A) ; 2(B).CPI Asoj(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2025_11_QEB_July_2025_IV_QTR.xlsx,2025/11,,ok,127,Cover; Address; Contents; Notes; Table 1; Table 1 (a),True,True,True,True,False,True
+2025_12_Current_macroeconomic_situation_Tables_Based_on_Four_Month_data_of_2082.83.xlsx,2025/12,4,ok,93,Content ; 1.SMIs; 2(A).CPI Kartik(A); 2(B).CPI Kartik(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2026_01_Current_macroeconomic_situation_Tables_Based_on_Five_Month_data_of_2082.83.xlsx,2026/01,5,ok,93,Content ; 1.SMIs; 2(A).CPI Mangsir(A); 2(B).CPI Mangsir(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2026_01_QEB_Oct_2082_I_QTR_final.xlsx,2026/01,,ok,127,Cover; Address; Contents; Notes; Table 1; Table 1 (a),True,True,True,True,False,True
+2026_02_Current_macroeconomic_situation_Tables_Based_on_Six_Month_data_of_2082.83.xlsx,2026/02,6,ok,93,Content ; 1.SMIs; 2(A).CPI Push(A); 2(B).CPI Push(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2026_02_Current_macroeconomic_situation_Tables_Based_on_Six_Month_data_of_2082.83_1.xlsx,2026/02,6,ok,93,Content ; 1.SMIs; 2(A).CPI Push(A); 2(B).CPI Push(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2026_02_Current_macroeconomic_situation_Tables_Based_on_Six_Month_data_of_2082.83_4.xlsx,2026/02,6,ok,93,Content ; 1.SMIs; 2(A).CPI Push(A); 2(B).CPI Push(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2026_02_Macroeconomic_Indicators_of_Nepal_2025_December.xlsx,2026/02,,ok,26,"Cover; Map; Content; 1, 2; 3; 4",True,True,False,True,False,True
+2026_03_Current_macroeconomic_situation_Tables_Based_on_Seven_Month_data_of_2082.83.xlsx,2026/03,7,ok,93,Content ; 1.SMIs; 2(A).CPI Magh(A); 2(B).CPI Magh(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2026_04_Current_macroeconomic_situation_Tables_Based_on_Eight_Month_data_of_2082.83_1.xlsx,2026/04,8,ok,93,Content ; 1.SMIs; 2(A).CPI Falgun(A); 2(B).CPI Falgun(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2026_04_QEB_Jan_2082_II_QTR_final__0000.xlsx,2026/04,,ok,127,Cover; Address; Contents; Notes; Table 1; Table 1 (a),True,True,True,True,False,True
+2026_06_Current_Macroeconomic_and_Financial_Situation_Tables_Based_on_Ten_months_data_of_2025.26_1_2.xlsx,2026/06,10,ok,93,Content ; 1.SMIs; 2(A).CPI Baisakh(A); 2(B).CPI Baisakh(B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2026_10_Current_macroeconomic_situation_Tables_Based_on_Two_Months_data_2083_84_1.xlsx,2026/10,2,ok,99,Content ; 1.SMIs; 2.CPI Bhadra (A); 2.CPI Bhadra (B); 3.CPI Province; 4.CPI Ecology,True,True,True,True,True,True
+2026_10_Macroeconomic_Indicators_of_Nepal_E2_80_93_Mid_July_2025_26.xlsx,2026/10,,ok,26,"Cover; Map; Content; 1, 2; 3; 4",True,True,False,True,False,True
+2026_10_QEB_2082_83_IV_QTR_final__0000.xlsx,2026/10,,ok,127,Cover; Address; Contents; Notes; Table 1; Table 1 (a),True,True,True,True,False,True

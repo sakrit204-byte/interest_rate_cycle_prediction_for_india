@@ -48,3 +48,23 @@ def block_bootstrap_ci(y: np.ndarray, pred: np.ndarray, block: int = 6, reps: in
             continue
         stats.append(balanced_accuracy_score(y[idx], pred[idx]))
     return float(np.percentile(stats, 2.5)), float(np.percentile(stats, 97.5))
+
+
+def diebold_mariano(loss_a: np.ndarray, loss_b: np.ndarray, horizon: int = 1) -> tuple[float, float]:
+    """Diebold Mariano test of equal predictive accuracy with the Harvey, Leybourne and
+    Newbold small sample correction. Negative statistic: model a has lower loss.
+
+    Returns (statistic, two sided p value from Student t with n - 1 degrees of freedom).
+    """
+    from scipy import stats
+    d = np.asarray(loss_a, float) - np.asarray(loss_b, float)
+    n = len(d)
+    mean = d.mean()
+    gamma = [np.mean((d[k:] - mean) * (d[:n - k] - mean)) for k in range(horizon)]
+    var = (gamma[0] + 2 * sum(gamma[1:])) / n
+    if var <= 0:
+        return float("nan"), float("nan")
+    dm = mean / np.sqrt(var)
+    correction = np.sqrt((n + 1 - 2 * horizon + horizon * (horizon - 1) / n) / n)
+    stat = dm * correction
+    return float(stat), float(2 * stats.t.sf(abs(stat), df=n - 1))

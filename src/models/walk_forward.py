@@ -11,7 +11,7 @@ the one standard error rule, and a shallow random forest with fixed settings.
 
 Outputs: reports/tables/walk_forward_train_metrics.csv and
 reports/tables/walk_forward_train_predictions.csv
-Usage: python -m src.models.walk_forward
+Usage: python -m src.models.walk_forward [--projections]
 """
 
 from __future__ import annotations
@@ -29,8 +29,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from statsmodels.miscmodels.ordinal_model import OrderedModel
 
-from src.evaluation.metrics import CLASSES, block_bootstrap_ci, log_loss, summary
-from src.features.build_india_features import FEATURES
+from src.evaluation.metrics import CLASSES, block_bootstrap_ci, diebold_mariano, log_loss, summary
+from src.features.build_india_features import FEATURES, PROJECTION_FEATURES
 
 ROOT = Path(__file__).resolve().parents[2]
 FEATURE_FILE = ROOT / "data" / "processed" / "india" / "india_features_cutoff7.csv"
@@ -43,10 +43,10 @@ THRESHOLD_GRID = np.round(np.arange(0.0, 2.01, 0.25), 2)
 SMOOTH = 1.0            # additive smoothing for frequency based probabilities
 
 
-def load_training() -> pd.DataFrame:
+def load_training(complete_col: str = "complete") -> pd.DataFrame:
     blind_start = pd.Timestamp(yaml.safe_load(CONFIG.read_text())["blind_window_start"])
     f = pd.read_csv(FEATURE_FILE, parse_dates=["date", "cutoff"])
-    train = f[(f["date"] < blind_start) & f["complete"]].reset_index(drop=True)
+    train = f[(f["date"] < blind_start) & f[complete_col]].reset_index(drop=True)
     if train["blind_window"].any():
         raise RuntimeError("blind window rows reached the training evaluation")
     return train
@@ -114,13 +114,13 @@ def logistic_fit(xtr: np.ndarray, ytr: np.ndarray, c: float) -> LogisticRegressi
     return LogisticRegression(C=c, max_iter=5000).fit(xtr, ytr)
 
 
-def choose_c(tr: pd.DataFrame) -> float:
+def choose_c(tr: pd.DataFrame, features: list[str] = FEATURES) -> float:
     """Inner walk forward over the last INNER_TEST training decisions, one standard error rule."""
     losses = {c: [] for c in C_GRID}
     for i in range(len(tr) - INNER_TEST, len(tr)):
         inner = tr.iloc[:i]
         inner = inner[inner["date"] <= tr["cutoff"].iloc[i]]
-        xtr, xte = standardize(inner, tr.iloc[[i]])
+        xtr, xte = standardize(inner, tr.iloc[[i]], features)
         for c in C_GRID:
             m = logistic_fit(xtr, inner["y"].to_numpy(), c)
             p = full_proba(m.classes_, m.predict_proba(xte))
@@ -131,9 +131,9 @@ def choose_c(tr: pd.DataFrame) -> float:
     return min(c for c in C_GRID if mean[c] <= limit)  # strongest regularization within 1 SE
 
 
-def logistic(tr: pd.DataFrame, te: pd.Series) -> np.ndarray:
-    c = choose_c(tr)
-    xtr, xte = standardize(tr, te.to_frame().T)
+def logistic(tr: pd.DataFrame, te: pd.Series, features: list[str] = FEATURES) -> np.ndarray:
+    c = choose_c(tr, features)
+    xtr, xte = standardize(tr, te.to_frame().T, features)
     m = logistic_fit(xtr, tr["y"].to_numpy(), c)
     return full_proba(m.classes_, m.predict_proba(xte))[0]
 
@@ -155,13 +155,25 @@ MODELS = {
 }
 
 
-def run(data: pd.DataFrame) -> pd.DataFrame:
+# Model 2 (D025), declared before its first run: the Taylor type ordered probit plus the
+# RBI projection and its latest revision, against the same baselines on identical rows.
+HYBRID_FEATURES = TAYLOR_FEATURES + PROJECTION_FEATURES
+MODELS_PROJECTION = {
+    "majority": majority,
+    "persistence": persistence,
+    "ordered_probit_taylor": lambda tr, te: ordered_probit(tr, te, TAYLOR_FEATURES),
+    "ordered_probit_hybrid": lambda tr, te: ordered_probit(tr, te, HYBRID_FEATURES),
+    "logistic_l2_hybrid": lambda tr, te: logistic(tr, te, HYBRID_FEATURES),
+}
+
+
+def run(data: pd.DataFrame, models: dict = MODELS) -> pd.DataFrame:
     rows = []
     for i in range(MIN_TRAIN, len(data)):
         te = data.iloc[i]
         tr = data.iloc[:i]
         tr = tr[tr["date"] <= te["cutoff"]]  # outcomes known by the cutoff only
-        for name, model in MODELS.items():
+        for name, model in models.items():
             try:
                 p = np.asarray(model(tr, te), float)
                 p = p / p.sum()
@@ -188,7 +200,40 @@ def metrics_table(pred: pd.DataFrame, by: str | None = None) -> pd.DataFrame:
     return pd.DataFrame(out)
 
 
+def dm_table(pred: pd.DataFrame, pairs: list[tuple[str, str]]) -> pd.DataFrame:
+    """Diebold Mariano tests on per decision log loss for the given model pairs."""
+    out = []
+    for a, b in pairs:
+        ga = pred[pred["model"] == a].set_index("date")
+        gb = pred[pred["model"] == b].set_index("date").loc[ga.index]
+        la = log_loss(ga["y"].to_numpy(), ga[["p_cut", "p_hold", "p_hike"]].to_numpy())
+        lb = log_loss(gb["y"].to_numpy(), gb[["p_cut", "p_hold", "p_hike"]].to_numpy())
+        stat, p = diebold_mariano(la, lb)
+        out.append({"model_a": a, "model_b": b, "mean_loss_a": la.mean(), "mean_loss_b": lb.mean(),
+                    "dm_stat_hln": stat, "p_value": p, "n": len(la)})
+    return pd.DataFrame(out)
+
+
+def main_projection() -> int:
+    data = load_training("complete_projection")
+    pred = run(data, MODELS_PROJECTION)
+    table = metrics_table(pred)
+    dm = dm_table(pred, [("ordered_probit_hybrid", "persistence"), ("ordered_probit_hybrid", "ordered_probit_taylor"),
+                         ("ordered_probit_hybrid", "majority"), ("logistic_l2_hybrid", "ordered_probit_hybrid")])
+    TABLES.mkdir(parents=True, exist_ok=True)
+    pred.round(4).to_csv(TABLES / "walk_forward_train_projection_predictions.csv", index=False)
+    table.round(4).to_csv(TABLES / "walk_forward_train_projection_metrics.csv", index=False)
+    dm.round(4).to_csv(TABLES / "walk_forward_train_projection_dm.csv", index=False)
+    print(f"training decisions {len(data)}; test decisions {len(data) - MIN_TRAIN} "
+          f"({data['date'].iloc[MIN_TRAIN].date()} to {data['date'].iloc[-1].date()})")
+    print(table.round(3).to_string(index=False))
+    print(dm.round(3).to_string(index=False))
+    return 0
+
+
 def main() -> int:
+    if "--projections" in sys.argv:
+        return main_projection()
     data = load_training()
     pred = run(data)
     pred["period"] = np.where(pd.to_datetime(pred["date"]) < pd.Timestamp("2014-01-21"),
