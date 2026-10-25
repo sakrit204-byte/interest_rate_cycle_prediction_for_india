@@ -267,4 +267,4 @@ The open questions below were not yet answered when work continued, so working d
 | Manual downloads | Automated downloads where sites allow them; files you download yourself otherwise |
 | Second coder for political events | To be named; until then, a documented self audit of a random sample after a delay |
 
-New blocker found on 25 October 2026: `www.nrb.org.np` and `nrb.org.np` could not be reached from this machine (connection timed out), while FRED and RBI responded normally. Nepal data may need to be downloaded by you from a browser that can reach NRB and placed in `data/raw/nepal/`, or fetched later if the outage is temporary.
+Resolved workaround, 25 October 2026: the NRB site is down (reported security incident). Official NRB files are now retrieved from Internet Archive byte copies with a full provenance manifest; see `docs/data_access.md` and decision D012.

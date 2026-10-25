@@ -1,0 +1,3 @@
+# Pinned to versions validated on 25 October 2026. Full environment pinned in Step 3.
+requests==2.32.5
+pytest==8.2.2
