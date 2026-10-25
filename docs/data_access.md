@@ -75,3 +75,22 @@ The NRB server is expected to stay down for some days, so Nepal data now rests o
 * IMF values are the latest revised figures, not the versions published at each decision date. They are used for cross checks and for the long corridor history; release timing for features comes from the NRB monthly tables where available.
 
 **Other alternates kept in reserve:** World Bank WDI and ADB Key Indicators (annual context), FRED (global series). News reports of NRB announcements may confirm decision dates but are never the source of a rate value.
+
+## MoSPI open API for India prices and activity (25 October 2026)
+
+The CPI user manual describes a signup and token route, but the newer eSankhyiki endpoints on the same host are open and return complete data in pages of at most 200 records. No account was created. Endpoints and filter codes were found by testing each parameter and checking the reported record totals:
+
+| Query | Endpoint and filters | Coverage | Records |
+|---|---|---|---|
+| CPI, All India, base 2012 | `cpi/getCPIIndex`, `base_year=2012`, `state_code=99` | January 2011 to December 2025 | 15,150 |
+| WPI headline, base 2011/12 | `wpi/getWpiRecords`, `base_year=2011-12`, `major_group_code=1000000000` | 2012 to April 2026 | 169 |
+| WPI headline, bases 2004/05 and 1993/94 | same endpoint, `major_group_code=1` | 1994 to 2017 | 147 and 197 |
+| IIP general, four bases | `iip/getIIPMonthly`, `type=General` | 1994 to August 2026 | 41 to 207 per base |
+
+Findings:
+
+1. The server only supports legacy TLS renegotiation, which OpenSSL 3 refuses by default. The ingester enables that single option for this host; certificate and host name checks stay on.
+2. January to May 2013 appear twice in the CPI data with two different index values. MoSPI computed the 2013 rates on one set and the 2014 rates on the other, so published rates are used where present (D020).
+3. April and May 2020 are flagged as imputed (status F star) and carry no published rate; the feature table keeps an imputation flag.
+4. The CPI 2024=100 series (from January 2026) was not found under any tested parameter. The IMF India CPI yoy fills January to July 2026 (D018). Across 2012 to 2025 it differs from MoSPI by 0.06 pp on average; individual months in 2012 and 2013 differ by up to 0.7 pp, reflecting revisions, and no decision uses CPI from those months except November 2013 (gap 0.04 pp).
+5. Values are the latest revised figures, not first releases. WPI in particular is revised two months after its provisional release. This is a stated limitation; a first release vintage is not available from this API.

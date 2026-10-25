@@ -1,0 +1,9 @@
+name,endpoint,params,retrieved_at_utc,local_path,records,expected_records,bytes,sha256,status
+cpi_2012_all_india,cpi/getCPIIndex,base_year=2012&state_code=99,2026-10-25T12:22:00+00:00,data/raw/india/mospi/cpi_2012_all_india_20261025.csv,15150,15150,1282736,0bdb2228f1c1fa5760ffaada16c3aee222563747f1d76e008588156ad365646b,ok
+wpi_2011_12_headline,wpi/getWpiRecords,base_year=2011-12&major_group_code=1000000000,2026-10-25T12:22:59+00:00,data/raw/india/mospi/wpi_2011_12_headline_20261025.csv,169,169,9022,be564f41e155190467014137acf448202e4ab2a802409782199f81735603c318,ok
+wpi_2004_05_headline,wpi/getWpiRecords,base_year=2004-05&major_group_code=1,2026-10-25T12:23:00+00:00,data/raw/india/mospi/wpi_2004_05_headline_20261025.csv,147,147,7898,92bfb9609ec8b4d99516f33f9c09ad40399a01873aa8b0a103ccdc72cc662258,ok
+wpi_1993_94_headline,wpi/getWpiRecords,base_year=1993-94&major_group_code=1,2026-10-25T12:23:00+00:00,data/raw/india/mospi/wpi_1993_94_headline_20261025.csv,197,197,10546,7e3ce63a84e3c3c893205cd7c55060bfa7f501f0478a1c9332970f6c8a239efb,ok
+iip_2022_23_general,iip/getIIPMonthly,base_year=2022-23&type=General,2026-10-25T12:23:01+00:00,data/raw/india/mospi/iip_2022_23_general_20261025.csv,41,41,2036,03fc5ce9584c8f53bcdc3fbeedeb8282615394b26db309a0f7bb6d46b66fa8ab,ok
+iip_2011_12_general,iip/getIIPMonthly,base_year=2011-12&type=General,2026-10-25T12:23:02+00:00,data/raw/india/mospi/iip_2011_12_general_20261025.csv,168,168,8185,69fc2b09aa47eb451d99347f081ac7b179777f94827267fbe88df83bc37ef480,ok
+iip_2004_05_general,iip/getIIPMonthly,base_year=2004-05&type=General,2026-10-25T12:23:02+00:00,data/raw/india/mospi/iip_2004_05_general_20261025.csv,144,144,7065,4b77ad9e560d2436038fa33391307e239510b893f803639994be4fb0854ce50b,ok
+iip_1993_94_general,iip/getIIPMonthly,base_year=1993-94&type=General,2026-10-25T12:23:03+00:00,data/raw/india/mospi/iip_1993_94_general_20261025.csv,207,207,10041,186447438bc1ee79e5be8b10b4e950a71f375f683a1649e73dd2aeaa758f6158,ok

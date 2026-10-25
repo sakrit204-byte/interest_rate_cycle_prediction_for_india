@@ -41,3 +41,6 @@ This log explains every variable that was considered, why it is used, and why it
 | 25 Oct 2026 | IN029, IN030 | Added: RBI published inflation (core) and growth (candidate) projections | Literature shows RBI responds to its own projections |
 | 25 Oct 2026 | IN031 | Added as pending: monetary policy uncertainty index | Found in screening; data not located |
 | 25 Oct 2026 | IN028 | Source URL and coverage filled in | Lakdawala and Sengupta dataset located |
+| 25 Oct 2026 | IN007, IN008, IN009, IN011, IN015 | Coverage verified from the MoSPI open API; WPI and IIP sources moved to that API | No account needed after all; see docs/data_access.md |
+| 25 Oct 2026 | Feature set v1 | First India feature set fixed at ten features: targeted inflation, its three month change, IIP growth (three month average), repo level, real rate, six month repo change, six month US policy rate change, previous decision, FIT and MPC regime indicators | Realized inflation only, as agreed for the first run; small budget for 120 training decisions (about one feature per twelve decisions) |
+| 25 Oct 2026 | IN008, IN009, IN010 | Left out of feature set v1 | Collinear with headline; held for a later robustness model to keep the budget |
