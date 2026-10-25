@@ -13,7 +13,8 @@ Version 0.1, 25 October 2026. This protocol is written before any data is analys
 
 ## Hypotheses (stated before analysis)
 
-* H1: For India, an ordered or regularized logistic model using the inflation gap, an activity gap and lagged policy beats persistence and majority class baselines on balanced accuracy in the blind window.
+* H1: For India, an ordered probit with an inaction band using the RBI projected inflation gap, the realized inflation gap, an activity gap and lagged policy beats persistence and majority class baselines on balanced accuracy in the blind window.
+* H1b: Machine learning models (regularized logistic regression, random forest) do not significantly beat that ordered probit in the blind window. This is stated as the null to be rejected; the Turkish evidence (CBRT study 2026) gives reason to expect it may hold.
 * H2: Adding political event indicators does not significantly improve out of sample log loss for India. This is stated as the null to be rejected, not as a belief.
 * H3: The lagged RBI repo change improves out of sample prediction of the Nepali interbank rate change beyond Nepali domestic variables.
 * H4: Pass through from Indian to Nepali short rates is incomplete and varies with Nepali liquidity conditions.

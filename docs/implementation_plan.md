@@ -30,10 +30,11 @@ The India arm is practical at zero cost. The Nepal arm is practical for descript
 * The RBI has used the repo rate under the Liquidity Adjustment Facility as its signal rate since the early 2000s. The Monetary Policy Committee (MPC) began in October 2016 and normally meets six times a year.
 * Expected decision count: roughly 60 MPC decisions from October 2016 to October 2026, plus pre MPC policy reviews and several inter meeting moves from 2001 to 2016. A rough total of 120 to 150 dated decisions is plausible but must be counted from RBI press releases in Step 2.
 * Class imbalance is the central risk. Holds dominate; hikes and cuts arrive in clusters. Clusters mean consecutive decisions are not independent, so the effective sample size is much smaller than the raw count.
-* Structural break: flexible inflation targeting was formally adopted in 2016. Pre 2016 decisions were made under a multiple indicator approach. Training on both periods without a regime indicator risks learning a reaction function the RBI no longer uses.
+* Structural break: flexible inflation targeting was adopted through the Monetary Policy Framework Agreement of 20 February 2015 and given a statutory basis by the 2016 amendment of the RBI Act, which also created the MPC (source: Garga and Sengupta 2026, Section 2). Decisions before that were made under a multiple indicator approach dating from April 1998. Training on both periods without a regime indicator risks learning a reaction function the RBI no longer uses.
+* Forward looking behaviour: Garga and Sengupta (2026) find that backward looking Taylor rules show no robust response to realized inflation after inflation targeting, while the RBI's own published inflation projections do show a significant response, and a hybrid rule fits best. The RBI's projections, published in each policy statement, are therefore a core feature. They are public at the decision date by construction, which also avoids revised data problems.
 * Statistical break inside the test window: MoSPI released a new CPI series with base 2024 = 100 in February 2026, replacing base 2012 = 100, with a linking factor. Any inflation feature spanning 2026 must use the linked series and document the splice.
 * Free data looks adequate: RBI DBIE, MoSPI eSankhyiki (which advertises API access), FRED (which redistributes the India Economic Policy Uncertainty index and several Indian series), IMF and World Bank portals.
-* A public RBI monetary policy shock series built from high frequency market data and narrative analysis exists (Lakdawala and Sengupta, sample reported as September 2003 to December 2020). Its access terms and exact construction must be verified before use. It ends before the test window, which matters for the causal arm but not for the prediction arm.
+* A public RBI monetary policy shock series exists: Lakdawala and Sengupta (2021), "Measuring monetary policy shocks in emerging economies: Evidence from India", IGIDR Working Paper 2021 021. Shocks come from daily changes in OIS rates from one month to one year around 115 RBI announcement dates, September 2003 to December 2020, cross checked against a narrative reading of statements and press coverage. The authors state the shocks and dates are public; licence terms are still to be checked. The series ends before the test window, which matters for the causal arm but not for the prediction arm. Its list of announcement dates also gives an independent check on our decision list.
 
 ### 2.3 Nepal
 
@@ -112,7 +113,8 @@ Small samples, clustered decisions and regime changes make overfitting the domin
 | Walk forward validation | Inside the training period, models are fitted on an expanding window and evaluated on the next block of decisions. No random shuffling ever. |
 | Embargo gap | A gap of one decision between training and validation folds so autocorrelated features do not leak across the boundary. |
 | Nested selection | Hyperparameters are chosen in an inner walk forward loop; the outer loop only reports. |
-| Small feature budget | A core set of about six to eight economically motivated features, fixed before modelling (inflation gap, output or IIP gap, lagged rate change, call rate spread, USD/INR change, oil price change, global rate, expectations). Extra features must earn their place in an ablation. |
+| Small feature budget | A core set of about six to eight economically motivated features, fixed before modelling (RBI projected inflation gap, realized inflation gap, output or IIP gap, lagged rate change, call rate spread, USD/INR change, oil price change, global rate). Extra features must earn their place in an ablation. |
+| Established benchmark model | An ordered probit with an inaction band (the policy rate moves only when the desired change crosses a threshold) is the primary interpretable model, following the ordered choice literature on central bank decisions (Kim for Korea; Chevapatrakul, Kim and Mizen for the UK; Sirchenko for the Federal Reserve, all to be read in full). Machine learning models must beat it, not only the naive baselines. |
 | Regularization | L2 and elastic net logistic regression; ordered logit with shrinkage; random forest limited in depth and leaf size. |
 | One standard error rule | Among models within one standard error of the best validation score, the simplest is chosen. |
 | Learning curves | Training versus validation score as training size grows. A large persistent gap is overfitting. |
@@ -144,7 +146,7 @@ Small samples, clustered decisions and regime changes make overfitting the domin
 The suggestion engine produces, for every historical decision date, a suggested direction (hike, hold, cut), a confidence level, and a short list of reason codes. It combines three independent sources so that disagreement is visible.
 
 1. **Learned reaction function (positive).** The best validated classifier gives probabilities for hike, hold and cut. This answers "what would the RBI or NRB of the training period have done?"
-2. **Estimated policy rule (positive, interpretable).** An inertial Taylor type rule estimated on training data: target rate equals a smoothing term times the lagged rate, plus responses to the inflation gap from target and the output gap, plus, for Nepal, the Indian policy rate and reserve adequacy as peg relevant terms. The gap between the prescribed rate and the current rate, passed through a deadband of 12.5 basis points either side, gives the direction.
+2. **Estimated policy rule (positive, interpretable).** An inertial hybrid Taylor type rule estimated on training data: target rate equals a smoothing term times the lagged rate, plus responses to the RBI projected inflation gap, the realized inflation gap and the output gap, plus, for Nepal, the Indian policy rate and reserve adequacy as peg relevant terms. The gap between the prescribed rate and the current rate, passed through a deadband of 12.5 basis points either side, gives the direction.
 3. **Textbook benchmark rule (normative).** A standard Taylor rule with conventional weights and India's 4 percent CPI target. It is reported as a reference point, never as the "correct" policy.
 
 Combination rule (fixed before unblinding): the suggestion is the classifier's most probable class when its top probability exceeds 0.5 and the estimated rule agrees; otherwise the engine reports "uncertain" with both signals shown. Reason codes come from the sign and size of each rule term and from held out permutation importance.
@@ -175,7 +177,7 @@ The full ledger lives in `data/source_registry/variable_registry.csv` and is exp
 | Policy instruments | Repo, reverse repo, SDF, MSF, CRR, stance | Policy rate, bank rate, deposit collection rate, CRR | Target and lagged policy |
 | Money markets | Weighted call rate, TREPS, 91 day T bill | Interbank rate, T bill rates | Operating target and market expectations |
 | Prices | CPI headline, food, fuel, core, WPI | CPI headline, food, non food, India CPI | Inflation targeting and imported inflation |
-| Expectations | RBI household inflation expectations survey, professional forecasters survey | None regular; documented gap | Forward looking policy |
+| Expectations | RBI published inflation and growth projections in each policy statement, household inflation expectations survey, professional forecasters survey | None regular; documented gap | Forward looking policy |
 | Activity | GDP, IIP, PMI (access to check), GST collections, auto sales | GDP (annual, some quarterly), production proxies | Output gap |
 | Credit and banking | Bank credit growth, deposit growth, NPAs | Private sector credit, deposits, credit to deposit ratio | Transmission and financial stability |
 | External | USD/INR, reserves, current account, FPI flows | INR peg rate, reserves in months of imports, remittances, imports from India, BOP | Exchange rate pressure and peg sustainability |
@@ -253,10 +255,16 @@ Acceptance criteria:
 * The novelty assessment names the closest existing studies and states what, if anything, this project adds.
 * No citation in any document lacks a source link or full reference.
 
-## 12. Blockers needing user input
+## 12. Blockers and working defaults
 
-1. Course scope: is the deliverable a class project report, or are you aiming for a journal submission? This decides how far Steps 10 and 14 go.
-2. Nepal target: do you accept the monthly interbank rate and hand coded stance index as the Nepal training target, given the policy rate era is too short?
-3. Prediction cutoff: is seven days before the meeting acceptable as the main design?
-4. Manual downloads: some RBI DBIE and NRB tables may need to be downloaded through a browser. Will you download files when the pipeline asks, or should the browser automation be used?
-5. Political event coding: who will do the second coder audit of event classifications?
+The open questions below were not yet answered when work continued, so working defaults were adopted (decision log entry D008). Each can be overridden.
+
+| Question | Working default |
+|---|---|
+| Class report or journal submission? | Class report built to publication standard; Steps 10 and 14 kept but scaled to the evidence |
+| Nepal training target | Monthly interbank rate change plus hand coded stance index. NRB describes the weighted average interbank rate as its operating target in the 2025/26 Monetary Policy (per search excerpt; to verify in the document), which supports this choice |
+| Prediction cutoff | Seven days before announcement, stress tested at 1 and 30 days |
+| Manual downloads | Automated downloads where sites allow them; files you download yourself otherwise |
+| Second coder for political events | To be named; until then, a documented self audit of a random sample after a delay |
+
+New blocker found on 25 October 2026: `www.nrb.org.np` and `nrb.org.np` could not be reached from this machine (connection timed out), while FRED and RBI responded normally. Nepal data may need to be downloaded by you from a browser that can reach NRB and placed in `data/raw/nepal/`, or fetched later if the outage is temporary.

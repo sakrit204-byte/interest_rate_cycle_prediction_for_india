@@ -35,3 +35,19 @@ Status: screening started 25 October 2026. Nothing below is yet a reviewed findi
 
 * No study was found during screening that estimates how RBI rate changes pass through to NRB policy or Nepali market rates. This is a candidate contribution, not a claimed one, until strands D and E are searched systematically.
 * No study was found during screening that applies ML classification to RBI MPC decisions with a sealed out of sample test. A master's thesis forecasting central bank rates with sentiment features exists and must be read.
+
+## Screening round 2 (25 October 2026)
+
+Additional searches were run for strands A, B, D, E, F, H and evaluation methods. New sources are rows L011 to L024 in `docs/literature_matrix.csv`.
+
+Reading status: Garga and Sengupta (2026) was partially read from the PDF (abstract, introduction, background, forward looking specification and data construction). Lakdawala and Sengupta (2021) was read through the authors' Ideas for India summary; the working paper itself was not yet read.
+
+Findings that change the design:
+
+* The RBI's own published inflation projections explain post 2015 decisions better than realized inflation (Garga and Sengupta 2026). These projections become a core feature, and the estimated rule becomes a hybrid rule.
+* Ordered choice models with inaction bands are the established benchmark for decision prediction. The primary interpretable model is now an ordered probit, and ML models must beat it.
+* The Lakdawala and Sengupta shock series and announcement dates are public (https://sites.google.com/view/rasesite/public-goods/data-on-monetary-policy-shocks-in-india). Licence terms are still unchecked.
+* For forecast comparisons, the Diebold Mariano test can be badly sized in small samples. The Harvey, Leybourne and Newbold correction or fixed b methods are needed, and the Giacomini White test suits rolling windows.
+* For RBI decisions around elections, only press commentary was found. That is a gap, or a sign that strand F needs a better search.
+
+Access problem: the NRB website could not be reached from this machine on 25 October 2026, so NRB documents in the matrix remain unread.

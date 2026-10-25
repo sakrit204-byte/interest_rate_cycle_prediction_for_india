@@ -20,7 +20,7 @@ This log explains every variable that was considered, why it is used, and why it
 
 ## Why the core set looks the way it does
 
-* **India**: CPI headline inflation (target variable of the inflation targeting framework), IIP (only timely monthly activity proxy), the call rate (operating target), USD/INR (external pressure), Brent (imported inflation), and the lagged repo change (policy inertia). GDP is a candidate rather than core because it arrives with a long lag and is revised.
+* **India**: the RBI published inflation projection and CPI headline inflation (the RBI responds to its projections more clearly than to realized inflation since 2015), IIP (only timely monthly activity proxy), the call rate (operating target), USD/INR (external pressure), Brent (imported inflation), and the lagged repo change (policy inertia). GDP is a candidate rather than core because it arrives with a long lag and is revised.
 * **Nepal**: CPI, private credit growth, reserves, remittances, the interbank rate and the peg rate. The policy rate is the target but too short for training, so the interbank rate and a stance index carry the training load.
 * **Cross border**: the RBI repo change and the India to Nepal interest differential are core because RQ3 and RQ4 cannot be answered without them.
 
@@ -38,3 +38,6 @@ This log explains every variable that was considered, why it is used, and why it
 | Date | Variable | Change | Reason |
 |---|---|---|---|
 | 25 Oct 2026 | All | Ledger created | Initial planning; no coverage verified yet |
+| 25 Oct 2026 | IN029, IN030 | Added: RBI published inflation (core) and growth (candidate) projections | Literature shows RBI responds to its own projections |
+| 25 Oct 2026 | IN031 | Added as pending: monetary policy uncertainty index | Found in screening; data not located |
+| 25 Oct 2026 | IN028 | Source URL and coverage filled in | Lakdawala and Sengupta dataset located |
