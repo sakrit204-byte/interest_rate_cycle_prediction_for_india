@@ -1,3 +1,15 @@
-# Pinned to versions validated on 25 October 2026. Full environment pinned in Step 3.
-requests==2.32.5
-pytest==8.2.2
+# Direct dependencies. Exact versions of everything installed are in requirements.lock.txt
+# (Python 3.11.9, validated 25 October 2026). Install with: pip install -r requirements.lock.txt
+pandas==3.1.0
+numpy==2.4.6
+scipy==1.17.1
+scikit-learn==1.9.1
+statsmodels==0.15.0
+matplotlib==3.11.2
+openpyxl==3.1.5
+xlrd==2.0.2
+pymupdf==2.0
+pyarrow==26.0.0
+requests==2.34.2
+PyYAML==6.0.3
+pytest==9.1.1

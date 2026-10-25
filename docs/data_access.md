@@ -40,3 +40,16 @@ Records how each source was reached, problems met, and the workaround used.
 * Junk captures found and handled: 19 archived "Excel" files were actually a captive portal login redirect page stored by a crawler. The downloader now checks file signatures (PDF, XLSX, XLS) and falls back to older captures of the same URL. All 19 were recovered from earlier valid captures. The manifest keeps the rejected attempts as `invalid_content` rows; it is append only.
 * The single unrecovered file is a third upload (`...2081.82-2.xlsx`) of the three month 2081/82 tables; two other uploads of the same release were saved.
 * Next: Step 2 parses the monetary policy documents into a dated NRB decision table and inventories which months the macro tables cover.
+
+## Truncated captures (25 October 2026)
+
+* Some archived files were cut off by the crawler, often at exactly 1,048,576 bytes (1 MiB). They start with a valid file signature, so the first check passed them.
+* The downloader now also checks completeness: a PDF must end with its end of file marker, and an XLSX must be a readable zip archive. Failed files are deleted, flagged as `invalid_content` in the manifest, and retried from older captures on the next run.
+* The revalidation pass flagged 54 files: 25 policy documents (including the English annual policies for 2008/09, 2009/10, 2011/12, 2012/13, 2013/14, 2014/15 and 2023/24), 5 circulars and 24 table workbooks.
+* The retry run was stopped by Claude Code because the computer ran low on memory, not because of an error. It resumes where it stopped: `python -m src.ingestion.nrb_archive`.
+
+## RBI and BIS sources (25 October 2026)
+
+* **RBI monetary policy statement archive:** `https://www.rbi.org.in/Scripts/Annualpolicy.aspx`. The year list is a form submission, reproduced by `src/ingestion/rbi_policy_index.py` with a two second pause between requests. 26 fiscal year pages saved; manifest `data/source_registry/manifests/rbi_policy_index_manifest.csv`.
+* **BIS central bank policy rates (WS_CBPOL):** `https://stats.bis.org/api/v1/data/WS_CBPOL/D.IN`. Daily RBI repo rate from 3 April 2001; the US series is also saved for the global rate feature. Nepal is not covered. Manifest `data/source_registry/manifests/bis_manifest.csv`.
+* The Lakdawala and Sengupta dataset page (`sites.google.com/view/rasesite/...`) returned HTTP 404 on 25 October 2026. The paper was published in the Journal of Money, Credit and Banking, volume 57, issue 2 to 3 (2025), pages 407 to 437, whose replication archive is the next place to look.

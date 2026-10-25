@@ -8,8 +8,10 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import io
 import re
 import time
+import zipfile
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -125,6 +127,26 @@ def has_expected_signature(content: bytes, path: str) -> bool:
     return True if expected is None else content.startswith(expected)
 
 
+def is_complete(content: bytes, path: str) -> bool:
+    """Signature check plus a truncation check.
+
+    Some captures were cut off by the crawler (often at exactly 1 MiB), so a PDF must
+    carry an end of file marker near its end and an XLSX must be a readable zip archive.
+    """
+    if not has_expected_signature(content, path):
+        return False
+    suffix = Path(urlsplit(path).path).suffix.lower()
+    if suffix == ".pdf":
+        return b"%%EOF" in content[-2048:]
+    if content.startswith(b"PK\x03\x04"):
+        try:
+            with zipfile.ZipFile(io.BytesIO(content)) as zf:
+                return zf.testzip() is None
+        except zipfile.BadZipFile:
+            return False
+    return True
+
+
 def local_name(cap: Capture) -> str:
     """Archive path below /uploads/ flattened into one file name, so names stay unique and traceable."""
     path = urlsplit(cap.original).path
@@ -164,7 +186,7 @@ def download(
             row.update(wayback_timestamp=current.timestamp, wayback_url=url)
             content, info = _fetch(session, url, retries, pause_seconds)
             row.update(retrieved_at_utc=datetime.now(timezone.utc).isoformat(timespec="seconds"), **info)
-            if content is not None and has_expected_signature(content, current.original):
+            if content is not None and is_complete(content, current.original):
                 target.write_bytes(content)
                 row.update(bytes=len(content), sha256=hashlib.sha256(content).hexdigest(), status="ok")
                 break
@@ -197,8 +219,8 @@ def revalidate(manifest_path: Path, path_root: Path | None = None) -> list[str]:
         path = Path(row["local_path"])
         if path_root and not path.is_absolute():
             path = path_root / path
-        content = path.read_bytes()[:16] if path.exists() else b""
-        if not has_expected_signature(content, row["original_url"]):
+        content = path.read_bytes() if path.exists() else b""
+        if not is_complete(content, row["original_url"]):
             if path.exists():
                 path.unlink()
             _append(manifest_path, {**row, "status": "invalid_content", "local_path": "",

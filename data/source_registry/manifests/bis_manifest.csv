@@ -1,0 +1,3 @@
+dataset,series_key,url,retrieved_at_utc,local_path,bytes,sha256,status
+WS_CBPOL,D.IN,https://stats.bis.org/api/v1/data/WS_CBPOL/D.IN?format=csv&startPeriod=2000-01-01,2026-10-25T11:15:59+00:00,data/raw/international/bis_cbpol/WS_CBPOL_D_IN_20261025.csv,3464376,be93bfb7b1ab7618445e245d92e7c4ceb433e026aecf105d54b2ad50870f0b52,ok
+WS_CBPOL,D.US,https://stats.bis.org/api/v1/data/WS_CBPOL/D.US?format=csv&startPeriod=2000-01-01,2026-10-25T11:16:02+00:00,data/raw/international/bis_cbpol/WS_CBPOL_D_US_20261025.csv,2567682,96ee98384a2283ce5625bdbc79088127b588b3bc860766febc85d9dbb564ce30,ok

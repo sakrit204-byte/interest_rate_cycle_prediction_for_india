@@ -39,7 +39,7 @@ def test_local_name_is_flat_and_traceable():
 
 def test_download_records_manifest_and_skips_completed(tmp_path):
     class FakeResp:
-        content = b"%PDF test"
+        content = b"%PDF test %%EOF"
         headers = {"Content-Type": "application/pdf"}
 
         def raise_for_status(self):
@@ -56,8 +56,8 @@ def test_download_records_manifest_and_skips_completed(tmp_path):
     manifest = tmp_path / "manifest.csv"
     rows = wayback.download(caps, "test", tmp_path / "out", manifest, FakeSession(), pause_seconds=0)
     assert rows[0]["status"] == "ok"
-    assert rows[0]["sha256"] == hashlib.sha256(b"%PDF test").hexdigest()
-    assert (tmp_path / "out" / wayback.local_name(caps[0])).read_bytes() == b"%PDF test"
+    assert rows[0]["sha256"] == hashlib.sha256(b"%PDF test %%EOF").hexdigest()
+    assert (tmp_path / "out" / wayback.local_name(caps[0])).read_bytes() == b"%PDF test %%EOF"
     again = wayback.download(caps, "test", tmp_path / "out", manifest, FakeSession(), pause_seconds=0)
     assert again == [] and FakeSession.calls == 1
 
@@ -90,7 +90,7 @@ def test_download_falls_back_to_older_valid_capture(tmp_path):
                 return _Resp(text=f"20250301000000 {original} x 300\n20250101000000 {original} x 900\n")
             if "20250301000000" in url:
                 return _Resp(content=b"<!DOCTYPE HTML redirect")
-            return _Resp(content=b"PK\x03\x04 real workbook")
+            return _Resp(content=_valid_xlsx())
 
     manifest = tmp_path / "m.csv"
     rows = wayback.download([newest], "macro_tables", tmp_path / "out", manifest, Session(), pause_seconds=0)
@@ -124,3 +124,25 @@ def test_revalidate_flags_bad_file_and_allows_retry(tmp_path):
     assert wayback.revalidate(manifest) == ["nrb.org.np/u/QEB.xlsx"]
     assert not bad.exists()
     assert "nrb.org.np/u/QEB.xlsx" not in wayback._completed(manifest)
+
+
+def test_is_complete_rejects_truncated_pdf_and_broken_zip():
+    import io as _io
+    import zipfile as _zf
+    assert wayback.is_complete(b"%PDF-1.4 body %%EOF\n", "a/policy.pdf")
+    assert not wayback.is_complete(b"%PDF-1.4 body cut off here", "a/policy.pdf")
+    buf = _io.BytesIO()
+    with _zf.ZipFile(buf, "w") as z:
+        z.writestr("xl/workbook.xml", "<workbook/>")
+    good = buf.getvalue()
+    assert wayback.is_complete(good, "a/tables.xlsx")
+    assert not wayback.is_complete(good[: len(good) // 2], "a/tables.xlsx")
+
+
+def _valid_xlsx():
+    import io as _io
+    import zipfile as _zf
+    buf = _io.BytesIO()
+    with _zf.ZipFile(buf, "w") as z:
+        z.writestr("xl/workbook.xml", "<workbook/>")
+    return buf.getvalue()
