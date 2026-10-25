@@ -53,3 +53,25 @@ Records how each source was reached, problems met, and the workaround used.
 * **RBI monetary policy statement archive:** `https://www.rbi.org.in/Scripts/Annualpolicy.aspx`. The year list is a form submission, reproduced by `src/ingestion/rbi_policy_index.py` with a two second pause between requests. 26 fiscal year pages saved; manifest `data/source_registry/manifests/rbi_policy_index_manifest.csv`.
 * **BIS central bank policy rates (WS_CBPOL):** `https://stats.bis.org/api/v1/data/WS_CBPOL/D.IN`. Daily RBI repo rate from 3 April 2001; the US series is also saved for the global rate feature. Nepal is not covered. Manifest `data/source_registry/manifests/bis_manifest.csv`.
 * The Lakdawala and Sengupta dataset page (`sites.google.com/view/rasesite/...`) returned HTTP 404 on 25 October 2026. The paper was published in the Journal of Money, Credit and Banking, volume 57, issue 2 to 3 (2025), pages 407 to 437, whose replication archive is the next place to look.
+
+## Retry outcome and alternate Nepal sources (25 October 2026)
+
+The NRB server is expected to stay down for some days, so Nepal data now rests on two independent routes rather than waiting for the site.
+
+**Route 1: NRB files from the Internet Archive (completed).** After the third run, all 142 monetary policy documents are complete, including the English annual policies for 2008/09, 2009/10, 2011/12 to 2014/15 and 2023/24 that were truncated before. 22 files have no complete capture (19 table workbooks, 2 circulars, 1 HTTP error). Most are second or third uploads of a release that is saved under another name; which months truly lack a table is checked in the table inventory.
+
+**Route 2: IMF data API (new, `src/ingestion/imf.py`).** Independent of NRB's website, updated by the IMF on 25 October 2026.
+
+| IMF series | Nepal coverage | What it is, verified against NRB annex Table 7 |
+|---|---|---|
+| MFS_IR, DISR ("Discount rate") | July 1976 to July 2026, monthly | NRB deposit collection rate, the corridor floor: 5.50 in July 2023, 3.00 in June 2024, 2.75 from August 2025 |
+| MFS_IR, MFS166 ("Monetary policy related") | July 1976 to July 2026, monthly | NRB bank rate, the corridor ceiling: 7.50 in July 2023, 7.00 in June 2024, 6.50 in October 2024, 6.00 from August 2025, 5.75 from December 2025 |
+| MFS_IR, GSTBILY | January 1981 to July 2026 | Treasury bill yield |
+| MFS_IR, S13BOND | June 1981 to July 2026 | Government bond yield |
+| CPI, all items and food | All items index from the 1960s to March 2026; food from August 2005 | Consumer price index |
+
+* The IMF labels do not match NRB names, which is why the mapping was checked value by value. The NRB policy rate itself is not in the IMF data and still comes from NRB documents.
+* The IMF India interest rate query returned no series. India rates come from BIS.
+* IMF values are the latest revised figures, not the versions published at each decision date. They are used for cross checks and for the long corridor history; release timing for features comes from the NRB monthly tables where available.
+
+**Other alternates kept in reserve:** World Bank WDI and ADB Key Indicators (annual context), FRED (global series). News reports of NRB announcements may confirm decision dates but are never the source of a rate value.

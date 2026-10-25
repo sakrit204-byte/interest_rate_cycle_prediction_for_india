@@ -1,0 +1,5 @@
+dataflow,key,url,retrieved_at_utc,local_path,bytes,sha256,status
+MFS_IR,NPL..M,"https://api.imf.org/external/sdmx/2.1/data/IMF.STA,MFS_IR/NPL..M",2026-10-25T12:05:22+00:00,data/raw/international/imf/MFS_IR_npl_interest_rates_20261025.csv,445795,84c0d74e130dc12871173520882e917e992a79c8f328202210540475f45870ce,ok
+MFS_IR,IND..M,"https://api.imf.org/external/sdmx/2.1/data/IMF.STA,MFS_IR/IND..M",2026-10-25T12:05:25+00:00,data/raw/international/imf/MFS_IR_ind_interest_rates_20261025.csv,702,2dde620c38d54e10c107acf7c894e8c0e90223cee7dff204abf9068653a5ce78,ok
+CPI,NPL.CPI._T+CP01..M,"https://api.imf.org/external/sdmx/2.1/data/IMF.STA,CPI/NPL.CPI._T+CP01..M",2026-10-25T12:05:30+00:00,data/raw/international/imf/CPI_npl_cpi_20261025.csv,14580338,2669cd0a73fe09fdc59162f111e480cc92c102c37f77870422ff7829d5364a45,ok
+CPI,IND.CPI._T+CP01..M,"https://api.imf.org/external/sdmx/2.1/data/IMF.STA,CPI/IND.CPI._T+CP01..M",2026-10-25T12:05:35+00:00,data/raw/international/imf/CPI_ind_cpi_20261025.csv,19311980,b221466aa13b57e834b338247b2f685b46f0b41eef4574f6d46cbba0893f20e8,ok
