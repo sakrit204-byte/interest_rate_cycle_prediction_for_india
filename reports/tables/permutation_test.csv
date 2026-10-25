@@ -1,0 +1,3 @@
+model,n_decisions,n_shifts,balanced_accuracy,null_bal_acc_mean,null_bal_acc_95th,p_value_bal_acc,log_loss,null_log_loss_mean,null_log_loss_5th,p_value_log_loss
+ordered_probit_hybrid,115,96,0.5877,0.3475,0.4716,0.0103,0.876,1.1998,1.0507,0.0103
+ordered_probit_taylor,115,96,0.5364,0.335,0.4336,0.0103,0.888,1.1665,1.0224,0.0103

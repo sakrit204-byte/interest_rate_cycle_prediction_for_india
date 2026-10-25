@@ -94,3 +94,7 @@ Findings:
 3. April and May 2020 are flagged as imputed (status F star) and carry no published rate; the feature table keeps an imputation flag.
 4. The CPI 2024=100 series (from January 2026) was not found under any tested parameter. The IMF India CPI yoy fills January to July 2026 (D018). Across 2012 to 2025 it differs from MoSPI by 0.06 pp on average; individual months in 2012 and 2013 differ by up to 0.7 pp, reflecting revisions, and no decision uses CPI from those months except November 2013 (gap 0.04 pp).
 5. Values are the latest revised figures, not first releases. WPI in particular is revised two months after its provisional release. This is a stated limitation; a first release vintage is not available from this API.
+
+## Nepal interbank rate (25 October 2026)
+
+The monthly weighted average interbank rate among commercial banks comes from table 41 of the archived NRB Quarterly Economic Bulletin for the fourth quarter of 2082/83 (`src/features/nepal_interbank.py`). It covers February 1995 to July 2026 (378 months, mid month values). The 2016/17 values match Annex 22 of the Current Macroeconomic Situation tables exactly. The policy rate and corridor appear in Annex 24 of the same tables and in IMF MFS_IR (D017).

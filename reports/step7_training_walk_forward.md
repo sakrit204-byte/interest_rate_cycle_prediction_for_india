@@ -37,3 +37,33 @@ Full tables: `reports/tables/walk_forward_train_metrics.csv`, by period in `walk
 * The second model adds RBI published inflation projections (IN029), as agreed, using the Taylor type specification as the base.
 * A learning curve and a label permutation test are run before the blind window, to show whether more data or a different feature set could help, and that the learned signal is not chance.
 * No further specifications are tried on this validation set without a decision log entry, to limit the number of comparisons.
+
+## Second model: adding RBI projections (D024, D025)
+
+RBI headline inflation projections were hand coded from 131 statements (113 decisions with a value; every value carries an exact quote checked by a test). The feature is the latest projection published by the cutoff, plus its revision for the same horizon. The comparison runs on the 115 training decisions that have a projection (75 test decisions, September 2010 to October 2021).
+
+| Model | Accuracy | Balanced accuracy (95% interval) | Macro F1 | Kappa | Log loss |
+|---|---|---|---|---|---|
+| Majority class | 0.57 | 0.42 (0.27 to 0.56) | 0.37 | 0.11 | 1.01 |
+| Persistence (Markov) | 0.63 | 0.56 (0.43 to 0.65) | 0.53 | 0.29 | 0.83 |
+| Ordered probit, Taylor type | 0.59 | 0.54 (0.36 to 0.70) | 0.55 | 0.25 | 0.89 |
+| Ordered probit, hybrid (with projections) | 0.61 | 0.59 (0.46 to 0.71) | 0.60 | 0.31 | 0.88 |
+| Logistic with L2 penalty, hybrid features | 0.61 | 0.51 (0.29 to 0.62) | 0.46 | 0.23 | 0.92 |
+
+Diebold Mariano tests on log loss (Harvey, Leybourne and Newbold correction): hybrid against persistence, statistic 0.52, p 0.60; hybrid against Taylor, statistic minus 0.46, p 0.65; hybrid against majority, statistic minus 1.31, p 0.19; logistic against hybrid, statistic 0.43, p 0.67.
+
+### Label shift permutation test
+
+Labels were shifted in a circle against the features by each of 96 offsets, keeping the runs of hikes and cuts, and the full walk forward was repeated each time (`reports/tables/permutation_test.csv`).
+
+| Model | Balanced accuracy | Null mean (95th percentile) | p value | Log loss | Null mean (5th percentile) | p value |
+|---|---|---|---|---|---|---|
+| Ordered probit, hybrid | 0.59 | 0.35 (0.47) | 0.01 | 0.88 | 1.20 (1.05) | 0.01 |
+| Ordered probit, Taylor type | 0.54 | 0.34 (0.43) | 0.01 | 0.89 | 1.17 (1.02) | 0.01 |
+
+### Reading the second model
+
+1. **The signal is real.** Both ordered probits beat every one of the 96 shifted label sets on both metrics; 0.01 is the smallest p value this test can give.
+2. **Projections improve classification.** The hybrid model has the highest balanced accuracy and macro F1 of all models, and the narrowest interval that stays above the majority class.
+3. **The gain over persistence is not established.** Its log loss is still above persistence and no Diebold Mariano test is significant. Part of what the permutation test detects is the previous decision, which every model with a lag uses.
+4. **Hypothesis status on the training period.** H1 (the hybrid ordered probit beats the baselines) is supported against the majority class and the threshold rule, but not against persistence. H1b (machine learning does not beat the ordered probit) is consistent with the results. The blind window gives the confirmatory test.
