@@ -1,0 +1,7 @@
+spec,variable,meaning,coefficient,std_error,z,p_value,ame_p_cut_pp,ame_p_hike_pp
+hybrid,infl,"Realized inflation, latest (pp)",0.066,0.0676,0.9762,0.329,-1.5162,1.4444
+hybrid,infl_change_3m,Change in realized inflation over three months (pp),0.0537,0.0787,0.6817,0.4954,-1.2366,1.1708
+hybrid,iip_yoy_3m,"Industrial production growth, three month average (pp)",0.0119,0.0138,0.8622,0.3886,-0.2775,0.2573
+hybrid,prev_decision,"Previous decision (cut -1, hold 0, hike 1)",0.9522,0.2077,4.5837,0.0,-16.5256,24.5438
+hybrid,proj_infl,RBI projected inflation (pp),-0.1363,0.1303,-1.0466,0.2953,3.2837,-2.8293
+hybrid,proj_revision,Latest revision to the projection (pp),0.9188,0.3744,2.4545,0.0141,-16.1435,23.593

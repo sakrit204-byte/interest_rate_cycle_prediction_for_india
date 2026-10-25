@@ -40,12 +40,33 @@ FEATURES = ["infl", "infl_change_3m", "iip_yoy_3m", "repo_level", "real_rate",
             "repo_change_6m", "us_rate_change_6m", "prev_decision", "fit_regime", "mpc_regime"]
 # second model (D025): RBI published projections, known at the cutoff only if published by then
 PROJECTION_FEATURES = ["proj_infl", "proj_revision"]
+# third model (D029): gaps from the regime specific nominal anchor, growth gap, rupee pressure
+ECON_FEATURES = ["infl_gap", "proj_gap", "growth_gap", "inr_depr_3m"]
+FRED_INR = "data/raw/international/fred/DEXINUS_*.csv"
+# (start date, anchor in percent) from RBI statements and the Monetary Policy Framework Agreement
+ANCHORS = [("2001-01-01", 5.0), ("2014-01-21", 8.0), ("2015-02-01", 6.0), ("2016-04-01", 5.0), ("2017-04-01", 4.0)]
+GROWTH_TREND_MONTHS = 60
+
+
+def anchor_on(day: pd.Timestamp) -> float:
+    value = np.nan
+    for start, a in ANCHORS:
+        if day >= pd.Timestamp(start):
+            value = a
+    return value
 
 
 def daily_rate(pattern: str) -> pd.Series:
     path = sorted(ROOT.glob(pattern))[-1]
     d = pd.read_csv(path, usecols=["TIME_PERIOD", "OBS_VALUE"]).dropna()
     return pd.Series(d.OBS_VALUE.astype(float).values, index=pd.to_datetime(d.TIME_PERIOD)).sort_index()
+
+
+def fred_daily(pattern: str) -> pd.Series:
+    path = sorted(ROOT.glob(pattern))[-1]
+    d = pd.read_csv(path)
+    s = pd.to_numeric(d.iloc[:, 1], errors="coerce")
+    return pd.Series(s.values, index=pd.to_datetime(d.iloc[:, 0])).dropna().sort_index()
 
 
 def rate_on(rate: pd.Series, day: pd.Timestamp) -> float:
@@ -78,7 +99,8 @@ def projection_features(proj: pd.DataFrame, cutoff: pd.Timestamp) -> dict:
 
 
 def row_features(day: pd.Timestamp, macro: pd.DataFrame, repo: pd.Series, us: pd.Series,
-                 past: pd.DataFrame, cutoff_days: int, proj: pd.DataFrame | None = None) -> dict:
+                 past: pd.DataFrame, cutoff_days: int, proj: pd.DataFrame | None = None,
+                 inr: pd.Series | None = None) -> dict:
     cutoff = day - pd.Timedelta(days=cutoff_days)
     measure, series = ("cpi_yoy", "cpi") if day >= CPI_FOCUS_START else ("wpi_yoy", "wpi")
     infl = available(macro, measure, series, cutoff)
@@ -99,11 +121,20 @@ def row_features(day: pd.Timestamp, macro: pd.DataFrame, repo: pd.Series, us: pd
         "prev_decision": CLASS_CODE[known["decision"].iloc[-1]] if len(known) else np.nan,
     }
     row["real_rate"] = row["repo_level"] - row["infl"]
+    anchor = anchor_on(day)
+    row["infl_gap"] = row["infl"] - anchor
+    # real time growth gap: latest three month IIP growth minus its trailing five year mean
+    row["growth_gap"] = (row["iip_yoy_3m"] - iip.iloc[-GROWTH_TREND_MONTHS:].mean()
+                         if len(iip) >= GROWTH_TREND_MONTHS else np.nan)
+    if inr is not None:
+        now, before = rate_on(inr, cutoff), rate_on(inr, cutoff - pd.Timedelta(days=91))
+        row["inr_depr_3m"] = (now / before - 1) * 100
     if proj is not None:
         row.update(projection_features(proj, cutoff))
         if row.get("proj_measure") and row["proj_measure"].lower() != series:
             # projection on a different index from the targeted inflation measure (January 2014)
             row["proj_infl"] = row["proj_revision"] = np.nan
+        row["proj_gap"] = row["proj_infl"] - anchor
     return row
 
 
@@ -117,9 +148,10 @@ def build(cutoff_days: int = CUTOFF_DAYS) -> pd.DataFrame:
     repo, us = daily_rate(BIS_IN), daily_rate(BIS_US)
     proj = pd.read_csv(PROJECTIONS, parse_dates=["decision_date"]).rename(columns={"decision_date": "date"})
     proj = proj.sort_values("date")
+    inr = fred_daily(FRED_INR)
     rows = []
     for _, d in decisions.iterrows():
-        f = row_features(d["date"], macro, repo, us, decisions[decisions["date"] < d["date"]], cutoff_days, proj)
+        f = row_features(d["date"], macro, repo, us, decisions[decisions["date"] < d["date"]], cutoff_days, proj, inr)
         rows.append({"date": d["date"].date(), "decision": d["decision"], "y": CLASS_CODE[d["decision"]],
                      "change_bp": d["change_bp"], "inter_meeting": d["inter_meeting"],
                      "regime": d["regime"], "blind_window": d["blind_window"], **f})
@@ -128,6 +160,7 @@ def build(cutoff_days: int = CUTOFF_DAYS) -> pd.DataFrame:
     out["mpc_regime"] = (out["regime"] == "mpc").astype(int)
     out["complete"] = out[FEATURES].notna().all(axis=1)
     out["complete_projection"] = out["complete"] & out[PROJECTION_FEATURES].notna().all(axis=1)
+    out["complete_econ"] = out["complete_projection"] & out[ECON_FEATURES].notna().all(axis=1)
     return out
 
 

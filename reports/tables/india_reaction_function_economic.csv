@@ -1,0 +1,7 @@
+spec,variable,meaning,coefficient,std_error,z,p_value,ame_p_cut_pp,ame_p_hike_pp
+economic,prev_decision,"Previous decision (cut -1, hold 0, hike 1)",0.9441,0.2031,4.6481,0.0,-16.3884,24.4715
+economic,proj_revision,Latest revision to the projection (pp),1.0532,0.3577,2.9443,0.0032,-17.5554,27.6141
+economic,infl_gap,Realized inflation minus the regime nominal anchor (pp),0.1133,0.066,1.7174,0.0859,-2.5691,2.5221
+economic,proj_gap,Projected inflation minus the regime nominal anchor (pp),-0.2302,0.1525,-1.509,0.1313,5.6557,-4.6724
+economic,growth_gap,IIP growth minus its trailing five year mean (pp),0.0105,0.0143,0.7378,0.4606,-0.2448,0.2281
+economic,inr_depr_3m,Rupee depreciation against the US dollar over three months (percent),-0.0152,0.0285,-0.5336,0.5936,0.3562,-0.3276

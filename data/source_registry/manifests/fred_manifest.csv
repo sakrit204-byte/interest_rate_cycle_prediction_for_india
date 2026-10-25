@@ -1,0 +1,3 @@
+series,url,retrieved_at_utc,local_path,bytes,sha256,status
+DEXINUS,https://fred.stlouisfed.org/graph/fredgraph.csv?id=DEXINUS,2026-10-25T14:13:32+00:00,data/raw/international/fred/DEXINUS_20261025.csv,260220,167a33dc21490b4832230943d0e901dcaca13335920d9cb3a14222cb0c64f1ab,ok
+DCOILBRENTEU,https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILBRENTEU,2026-10-25T14:13:34+00:00,data/raw/international/fred/DCOILBRENTEU_20261025.csv,170183,a1fec56bfa6bc77dc5e017fa8976e6eaca2fa2ae43773209ac5923f1269c8b33,ok

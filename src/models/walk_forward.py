@@ -30,7 +30,7 @@ from sklearn.linear_model import LogisticRegression
 from statsmodels.miscmodels.ordinal_model import OrderedModel
 
 from src.evaluation.metrics import CLASSES, block_bootstrap_ci, diebold_mariano, log_loss, summary
-from src.features.build_india_features import FEATURES, PROJECTION_FEATURES
+from src.features.build_india_features import ECON_FEATURES, FEATURES, PROJECTION_FEATURES
 
 ROOT = Path(__file__).resolve().parents[2]
 FEATURE_FILE = ROOT / "data" / "processed" / "india" / "india_features_cutoff7.csv"
@@ -167,6 +167,16 @@ MODELS_PROJECTION = {
 }
 
 
+# Model 3 (D029), declared from theory before its first run.
+ECON_MODEL_FEATURES = ["prev_decision", "proj_revision"] + ECON_FEATURES
+MODELS_ECON = {
+    "majority": majority,
+    "persistence": persistence,
+    "ordered_probit_hybrid": lambda tr, te: ordered_probit(tr, te, HYBRID_FEATURES),
+    "ordered_probit_economic": lambda tr, te: ordered_probit(tr, te, ECON_MODEL_FEATURES),
+}
+
+
 def run(data: pd.DataFrame, models: dict = MODELS) -> pd.DataFrame:
     rows = []
     for i in range(MIN_TRAIN, len(data)):
@@ -231,9 +241,26 @@ def main_projection() -> int:
     return 0
 
 
+def main_econ() -> int:
+    data = load_training("complete_econ")
+    pred = run(data, MODELS_ECON)
+    table = metrics_table(pred)
+    dm = dm_table(pred, [("ordered_probit_economic", "persistence"), ("ordered_probit_economic", "ordered_probit_hybrid"),
+                         ("ordered_probit_economic", "majority")])
+    pred.round(4).to_csv(TABLES / "walk_forward_train_econ_predictions.csv", index=False)
+    table.round(4).to_csv(TABLES / "walk_forward_train_econ_metrics.csv", index=False)
+    dm.round(4).to_csv(TABLES / "walk_forward_train_econ_dm.csv", index=False)
+    print(f"training decisions {len(data)}; test decisions {len(data) - MIN_TRAIN}")
+    print(table.round(3).to_string(index=False))
+    print(dm.round(3).to_string(index=False))
+    return 0
+
+
 def main() -> int:
     if "--projections" in sys.argv:
         return main_projection()
+    if "--econ" in sys.argv:
+        return main_econ()
     data = load_training()
     pred = run(data)
     pred["period"] = np.where(pd.to_datetime(pred["date"]) < pd.Timestamp("2014-01-21"),
