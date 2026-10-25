@@ -36,6 +36,36 @@ CORRIDOR_LAG = 1
 
 FEATURES = ["ib_adj_level", "ib_adj_change_3m", "india_repo_level", "india_repo_change_3m",
             "nepal_cpi_yoy", "nrb_bank_rate_change_6m"]
+# second Nepal model (D030): liquidity channel under the peg, IMF MFS lagged two months
+LIQUIDITY_FEATURES = ["reserves_to_deposits", "nfa_cb_growth_3m", "gov_deposit_change_3m", "credit_minus_deposit_growth"]
+LIQUIDITY_MODEL_FEATURES = ["ib_adj_level", "ib_adj_change_3m", "nrb_bank_rate_change_6m",
+                            "india_repo_change_3m"] + LIQUIDITY_FEATURES
+MFS = {  # name: (dataflow, indicator)
+    "claims_on_cb": ("MFS_ODC", "ODCORP_A_ACO_S121_ODCS"),
+    "transferable_deposits": ("MFS_ODC", "ODCORP_L_F22_IBM_ODCS"),
+    "other_deposits": ("MFS_ODC", "ODCORP_L_F29_IBM_ODCS"),
+    "private_credit": ("MFS_ODC", "ODCORP_A_ACO_PS_ODCS"),
+    "cb_nfa": ("MFS_CBS", "S121_N_NFRA_CBS"),
+    "gov_deposits_cb": ("MFS_CBS", "S121_L_LT_S1311MIXED_CBS"),
+    "broad_money": ("MFS_DC", "DCORP_L_BM"),
+}
+
+
+def liquidity_panel() -> pd.DataFrame:
+    """Monthly liquidity indicators by reference month (values public two months later)."""
+    raw = {}
+    for name, (flow, code) in MFS.items():
+        raw[name] = imf_series(f"{flow}_npl", lambda d, c=code: (d["INDICATOR"] == c) &
+                               (d["TYPE_OF_TRANSFORMATION"] == "XDC"))
+    m = pd.DataFrame(raw)
+    deposits = m["transferable_deposits"] + m["other_deposits"]
+    out = pd.DataFrame(index=m.index)
+    out["reserves_to_deposits"] = m["claims_on_cb"] / deposits * 100
+    out["nfa_cb_growth_3m"] = (m["cb_nfa"] / m["cb_nfa"].shift(3) - 1) * 100
+    out["gov_deposit_change_3m"] = (m["gov_deposits_cb"] - m["gov_deposits_cb"].shift(3)) / m["broad_money"] * 100
+    out["credit_minus_deposit_growth"] = ((m["private_credit"] / m["private_credit"].shift(12) - 1)
+                                          - (deposits / deposits.shift(12) - 1)) * 100
+    return out
 
 
 def imf_series(prefix: str, mask) -> pd.Series:
@@ -52,6 +82,7 @@ def build() -> pd.DataFrame:
                      (d["TYPE_OF_TRANSFORMATION"] == "SRP_YOY_PCH_PA_PT"))
     bank_rate = imf_series("MFS_IR_npl_interest_rates", lambda d: d["INDICATOR"] == "MFS166_RT_PT_A_PT")
     repo = daily_rate(BIS_IN)
+    liq = liquidity_panel()
     adj = t["interbank_adj"]
     rows = []
     for month in t.index:
@@ -69,9 +100,11 @@ def build() -> pd.DataFrame:
             "india_repo_change_3m": rate_on(repo, origin) - rate_on(repo, origin - pd.Timedelta(days=91)),
             "nepal_cpi_yoy": cpi.get(info, np.nan),
             "nrb_bank_rate_change_6m": bank_rate.get(corridor, np.nan) - bank_rate.get(corridor - 6, np.nan),
+            **{f: (liq.at[info, f] if info in liq.index else np.nan) for f in LIQUIDITY_FEATURES},
         })
     out = pd.DataFrame(rows)
     out["complete"] = out[FEATURES].notna().all(axis=1) & out["y"].notna()
+    out["complete_liquidity"] = out[LIQUIDITY_MODEL_FEATURES].notna().all(axis=1) & out["y"].notna()
     return out
 
 
@@ -83,6 +116,8 @@ def main() -> int:
     print(f"{len(out)} months; complete {int(out['complete'].sum())}; training complete {len(train)} "
           f"({train['month'].iloc[0]} to {train['month'].iloc[-1]})")
     print("missing:", out[FEATURES].isna().sum()[lambda s: s > 0].to_dict())
+    tl = out[~out["blind_window"] & out["complete_liquidity"]]
+    print(f"liquidity model training months {len(tl)} ({tl['month'].iloc[0]} to {tl['month'].iloc[-1]})")
     return 0
 
 

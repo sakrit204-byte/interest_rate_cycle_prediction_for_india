@@ -1,0 +1,15 @@
+feature,full_sample_coef,windows,share_same_sign,coef_min,coef_median,coef_max,stable,country
+prev_decision,0.6586,75,1.0,0.5104,0.655,0.8376,True,india
+proj_revision,0.4541,75,1.0,0.2366,0.4877,0.5545,True,india
+infl_gap,0.2742,75,1.0,0.0204,0.274,0.3646,True,india
+proj_gap,-0.2379,75,1.0,-0.4109,-0.2667,-0.0247,True,india
+growth_gap,0.0832,75,1.0,0.0806,0.2053,0.2879,True,india
+inr_depr_3m,-0.0662,75,0.8133,-0.3667,-0.0455,0.0558,True,india
+ib_adj_level,-0.2717,157,1.0,-0.4844,-0.2693,-0.12,True,nepal
+ib_adj_change_3m,-0.0958,157,0.828,-0.2157,-0.0903,0.2385,True,nepal
+nrb_bank_rate_change_6m,0.2553,157,0.8662,-0.1293,0.1595,0.312,True,nepal
+india_repo_change_3m,-0.1311,157,1.0,-0.6076,-0.2037,-0.1307,True,nepal
+reserves_to_deposits,-0.0937,157,0.8153,-0.1633,-0.0646,0.0367,True,nepal
+nfa_cb_growth_3m,-0.2265,157,1.0,-0.2608,-0.2077,-0.001,True,nepal
+gov_deposit_change_3m,0.1957,157,1.0,0.0116,0.1841,0.4926,True,nepal
+credit_minus_deposit_growth,-0.2199,157,1.0,-0.3084,-0.2368,-0.1536,True,nepal

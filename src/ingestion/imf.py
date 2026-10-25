@@ -8,7 +8,7 @@ docs/data_access.md): IMF MFS_IR indicator DISR ("Discount rate") is the NRB dep
 collection rate (corridor floor), and MFS166 ("Monetary policy related") is the NRB
 bank rate (corridor ceiling). The NRB policy rate itself is not in this dataset.
 
-Usage: python -m src.ingestion.imf
+Usage: python -m src.ingestion.imf [short_name ...]
 """
 
 from __future__ import annotations
@@ -34,6 +34,10 @@ QUERIES = [
     ("MFS_IR", "IND..M", "ind_interest_rates"),
     ("CPI", "NPL.CPI._T+CP01..M", "npl_cpi"),
     ("CPI", "IND.CPI._T+CP01..M", "ind_cpi"),
+    # Nepal monetary statistics for the liquidity channel (D030); these flows have four key dimensions
+    ("MFS_CBS", "NPL...M", "npl_central_bank"),
+    ("MFS_ODC", "NPL...M", "npl_other_depository"),
+    ("MFS_DC", "NPL...M", "npl_depository"),
 ]
 
 
@@ -58,6 +62,7 @@ def fetch(flow: str, key: str, name: str, session: requests.Session) -> dict:
 
 
 def main() -> int:
+    only = set(sys.argv[1:])  # optional short names to fetch, e.g. npl_central_bank
     session = requests.Session()
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
     new = not MANIFEST.exists()
@@ -66,6 +71,8 @@ def main() -> int:
         if new:
             writer.writeheader()
         for flow, key, name in QUERIES:
+            if only and name not in only:
+                continue
             try:
                 row = fetch(flow, key, name, session)
             except requests.RequestException as err:

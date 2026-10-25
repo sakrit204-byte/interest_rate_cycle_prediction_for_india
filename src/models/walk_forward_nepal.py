@@ -10,7 +10,11 @@ adjusted level, ordered probit (all six features), L2 multinomial logistic (C by
 forward and the one standard error rule), and a shallow random forest with fixed settings.
 
 Outputs: reports/tables/nepal_walk_forward_train_metrics.csv, _predictions.csv, _dm.csv
-Usage: python -m src.models.walk_forward_nepal
+Usage: python -m src.models.walk_forward_nepal [--liquidity]
+
+With --liquidity: the second Nepal model (D030) on liquidity features from IMF monetary
+surveys, its variant without the India repo change (the transmission test), and the baselines.
+Outputs carry the prefix nepal_walk_forward_train_liquidity.
 """
 
 from __future__ import annotations
@@ -23,7 +27,8 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 
-from src.features.build_nepal_features import FEATURES, NEPAL_LAG, OUT as FEATURE_FILE
+from src.features.build_nepal_features import (FEATURES, LIQUIDITY_MODEL_FEATURES, NEPAL_LAG,
+                                               OUT as FEATURE_FILE)
 from src.features.nepal_target import HORIZON
 from src.models import walk_forward as wf
 
@@ -35,9 +40,12 @@ EMBARGO = HORIZON + NEPAL_LAG  # months
 MIN_TRAIN = 60
 
 
-def load_training() -> pd.DataFrame:
+NO_INDIA_FEATURES = [f for f in LIQUIDITY_MODEL_FEATURES if f != "india_repo_change_3m"]
+
+
+def load_training(complete_col: str = "complete") -> pd.DataFrame:
     f = pd.read_csv(FEATURE_FILE)
-    train = f[~f["blind_window"] & f["complete"]].reset_index(drop=True)
+    train = f[~f["blind_window"] & f[complete_col]].reset_index(drop=True)
     if train["blind_window"].any():
         raise RuntimeError("blind window rows reached the Nepal training evaluation")
     train["period"] = pd.PeriodIndex(train["month"], freq="M")
@@ -63,10 +71,10 @@ def persistence(tr: pd.DataFrame, te: pd.Series) -> np.ndarray:
     return wf.persistence(tr.dropna(subset=["prev_decision"]), te)
 
 
-def random_forest(tr: pd.DataFrame, te: pd.Series) -> np.ndarray:
+def random_forest(tr: pd.DataFrame, te: pd.Series, features: list[str] = FEATURES) -> np.ndarray:
     m = RandomForestClassifier(n_estimators=300, max_depth=3, min_samples_leaf=10, random_state=0)
-    m.fit(tr[FEATURES].to_numpy(), tr["y"].to_numpy())
-    return wf.full_proba(m.classes_, m.predict_proba(te[FEATURES].to_numpy(dtype=float)[None, :]))[0]
+    m.fit(tr[features].to_numpy(), tr["y"].to_numpy())
+    return wf.full_proba(m.classes_, m.predict_proba(te[features].to_numpy(dtype=float)[None, :]))[0]
 
 
 def choose_c(tr: pd.DataFrame) -> float:
@@ -98,14 +106,23 @@ MODELS = {
     "logistic_l2": logistic,
     "random_forest": random_forest,
 }
+# second Nepal model (D030) and the pre declared transmission test (with and without the India repo)
+MODELS_LIQUIDITY = {
+    "majority": wf.majority,
+    "persistence": persistence,
+    "mean_reversion_rule": mean_reversion,
+    "ordered_probit_liquidity": lambda tr, te: wf.ordered_probit(tr, te, LIQUIDITY_MODEL_FEATURES),
+    "ordered_probit_liquidity_no_india": lambda tr, te: wf.ordered_probit(tr, te, NO_INDIA_FEATURES),
+    "random_forest_liquidity": lambda tr, te: random_forest(tr, te, LIQUIDITY_MODEL_FEATURES),
+}
 
 
-def run(data: pd.DataFrame) -> pd.DataFrame:
+def run(data: pd.DataFrame, models: dict = MODELS) -> pd.DataFrame:
     rows = []
     for i in range(MIN_TRAIN + EMBARGO, len(data)):
         te = data.iloc[i]
         tr = data[data["period"] <= te["period"] - EMBARGO]
-        for name, model in MODELS.items():
+        for name, model in models.items():
             try:
                 p = np.asarray(model(tr, te), float)
                 p = p / p.sum()
@@ -119,17 +136,26 @@ def run(data: pd.DataFrame) -> pd.DataFrame:
 
 
 def main() -> int:
-    data = load_training()
-    pred = run(data)
+    liquidity = "--liquidity" in sys.argv
+    if liquidity:
+        data, models, tag = load_training("complete_liquidity"), MODELS_LIQUIDITY, "nepal_walk_forward_train_liquidity"
+        pairs = [("ordered_probit_liquidity", "ordered_probit_liquidity_no_india"),  # transmission test
+                 ("ordered_probit_liquidity", "persistence"), ("ordered_probit_liquidity", "majority"),
+                 ("ordered_probit_liquidity", "mean_reversion_rule"),
+                 ("random_forest_liquidity", "ordered_probit_liquidity")]
+    else:
+        data, models, tag = load_training(), MODELS, "nepal_walk_forward_train"
+        pairs = [("ordered_probit", "persistence"), ("ordered_probit", "majority"),
+                 ("ordered_probit", "mean_reversion_rule"), ("random_forest", "ordered_probit"),
+                 ("logistic_l2", "ordered_probit")]
+    pred = run(data, models)
     table = wf.metrics_table(pred)
-    dm = wf.dm_table(pred, [("ordered_probit", "persistence"), ("ordered_probit", "majority"),
-                            ("ordered_probit", "mean_reversion_rule"), ("random_forest", "ordered_probit"),
-                            ("logistic_l2", "ordered_probit")], horizon=HORIZON)  # overlapping labels
+    dm = wf.dm_table(pred, pairs, horizon=HORIZON)  # overlapping labels
     TABLES.mkdir(parents=True, exist_ok=True)
-    pred.round(4).to_csv(TABLES / "nepal_walk_forward_train_predictions.csv", index=False)
-    table.round(4).to_csv(TABLES / "nepal_walk_forward_train_metrics.csv", index=False)
-    dm.round(4).to_csv(TABLES / "nepal_walk_forward_train_dm.csv", index=False)
-    print(f"training months {len(data)}; test months {len(pred) // len(MODELS)} "
+    pred.round(4).to_csv(TABLES / f"{tag}_predictions.csv", index=False)
+    table.round(4).to_csv(TABLES / f"{tag}_metrics.csv", index=False)
+    dm.round(4).to_csv(TABLES / f"{tag}_dm.csv", index=False)
+    print(f"training months {len(data)}; test months {len(pred) // len(models)} "
           f"({pred['date'].iloc[0]} to {pred['date'].iloc[-1]})")
     print(table.round(3).to_string(index=False))
     print(dm.round(3).to_string(index=False))
