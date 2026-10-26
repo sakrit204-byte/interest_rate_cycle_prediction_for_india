@@ -1,6 +1,6 @@
-# DRAFT. Not yet frozen. The SHA256 of the final version is recorded in the commit
-# that freezes it, before the blind window is unlocked (see docs/research_protocol.md).
-status: draft
+# FROZEN on 26 Oct 2026 before unblinding. SHA256 (line endings normalised) is in
+# configs/blind_test.sha256 and in the freezing commit message (research protocol).
+status: frozen
 training_information_cutoff: "2021-10-31"
 blind_window_start: "2021-11-01"
 forecast_cutoff_days_before_decision: [7, 1, 30]   # first value is the main design
