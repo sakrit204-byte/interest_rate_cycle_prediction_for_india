@@ -62,9 +62,14 @@ def load(unblind: bool) -> pd.DataFrame:
     return f
 
 
+def config_hash() -> str:
+    """SHA256 of the config with line endings normalised, so a checkout on any system matches."""
+    return hashlib.sha256(CONFIG.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
 def check_frozen() -> None:
     cfg = config()
-    digest = hashlib.sha256(CONFIG.read_bytes()).hexdigest()
+    digest = config_hash()
     if cfg["status"] != "frozen" or not FROZEN_HASH.exists() or FROZEN_HASH.read_text().split()[0] != digest:
         raise RuntimeError("blind config is not frozen or its hash differs; refusing to unblind")
 
