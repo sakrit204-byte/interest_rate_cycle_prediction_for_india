@@ -106,8 +106,63 @@ The India model beats persistence in three of four blocks. The exception, 2013 t
 
 **Replication.** Rebuilding both feature tables and rerunning both walk forwards from the raw files gives byte identical outputs (SHA256 in `reproducibility_hashes.csv`; run `python -m src.validation.stability --check`). Random forests use a fixed seed; nothing depends on the date of the run except the downloads, which are kept with their hashes.
 
-## 5. What this means for the paper
+## 5. Transmission from India to Nepal: local projections (D032)
+
+Response of Nepali variables to a one point (100 basis point) change in the RBI repo rate, from monthly local projections, August 2000 to October 2021, holding oil prices, US policy and Indian inflation fixed (`local_projections.csv`). The RBI moved 60 times in the sample.
+
+| Months after the RBI move | Interbank rate, pp | 91 day T bill, pp | CPI inflation, pp | Private credit growth, pp |
+|---|---|---|---|---|
+| 0 | minus 0.39 (p 0.28) | minus 0.21 (p 0.48) | 0.12 (p 0.60) | minus 1.0 (p 0.67) |
+| 3 | minus 0.59 (p 0.41) | minus 0.38 (p 0.50) | minus 0.20 (p 0.77) | 1.3 (p 0.74) |
+| 6 | minus 0.73 (p 0.33) | minus 0.70 (p 0.32) | 0.12 (p 0.86) | 8.1 (p 0.10) |
+| 12 | minus 1.57 (p 0.05) | minus 0.43 (p 0.44) | minus 0.03 (p 0.98) | 6.0 (p 0.21) |
+| 24 | minus 0.88 (p 0.22) | minus 0.25 (p 0.70) | 1.51 (p 0.04) | 7.9 (p 0.31) |
+
+### 5.1 Reading
+
+1. **No direct interest rate pass through.** Under a credible peg with an open capital link, uncovered interest parity would make Nepali short rates follow Indian rates one for one. They do not: the point estimates are negative at every horizon, and at twelve months full pass through (plus 1) lies outside the confidence interval for the interbank rate. Nepal's border with India is open for goods and cash, but its capital account is largely closed and its banks cannot freely arbitrage into Indian money markets. Capital controls are what let the peg and an independent short rate coexist, the escape route from the impossible trinity.
+2. **Why the sign is negative.** The negative sign should not be read as Indian tightening easing Nepali money. RBI cycles are few (about six tightening and easing episodes) and they happened to coincide with Nepali liquidity cycles running the other way. The clearest case is 2010 to 2011, when the RBI hiked while Nepal had a liquidity crunch, which then turned into a remittance driven surplus. With so few independent episodes, timing coincidences dominate. The safe conclusion is negative, not that the effect is negative: the data show no positive transmission through short rates.
+3. **Inflation is where the peg bites, and slowly.** The CPI response is near zero for a year and rises to 1.5 points after two years (p 0.04). That is the expected direction if the channel runs through trade: India supplies about two thirds of Nepal's imports at a fixed exchange rate, so Indian price developments arrive in Nepal with a lag. One significant coefficient among many horizons is weak evidence, so we treat it as consistent with the trade channel, not as proof of it.
+4. **Credit responds positively but imprecisely**, as it would if Indian tightening coincides with Indian demand booms that raise Nepali trade and remittance income. None of these estimates is significant.
+
+### 5.2 Does liquidity change transmission? (H4)
+
+Splitting the RBI shock by Nepali excess reserves (`local_projections_state.csv`) shows a larger negative interbank response when liquidity is abundant (minus 3.3 points at twelve months, p 0.001) than when it is scarce (minus 1.0, p 0.47). This pattern is the opposite of H4's mechanism, under which abundant liquidity should mute any transmission. It supports the coincidence reading above: abundant liquidity episodes are the remittance surpluses that overlapped with RBI tightening. H4 as stated (incomplete pass through that varies with liquidity) holds only in the trivial sense that pass through is absent; we do not claim a liquidity dependent transmission mechanism.
+
+### 5.3 What it means for the transmission question
+
+India's monetary policy reaches Nepal through prices and the balance of payments, not through short term interest rates. This matches the forecasting result in section 3.2: the RBI repo adds nothing to a three month forecast of the interbank rate once liquidity is known. Both methods point the same way, which is more convincing than either alone.
+
+## 6. What this means for the paper
 
 * India: the RBI behaves like a forecast targeting, inertial central bank whose anchor changed in steps; the policy signal is news about its own forecast and the gap from the prevailing anchor.
-* Nepal: policy is constrained by the peg; short run interest rates are a liquidity phenomenon. Reserve inflows lower the rate and fiscal drains raise it, consistently across 13 years, while India's repo adds nothing at three months once liquidity is known.
+* Nepal: policy is constrained by the peg; short run interest rates are a liquidity phenomenon. Reserve inflows lower the rate and fiscal drains raise it, consistently across 13 years, while India's repo adds nothing at three months once liquidity is known. Transmission from India runs through prices with a lag of about two years, not through short rates, which Nepal's capital controls insulate.
 * Both conclusions are on the training period. The blind window (from November 2021) is the confirmatory test.
+
+## 7. The suggestion engine on the training period
+
+The engine (`src/policy/suggestion_engine.py`, D033) was run in real time over the 75 training decisions from 2010 to 2021 (`suggestions_train.csv`, figure `reports/figures/backtest_train.png`). This is a rehearsal; the confirmatory test is the blind window.
+
+| Source | Decisions called | Hit rate where called |
+|---|---|---|
+| Learned reaction function (economic ordered probit) | 75 | 0.65 |
+| Estimated inertial rule | 75 | 0.51 |
+| Textbook Taylor rule | 75 | 0.31 |
+| Combined suggestion (classifier and rule agree, top probability above 0.5) | 42 | 0.64 |
+
+**What the estimated rule says about the RBI.** Across the walk forward windows, the RBI closes about 6 percent of the gap between the policy rate and its neutral level at each decision (smoothing 0.94, range 0.87 to 0.97), and the implied neutral real rate is about 1.2 percent (interquartile range 0.9 to 1.35). Both are economically sensible: heavy inertia is the norm for inflation targeting central banks, and a real neutral rate a little above 1 percent is in the range discussed for India. Because each step is small, the rule's prescribed change rarely clears the 12.5 basis point deadband, so it mostly says hold. That is why the combined suggestion covers only 42 of 75 decisions: it speaks only when the two positive sources agree.
+
+**Turning points.** The learned reaction function called every change of cycle (2012, 2013, 2015, 2018, 2019) exactly one decision late. That is the signature of interest rate smoothing in the data: the best single predictor of the next move is the last move, so a model fitted to an inertial central bank follows it into a new cycle rather than anticipating it. The textbook Taylor rule signals each turn early, two to fourteen decisions ahead, because it has no inertia, but it is wrong most of the time in between (hit rate 0.31) and swings wildly when IIP growth jumps on base effects (minus 10 percent in August 2020, 38 percent in August 2021). The gap between the two is the practical meaning of gradualism: the RBI does what a Taylor rule says only slowly and only after the evidence accumulates.
+
+## 8. Do political events help? (H2, D034)
+
+Training period walk forward, each primary model with and without political indicators (`ablation_political_*.csv`).
+
+| Model | Balanced accuracy | Log loss | Brier | Diebold Mariano p |
+|---|---|---|---|---|
+| India economic probit | 0.64 | 0.866 | 0.510 | |
+| with election and budget indicators | 0.64 | 0.849 | 0.485 | 0.57 |
+| Nepal liquidity probit | 0.42 | 1.132 | 0.645 | |
+| with government change and disruption indicators | 0.40 | 1.151 | 0.660 | 0.32 |
+
+H2 (political events add nothing) is not rejected in either country. For India the probabilities improve slightly but not significantly; only five training decisions fell inside an election period, far too few to estimate a political business cycle, and an independent central bank with a statutory inflation target from 2016 gives less room for one. Budgets carry fiscal news, but the RBI already sees it through its own inflation projection, which is in the model. For Nepal, government turnover is so frequent (a new prime minister about once every 14 months) that it is almost background; what matters for the interbank rate is whether turnover changes spending, which the government deposit feature already measures directly. The economic lesson is that political shocks act on monetary conditions through the fiscal and liquidity variables already in the models, not as separate predictors.

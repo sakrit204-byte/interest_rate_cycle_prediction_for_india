@@ -4,13 +4,31 @@ status: draft
 training_information_cutoff: "2021-10-31"
 blind_window_start: "2021-11-01"
 forecast_cutoff_days_before_decision: [7, 1, 30]   # first value is the main design
+real_time_refit: true          # every model refit at each origin on outcomes public by then (D033)
 india:
   target: repo_rate_decision_3class
   include_inter_meeting_moves: true
+  primary_model: ordered_probit_economic       # D029
+  primary_features: [prev_decision, proj_revision, infl_gap, proj_gap, growth_gap, inr_depr_3m]
+  comparison_models: [majority, persistence, ordered_probit_taylor, ordered_probit_hybrid, random_forest]
+  anchors: {"2001-01-01": 5.0, "2014-01-21": 8.0, "2015-02-01": 6.0, "2016-04-01": 5.0, "2017-04-01": 4.0}
 nepal:
-  training_target: interbank_rate_monthly_change
-  evaluation_target: policy_rate_decision_direction
+  training_target: interbank_seasonally_adjusted_3m_direction   # D027, deadband 0.5 pp
+  evaluation_target: interbank_seasonally_adjusted_3m_direction  # D033 (NRB decisions descriptive only)
+  primary_model: ordered_probit_liquidity      # D030
+  primary_features: [ib_adj_level, ib_adj_change_3m, nrb_bank_rate_change_6m, india_repo_change_3m,
+                     reserves_to_deposits, nfa_cb_growth_3m, gov_deposit_change_3m, credit_minus_deposit_growth]
+  comparison_models: [majority, persistence, mean_reversion_rule, ordered_probit_liquidity_no_india, random_forest_liquidity]
+  seasonal_factors: frozen_from_training
 suggestion_engine:
+  classifier: ordered_probit_economic
+  estimated_rule: "change = c + lam (anchor - repo) + b1 infl_gap + b2 proj_gap + b3 growth_gap, OLS"
+  textbook_rule: "rate = 1.5 + infl + 0.5 (infl - anchor) + 0.5 growth_gap"
   deadband_bp: 12.5
   classifier_min_top_probability: 0.5
+  combination: classifier_top_class_if_above_min_and_rule_agrees_else_uncertain
 metrics: [balanced_accuracy, macro_f1, cohen_kappa, log_loss, brier, turning_point_lag]
+tests:
+  diebold_mariano: {india_horizon: 1, nepal_horizon: 3, loss: log_loss}
+  hypotheses: [H1 primary beats persistence and majority on balanced accuracy,
+               H1b ML does not beat primary, H3 India repo improves Nepal forecast]
