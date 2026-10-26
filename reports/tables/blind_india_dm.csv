@@ -1,0 +1,5 @@
+model_a,model_b,mean_loss_a,mean_loss_b,dm_stat_hln,p_value,n
+ordered_probit_economic,persistence,0.6396,0.6846,-0.6623,0.5129,31
+ordered_probit_economic,majority,0.6396,0.9288,-3.3601,0.0021,31
+random_forest,ordered_probit_economic,0.666,0.6396,0.4921,0.6262,31
+ordered_probit_economic,ordered_probit_hybrid,0.6396,0.6221,1.0719,0.2923,31

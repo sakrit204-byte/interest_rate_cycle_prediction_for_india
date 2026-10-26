@@ -4,7 +4,11 @@ Predicting interest rate cycles under political and macroeconomic uncertainty: a
 
 ## Status
 
-Planning stage. No data has been downloaded and no model has been trained. Nothing in this repository is yet an empirical result.
+Steps 1 to 11 complete; the blind test has been run (26 October 2026). Remaining: scenarios, the Streamlit dashboard, robustness checks and the paper.
+
+* `reports/blind_test_results.md`: confirmatory results on the sealed period, November 2021 to October 2026, with `reports/figures/backtest_blind.png`.
+* `reports/economic_interpretation.md`: the economic reading of every result (RBI reaction function, Nepal liquidity under the peg, transmission, political events, stability).
+* Reproduce: `python -m src.validation.stability --check` rebuilds features and predictions and compares hashes.
 
 ## Where to start
 

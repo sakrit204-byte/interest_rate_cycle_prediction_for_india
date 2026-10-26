@@ -1,0 +1,5 @@
+model_a,model_b,mean_loss_a,mean_loss_b,dm_stat_hln,p_value,n
+ordered_probit_liquidity,ordered_probit_liquidity_no_india,1.0473,1.0627,-1.2256,0.2255,57
+ordered_probit_liquidity,persistence,1.0473,1.0887,-0.6365,0.527,57
+ordered_probit_liquidity,majority,1.0473,1.1116,-1.0172,0.3134,57
+random_forest_liquidity,ordered_probit_liquidity,1.0329,1.0473,-0.2023,0.8404,57

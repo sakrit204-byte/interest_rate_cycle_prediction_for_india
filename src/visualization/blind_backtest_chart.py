@@ -66,7 +66,7 @@ def draw(s: pd.DataFrame, title: str, out: Path) -> None:
         if repo.index.max() >= blind_start:
             ax.axvspan(blind_start, repo.index.max(), color="#f0efec", zorder=0)
     if repo.index.max() >= blind_start:
-        top.text(blind_start, 1.02, "  sealed test period", transform=top.get_xaxis_transform(), color=SECONDARY, fontsize=8)
+        top.text(blind_start, 0.96, "  sealed test period", transform=top.get_xaxis_transform(), color=SECONDARY, fontsize=8)
 
     top.step(repo.index, repo.values, where="post", color=INK, linewidth=1.6)
     for _, r in s.iterrows():
@@ -102,7 +102,7 @@ def draw(s: pd.DataFrame, title: str, out: Path) -> None:
     bot.set_ylim(lo, hi)
     off = s[(s["taylor_rate"] > hi) | (s["taylor_rate"] < lo)]
     note = ("" if off.empty else "Textbook Taylor values off scale: " + ", ".join(
-        f"{pd.Timestamp(d):%b %Y} {v:.0f}%" for d, v in zip(off["date"], off["taylor_rate"])) + " (IIP base effects).\n")
+        f"{pd.Timestamp(d):%b %Y} {v:.0f}%" for d, v in zip(off["date"], off["taylor_rate"])) + " (reasons in reports/economic_interpretation.md).\n")
     bot.set_ylabel("Rate, %")
     bot.legend(loc="upper left", fontsize=8, frameon=False, ncol=3)
     fig.text(0.01, 0.005, note + "Sources: RBI decisions (BIS policy rate), MoSPI, RBI statements; model output from "
@@ -118,8 +118,10 @@ def draw(s: pd.DataFrame, title: str, out: Path) -> None:
 def main() -> int:
     period = sys.argv[1] if len(sys.argv) > 1 else "train"
     s = pd.read_csv(TABLES / f"suggestions_{period}.csv")
+    if period == "blind":  # training walk forward shown as context before the shaded sealed period
+        s = pd.concat([pd.read_csv(TABLES / "suggestions_train.csv"), s], ignore_index=True)
     title = ("RBI decisions and engine suggestions, training period walk forward (not the blind test)"
-             if period == "train" else "Blind backtest: RBI decisions from November 2021 against frozen suggestions")
+             if period == "train" else "Blind backtest: frozen engine against RBI decisions (shaded: sealed test period from November 2021)")
     draw(s, title, FIGURES / f"backtest_{period}")
     print("written", FIGURES / f"backtest_{period}.png")
     return 0

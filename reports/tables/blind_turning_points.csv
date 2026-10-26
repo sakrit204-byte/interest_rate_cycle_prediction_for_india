@@ -1,0 +1,13 @@
+date,new_direction,source,lag_decisions
+2022-05-04,hike,classifier,1.0
+2025-02-07,cut,classifier,1.0
+2026-10-07,hike,classifier,
+2022-05-04,hike,rule,
+2025-02-07,cut,rule,5.0
+2026-10-07,hike,rule,
+2022-05-04,hike,taylor,-3.0
+2025-02-07,cut,taylor,1.0
+2026-10-07,hike,taylor,-10.0
+2022-05-04,hike,suggestion,
+2025-02-07,cut,suggestion,
+2026-10-07,hike,suggestion,

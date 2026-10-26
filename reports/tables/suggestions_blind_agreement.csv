@@ -1,0 +1,5 @@
+source,n,covered,hit_rate_covered,hit_rate_all
+classifier,31,31,0.7742,0.7742
+rule,31,31,0.6774,0.6774
+taylor,31,31,0.3548,0.3548
+suggestion,31,22,0.7727,0.5484

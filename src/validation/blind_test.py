@@ -64,10 +64,10 @@ def nepal() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     return pred, wf.metrics_table(pred), dm
 
 
-def turning_points(s: pd.DataFrame, source: str = "suggestion") -> pd.DataFrame:
+def turning_points(s: pd.DataFrame, source: str = "suggestion", last: str | None = None) -> pd.DataFrame:
     """For each actual change of cycle (first hike after cuts, first cut after hikes), how many
     decisions earlier (negative) or later (positive) the source first called the new direction."""
-    rows, last, prev_tp = [], None, 0
+    rows, prev_tp = [], 0  # last: direction of the last move before the window (D036)
     acts = s["actual"].tolist()
     for i, a in enumerate(acts):
         if a in ("hike", "cut") and a != last:
@@ -95,7 +95,10 @@ def main() -> int:
     s.round(4).to_csv(TABLES / "suggestions_blind.csv", index=False)
     a = se.agreement(s)
     a.round(4).to_csv(TABLES / "suggestions_blind_agreement.csv", index=False)
-    tp = pd.concat([turning_points(s, c) for c in ("classifier", "rule", "taylor", "suggestion")])
+    d = pd.read_csv(TABLES / "rbi_decisions.csv", parse_dates=["date"])
+    before = d[(d["date"] < cfg["blind_start"]) & d["decision"].isin(["hike", "cut"])]
+    last = before["decision"].iloc[-1]
+    tp = pd.concat([turning_points(s, c, last) for c in ("classifier", "rule", "taylor", "suggestion")])
     tp.to_csv(TABLES / "blind_turning_points.csv", index=False)
     print(a.round(3).to_string(index=False), "\n", tp.to_string(index=False))
     return 0
