@@ -4,7 +4,9 @@ Predicting interest rate cycles under political and macroeconomic uncertainty: a
 
 ## Status
 
-Steps 1 to 11 complete; the blind test has been run (26 October 2026). Remaining: scenarios, the Streamlit dashboard, robustness checks and the paper.
+Steps 1 to 13 complete: the blind test has been run (26 October 2026), and the scenario engine and dashboard are built. Remaining: robustness checks and the paper.
+
+Dashboard (runs locally, no hosting): `streamlit run app/main.py`, then open http://localhost:8501. Nine pages: overview, data explorer, variable ledger, political events, models, blind backtest, transmission, scenarios, methods and limitations.
 
 * `reports/blind_test_results.md`: confirmatory results on the sealed period, November 2021 to October 2026, with `reports/figures/backtest_blind.png`.
 * `reports/economic_interpretation.md`: the economic reading of every result (RBI reaction function, Nepal liquidity under the peg, transmission, political events, stability).
