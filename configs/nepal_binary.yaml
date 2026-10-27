@@ -1,0 +1,36 @@
+# Nepal binary model, declared in decision D039 (27 Oct 2026). Frozen: the SHA256 of this file
+# (line endings normalised) is recorded in configs/nepal_binary.sha256. Sealed scoring uses only
+# labels that become public after sealed_after.
+status: frozen
+declared: "2026-10-27"
+sealed_after: "2026-10-27"
+target_series: published interbank rate, NRB Quarterly Economic Bulletin table 41
+horizon_months: 3
+deadband_pp: 0.5
+questions:
+  fall: change over the horizon below minus deadband
+  rise: change over the horizon above deadband
+information_lag_months:
+  interbank: 1
+  corridor: 1
+  liquidity: 2
+features:
+  - level
+  - momentum
+  - ib_minus_floor
+  - ceiling_minus_ib
+  - nrb_bank_rate_change_6m
+  - india_repo_change_3m
+  - reserves_to_deposits
+  - nfa_cb_growth_3m
+  - gov_deposit_change_3m
+  - credit_minus_deposit_growth
+  - calendar
+model: L2 logistic regression, C 0.3, balanced class weights, standardised per window
+embargo_months: 4
+min_train: 60
+training_last_label: "2021-10"
+benchmarks:
+  - persistence (last public label)
+  - calendar only (same logistic on the calendar feature alone)
+  - chance (0.5)
