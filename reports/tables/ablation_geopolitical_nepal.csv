@@ -1,0 +1,5 @@
+question,model,n,balanced_accuracy,bal_acc_ci_low,bal_acc_ci_high,brier,dm_p_value_brier
+fall,baseline,158,0.7274,0.6577,0.811,0.1838,
+fall,geopolitical,158,0.7314,0.6683,0.8028,0.1889,0.2107
+rise,baseline,158,0.6398,0.5403,0.7302,0.2541,
+rise,geopolitical,158,0.6066,0.5254,0.6869,0.2628,0.486
