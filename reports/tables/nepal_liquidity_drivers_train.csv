@@ -1,0 +1,5 @@
+question,model,n,first_origin,balanced_accuracy,bal_acc_ci_low,bal_acc_ci_high,brier,dm_p_value_brier
+fall,baseline,56,2012-10,0.6429,0.4973,0.7832,0.2282,
+fall,drivers,56,2012-10,0.5952,0.4271,0.7191,0.218,0.3728
+rise,baseline,56,2012-10,0.6138,0.468,0.7233,0.224,
+rise,drivers,56,2012-10,0.6785,0.5339,0.7979,0.2481,0.5517
