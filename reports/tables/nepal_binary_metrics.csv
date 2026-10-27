@@ -1,0 +1,13 @@
+period,question,benchmark,n,base_rate,accuracy,balanced_accuracy,bal_acc_ci_low,bal_acc_ci_high
+train,fall,model,158,0.3544,0.7468,0.7274,0.6577,0.811
+train,fall,calendar_only,158,0.3544,0.6139,0.6285,0.5526,0.7048
+train,fall,persistence,158,0.3544,0.5506,0.511,0.4263,0.5803
+train,rise,model,158,0.3038,0.6456,0.6398,0.5403,0.7302
+train,rise,calendar_only,158,0.3038,0.6203,0.5981,0.5141,0.7127
+train,rise,persistence,158,0.3038,0.5696,0.4854,0.39,0.5556
+post_hoc,fall,model,57,0.193,0.6316,0.5296,0.2778,0.7256
+post_hoc,fall,calendar_only,57,0.193,0.5789,0.5316,0.25,0.7552
+post_hoc,fall,persistence,57,0.193,0.7719,0.6512,0.4528,0.8423
+post_hoc,rise,model,57,0.1754,0.6491,0.6691,0.3609,0.8333
+post_hoc,rise,calendar_only,57,0.1754,0.4912,0.4947,0.2742,0.7736
+post_hoc,rise,persistence,57,0.1754,0.7368,0.6043,0.4118,0.699

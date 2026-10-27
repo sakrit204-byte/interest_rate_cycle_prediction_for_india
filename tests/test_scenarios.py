@@ -22,3 +22,9 @@ def test_nepal_response_scales_with_shock():
     assert (half["response"] - one["response"] / 2).abs().max() < 1e-12
     neg = sc.nepal(-1.0)
     assert (neg["ci_low"] <= neg["ci_high"]).all()
+
+
+def test_nepal_binary_config_frozen():
+    from src.models.nepal_binary import check_frozen
+    cfg = check_frozen()
+    assert cfg["horizon_months"] == 3 and cfg["deadband_pp"] == 0.5
