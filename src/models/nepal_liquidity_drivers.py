@@ -68,7 +68,8 @@ def drivers(source: str = "cme") -> pd.DataFrame:
     bm = imf_series("MFS_DC_npl_depository", lambda d: (d["INDICATOR"] == "DCORP_L_BM") &
                     (d["TYPE_OF_TRANSFORMATION"] == "XDC")).reindex(flows.index)
     # min_periods=3: a sum is formed only when all three months are reported, never from a gap
-    return flows.rolling(3, min_periods=3).sum().div(bm, axis=0).mul(100)
+    # NRB flows are in million rupees, IMF broad money in rupees
+    return flows.mul(1e6).rolling(3, min_periods=3).sum().div(bm, axis=0).mul(100)
 
 
 def main(argv=None) -> int:
