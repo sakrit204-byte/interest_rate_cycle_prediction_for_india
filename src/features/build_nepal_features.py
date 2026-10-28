@@ -75,11 +75,23 @@ def imf_series(prefix: str, mask) -> pd.Series:
                      index=pd.PeriodIndex(df["TIME_PERIOD"].str.replace("-M", "-"), freq="M")).sort_index()
 
 
+def nepal_cpi_yoy() -> pd.Series:
+    """IMF CPI inflation for Nepal, with the months whose index repeats the year before left missing.
+
+    In the IMF file the index for mid August 2006 to mid July 2007 is an exact copy of the twelve
+    months before, so the published inflation for those months is zero, an artefact (D052).
+    """
+    total = lambda d: d["COICOP_1999"] == "_T"
+    yoy = imf_series("CPI_npl_cpi", lambda d: total(d) & (d["TYPE_OF_TRANSFORMATION"] == "SRP_YOY_PCH_PA_PT"))
+    index = imf_series("CPI_npl_cpi", lambda d: total(d) & (d["TYPE_OF_TRANSFORMATION"] == "IX"))
+    copied = index.eq(index.shift(12, freq="M").reindex(index.index))
+    return yoy.mask(copied.reindex(yoy.index, fill_value=False))
+
+
 def build() -> pd.DataFrame:
     t = pd.read_csv(TARGET, index_col=0)
     t.index = pd.PeriodIndex(t.index, freq="M")
-    cpi = imf_series("CPI_npl_cpi", lambda d: (d["COICOP_1999"] == "_T") &
-                     (d["TYPE_OF_TRANSFORMATION"] == "SRP_YOY_PCH_PA_PT"))
+    cpi = nepal_cpi_yoy()
     bank_rate = imf_series("MFS_IR_npl_interest_rates", lambda d: d["INDICATOR"] == "MFS166_RT_PT_A_PT")
     repo = daily_rate(BIS_IN)
     liq = liquidity_panel()

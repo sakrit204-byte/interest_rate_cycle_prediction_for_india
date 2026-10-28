@@ -50,7 +50,7 @@ Writing the model in terms of gaps from the regime's nominal anchor is what an e
 
 ## 3. Nepal: why the interbank rate is hard to predict
 
-The Nepal models do not beat chance at a three month horizon (balanced accuracy 0.34 to 0.38 against 0.33 for random guessing; no Diebold Mariano test significant). This is an economic finding, not only a modelling failure.
+The Nepal models do not beat chance at a three month horizon (balanced accuracy 0.35 to 0.38 against 0.33 for random guessing; no Diebold Mariano test significant). This is an economic finding, not only a modelling failure.
 
 1. **The peg imports monetary policy.** With the rupee fixed at 1.6 to the Indian rupee and an open border, Nepal faces the impossible trinity: a fixed exchange rate and a largely open financial link with India leave little room for an independent interest rate. The NRB's own 2025/26 policy names the peg as the nominal anchor and the interbank rate only as an operating target.
 2. **Liquidity, not policy, drives the interbank rate.** The seasonal pattern (falls of about 1 point in mid August and mid September, rises in February and May) is consistent with the government's spending and revenue calendar and with remittance flows, a hypothesis the next Nepal features test directly. Large year end spending floods banks with liquidity; revenue collection drains it. The rate sat near the corridor floor for long spells of excess liquidity (2011 to 2016, 2020, 2024 to 2025).
@@ -112,17 +112,17 @@ Response of Nepali variables to a one point (100 basis point) change in the RBI 
 
 | Months after the RBI move | Interbank rate, pp | 91 day T bill, pp | CPI inflation, pp | Private credit growth, pp |
 |---|---|---|---|---|
-| 0 | minus 0.39 (p 0.28) | minus 0.21 (p 0.48) | 0.12 (p 0.60) | minus 1.0 (p 0.67) |
-| 3 | minus 0.59 (p 0.41) | minus 0.38 (p 0.50) | minus 0.20 (p 0.77) | 1.3 (p 0.74) |
-| 6 | minus 0.73 (p 0.33) | minus 0.70 (p 0.32) | 0.12 (p 0.86) | 8.1 (p 0.10) |
-| 12 | minus 1.57 (p 0.05) | minus 0.43 (p 0.44) | minus 0.03 (p 0.98) | 6.0 (p 0.21) |
-| 24 | minus 0.88 (p 0.22) | minus 0.25 (p 0.70) | 1.51 (p 0.04) | 7.9 (p 0.31) |
+| 0 | minus 0.39 (p 0.28) | minus 0.21 (p 0.48) | 0.12 (p 0.59) | minus 1.0 (p 0.67) |
+| 3 | minus 0.59 (p 0.41) | minus 0.38 (p 0.50) | 0.15 (p 0.81) | 1.3 (p 0.74) |
+| 6 | minus 0.73 (p 0.33) | minus 0.70 (p 0.32) | 0.10 (p 0.88) | 8.1 (p 0.10) |
+| 12 | minus 1.57 (p 0.05) | minus 0.43 (p 0.44) | 0.04 (p 0.95) | 6.0 (p 0.21) |
+| 24 | minus 0.88 (p 0.22) | minus 0.25 (p 0.70) | 0.87 (p 0.23) | 7.9 (p 0.31) |
 
 ### 5.1 Reading
 
 1. **No direct interest rate pass through.** Under a credible peg with an open capital link, uncovered interest parity would make Nepali short rates follow Indian rates one for one. They do not: the point estimates are negative at every horizon, and at twelve months full pass through (plus 1) lies outside the confidence interval for the interbank rate. Nepal's border with India is open for goods and cash, but its capital account is largely closed and its banks cannot freely arbitrage into Indian money markets. Capital controls are what let the peg and an independent short rate coexist, the escape route from the impossible trinity.
 2. **Why the sign is negative.** The negative sign should not be read as Indian tightening easing Nepali money. RBI cycles are few (about six tightening and easing episodes) and they happened to coincide with Nepali liquidity cycles running the other way. The clearest case is 2010 to 2011, when the RBI hiked while Nepal had a liquidity crunch, which then turned into a remittance driven surplus. With so few independent episodes, timing coincidences dominate. The safe conclusion is negative, not that the effect is negative: the data show no positive transmission through short rates.
-3. **Inflation is where the peg bites, and slowly.** The CPI response is near zero for a year and rises to 1.5 points after two years (p 0.04). That is the expected direction if the channel runs through trade: India supplies about two thirds of Nepal's imports at a fixed exchange rate, so Indian price developments arrive in Nepal with a lag. One significant coefficient among many horizons is weak evidence, so we treat it as consistent with the trade channel, not as proof of it.
+3. **No measurable response of inflation to the RBI's own moves.** The CPI response is near zero for a year and rises to 0.9 points after two years, but it is not significant (p 0.23). An earlier version reported 1.5 points (p 0.04); that came from an error in the IMF CPI file, in which the price index for mid August 2006 to mid July 2007 repeats the year before, so measured inflation was zero for twelve months. Those months are now left missing (D052). The peg does tie Nepal's prices to India's (inflation in the two countries moves together, section 5.4), but that link runs through Indian prices and the exchange rate, not through the RBI repo rate itself.
 4. **Credit responds positively but imprecisely**, as it would if Indian tightening coincides with Indian demand booms that raise Nepali trade and remittance income. None of these estimates is significant.
 
 ### 5.2 Does liquidity change transmission? (H4)
@@ -131,12 +131,25 @@ Splitting the RBI shock by Nepali excess reserves (`local_projections_state.csv`
 
 ### 5.3 What it means for the transmission question
 
-India's monetary policy reaches Nepal through prices and the balance of payments, not through short term interest rates. This matches the forecasting result in section 3.2: the RBI repo adds nothing to a three month forecast of the interbank rate once liquidity is known. Both methods point the same way, which is more convincing than either alone.
+India's monetary policy does not reach Nepal through short term interest rates, and its effect on Nepali inflation cannot be measured with confidence. What the peg transmits is India's prices and, through the balance of payments, liquidity. This matches the forecasting result in section 3.2: the RBI repo adds nothing to a three month forecast of the interbank rate once liquidity is known. Both methods point the same way, which is more convincing than either alone.
+
+### 5.4 What the peg carries and what it does not (D052)
+
+Side by side, from `peg_channels.csv` and `reports/figures/peg_channels.png`:
+
+| Period | Inflation correlation, India and Nepal, same month | 12 month change in RBI repo and Nepal interbank rate, correlation | Nepal interbank minus RBI repo, mean, points |
+|---|---|---|---|
+| 2001 to 2026 | 0.46 (0.66 with India's CPI only, from 2013) | minus 0.07 | minus 3.2 |
+| Before the corridor, 2001 to 2016 | 0.32 | minus 0.20 | minus 3.9 |
+| Corridor, 2016 to 2021 | 0.29 | 0.45 | minus 2.7 |
+| Blind window, 2021 to 2026 | 0.88 | 0.18 | minus 1.4 |
+
+Prices follow India: average inflation is close in the two countries (5.5 percent in India, 6.4 in Nepal since 2001) and, once India's CPI is used on both sides, the two rates move together closely, most of all since 2021 when both were driven by the same food and fuel shocks. Interest rates do not: over 25 years the change in Nepal's interbank rate is unrelated to the change in the RBI repo rate, and Nepal's rate sits on average three points below it. The positive correlation in 2016 to 2021 covers a single cycle (both fell in 2020 with the pandemic, a common shock rather than transmission). This is the impossible trinity resolved through capital controls: the peg fixes the exchange rate and so imports India's price level, while the closed capital account leaves the NRB its own short rate, which is set by the liquidity that the peg creates when remittances are converted at the fixed rate (D049).
 
 ## 6. What this means for the paper
 
 * India: the RBI behaves like a forecast targeting, inertial central bank whose anchor changed in steps; the policy signal is news about its own forecast and the gap from the prevailing anchor.
-* Nepal: policy is constrained by the peg; short run interest rates are a liquidity phenomenon. Reserve inflows lower the rate and fiscal drains raise it, consistently across 13 years, while India's repo adds nothing at three months once liquidity is known. Transmission from India runs through prices with a lag of about two years, not through short rates, which Nepal's capital controls insulate.
+* Nepal: policy is constrained by the peg; short run interest rates are a liquidity phenomenon. Reserve inflows lower the rate and fiscal drains raise it, consistently across 13 years, while India's repo adds nothing at three months once liquidity is known. The peg carries India's prices into Nepal (inflation correlation 0.66 since 2013), but not India's policy rate, from which Nepal's capital controls insulate it.
 * Both conclusions are on the training period. The blind window (from November 2021) is the confirmatory test.
 
 ## 7. The suggestion engine on the training period

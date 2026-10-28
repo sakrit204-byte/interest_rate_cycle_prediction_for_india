@@ -26,7 +26,7 @@ import statsmodels.api as sm
 import yaml
 
 from src.features.build_india_features import BIS_IN, BIS_US, CPI_FOCUS_START, daily_rate, fred_daily
-from src.features.build_nepal_features import MFS, imf_series, liquidity_panel
+from src.features.build_nepal_features import MFS, imf_series, liquidity_panel, nepal_cpi_yoy
 
 ROOT = Path(__file__).resolve().parents[2]
 TABLES = ROOT / "reports" / "tables"
@@ -51,8 +51,7 @@ def monthly_panel() -> pd.DataFrame:
     ib = pd.read_csv(ROOT / "data" / "interim" / "nepal" / "nepal_interbank_monthly.csv", index_col="month")
     p["interbank_rate"] = pd.Series(ib["interbank_rate"].values, index=pd.PeriodIndex(ib.index, freq="M"))
     p["tbill_91d"] = imf_series("MFS_IR_npl_interest_rates", lambda d: d["INDICATOR"] == "GSTBILY_RT_PT_A_PT")
-    p["nepal_cpi_yoy"] = imf_series("CPI_npl_cpi", lambda d: (d["COICOP_1999"] == "_T") &
-                                    (d["TYPE_OF_TRANSFORMATION"] == "SRP_YOY_PCH_PA_PT"))
+    p["nepal_cpi_yoy"] = nepal_cpi_yoy()
     flow, code = MFS["private_credit"]
     credit = imf_series(f"{flow}_npl", lambda d: (d["INDICATOR"] == code) & (d["TYPE_OF_TRANSFORMATION"] == "XDC"))
     p["private_credit_growth"] = (credit / credit.shift(12) - 1) * 100

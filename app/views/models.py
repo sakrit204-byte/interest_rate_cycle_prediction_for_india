@@ -38,7 +38,7 @@ with india:
 with nepal:
     st.markdown("Target: direction of the seasonally adjusted interbank rate over three months "
                 "(down, flat or up, deadband 0.5 points).")
-    st.markdown("**Model 1: policy style variables (191 months)**")
+    st.markdown("**Model 1: policy style variables (179 months)**")
     st.dataframe(metrics_view(table("nepal_walk_forward_train_metrics")), hide_index=True, use_container_width=True)
     st.markdown("**Model 2: liquidity under the peg (157 months)**")
     st.dataframe(metrics_view(table("nepal_walk_forward_train_liquidity_metrics")), hide_index=True,

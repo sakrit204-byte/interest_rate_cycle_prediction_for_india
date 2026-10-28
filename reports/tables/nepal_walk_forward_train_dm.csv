@@ -1,6 +1,6 @@
 model_a,model_b,mean_loss_a,mean_loss_b,dm_stat_hln,p_value,n
-ordered_probit,persistence,1.0991,1.0748,0.3925,0.6952,191
-ordered_probit,majority,1.0991,1.0758,0.4312,0.6668,191
-ordered_probit,mean_reversion_rule,1.0991,1.0755,0.5035,0.6152,191
-random_forest,ordered_probit,1.0637,1.0991,-0.6652,0.5067,191
-logistic_l2,ordered_probit,1.0533,1.0991,-0.9586,0.339,191
+ordered_probit,persistence,1.1134,1.0784,0.5503,0.5828,179
+ordered_probit,majority,1.1134,1.074,0.7304,0.4661,179
+ordered_probit,mean_reversion_rule,1.1134,1.075,0.8125,0.4176,179
+random_forest,ordered_probit,1.0622,1.1134,-0.941,0.348,179
+logistic_l2,ordered_probit,1.0436,1.1134,-1.4232,0.1564,179

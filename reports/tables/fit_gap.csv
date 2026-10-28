@@ -1,0 +1,4 @@
+model,classes,n_in_sample,in_sample,n_walk_forward,walk_forward,n_unseen,unseen,unseen_persistence,unseen_period,gap_in_sample_minus_unseen
+India economic ordered probit,3,115,0.598,75,0.639,31,0.693,0.555,blind 2021 to 2026,-0.095
+"Nepal binary logistic, fall",2,222,0.751,158,0.727,57,0.53,0.651,post hoc 2021 to 2026,0.221
+"Nepal binary logistic, rise",2,222,0.735,158,0.64,57,0.669,0.604,post hoc 2021 to 2026,0.065

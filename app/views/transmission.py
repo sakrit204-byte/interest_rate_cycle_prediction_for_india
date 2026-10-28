@@ -29,7 +29,7 @@ fig.update_xaxes(title_text="months after the RBI move", row=2)
 st.plotly_chart(style(fig, height=620, hovermode="closest"), use_container_width=True, theme=None)
 
 st.markdown("""
-**Reading.** Short rates do not follow India: if they did, the interbank and T bill responses would rise towards plus one. At twelve months full pass through lies outside the interval for the interbank rate. Nepal's open border carries goods and cash, but a largely closed capital account stops banks arbitraging into Indian money markets, which is how a peg and a separate short rate can coexist. The negative point estimates reflect few RBI cycles that happened to coincide with opposite Nepali liquidity cycles, not a negative effect. Inflation is where the peg bites: the CPI response rises to about 1.5 points after two years, consistent with Indian prices arriving through trade at a fixed exchange rate.
+**Reading.** Short rates do not follow India: if they did, the interbank and T bill responses would rise towards plus one. At twelve months full pass through lies outside the interval for the interbank rate. Nepal's open border carries goods and cash, but a largely closed capital account stops banks arbitraging into Indian money markets, which is how a peg and a separate short rate can coexist. The negative point estimates reflect few RBI cycles that happened to coincide with opposite Nepali liquidity cycles, not a negative effect. Inflation does not respond measurably to the RBI's own moves (0.9 points after two years, not significant); the peg carries India's prices into Nepal, not its policy rate.
 """)
 
 st.subheader("Does Nepali liquidity change the response? (H4)")

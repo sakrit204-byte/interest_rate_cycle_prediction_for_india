@@ -1,0 +1,5 @@
+period,months,india_inflation_mean,nepal_inflation_mean,inflation_corr_lag0,inflation_corr_lag3,inflation_corr_lag6,inflation_corr_lag12,inflation_corr_lag24,inflation_corr_cpi_only,interbank_vs_repo_corr_12m_change,tbill_vs_repo_corr_12m_change,interbank_minus_repo_mean
+2001 to 2026,291,5.455,6.414,0.455,0.434,0.354,0.229,0.366,0.66,-0.066,0.037,-3.188
+"before corridor, 2001 to 2016",175,5.993,7.405,0.32,0.318,0.273,0.164,0.304,0.272,-0.2,-0.138,-3.886
+"corridor, 2016 to 2021",63,4.498,4.48,0.288,0.217,-0.226,-0.462,0.145,0.288,0.446,0.276,-2.712
+"blind window, 2021 to 2026",53,4.746,5.44,0.879,0.796,0.682,0.381,0.082,0.879,0.182,0.356,-1.427
