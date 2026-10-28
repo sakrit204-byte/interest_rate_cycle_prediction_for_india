@@ -1,0 +1,14 @@
+direction,first_move,last_move,moves,rbi_change,complete,interbank_change,interbank_same_direction,tbill_91d_change,tbill_91d_same_direction,nrb_bank_rate_change,nrb_bank_rate_same_direction
+hike,2001-04-27,2001-04-27,1,0.5,True,0.44,True,1.0,True,0.0,False
+cut,2001-04-30,2004-03-31,7,-3.0,True,-3.3,True,-3.08,True,-2.0,True
+hike,2005-10-25,2008-07-29,10,3.0,True,1.29,True,2.7,True,0.5,True
+cut,2008-10-20,2009-04-21,6,-4.25,True,1.33,False,3.07,False,0.25,False
+hike,2010-03-19,2011-10-25,13,3.75,True,-10.74,False,-8.31,False,0.5,True
+cut,2012-04-17,2013-05-03,4,-1.25,True,-0.39,True,-0.72,True,1.0,False
+hike,2013-09-20,2014-01-28,3,0.75,True,-0.11,False,-0.19,False,0.0,False
+cut,2015-01-15,2017-08-02,7,-2.0,True,2.53,False,2.43,False,-1.0,True
+hike,2018-06-06,2018-08-01,2,0.5,True,-2.85,False,-2.95,False,-0.5,False
+cut,2019-02-07,2020-05-22,7,-2.5,True,-2.82,True,-0.65,True,-1.5,True
+hike,2022-05-04,2023-02-08,6,2.5,True,0.02,False,2.08,True,1.5,True
+cut,2025-02-07,2025-12-05,4,-1.25,True,-0.3,True,-0.35,True,-0.75,True
+hike,2026-10-07,2026-10-07,1,0.25,False,,False,,False,,False

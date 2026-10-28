@@ -14,7 +14,11 @@ theory predicts, using the same monthly panel as the local projections (D032):
 Each is reported for the whole sample and for three periods: before the NRB corridor
 (to mid 2016), corridor years before the blind window, and the blind window.
 
-Outputs: reports/tables/peg_channels.csv, reports/figures/peg_channels.png and .svg
+Cycle by cycle (D053): for every RBI cycle (a run of moves in one direction in the decision
+table), the change in Nepal's interbank rate, 91 day treasury bill rate and NRB bank rate from
+the month before the first move to three months after the last one.
+
+Outputs: reports/tables/peg_channels.csv, peg_cycles.csv, reports/figures/peg_channels.png and .svg
 Usage: python -m src.econometrics.peg_channels
 """
 
@@ -30,6 +34,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 from src.econometrics.local_projections import monthly_panel
+from src.features.build_nepal_features import imf_series
 
 ROOT = Path(__file__).resolve().parents[2]
 TABLES = ROOT / "reports" / "tables"
@@ -64,6 +69,26 @@ def table(p: pd.DataFrame) -> pd.DataFrame:
         row["interbank_vs_repo_corr_12m_change"] = s["interbank_change_12m"].corr(s["repo_change_12m"])
         row["tbill_vs_repo_corr_12m_change"] = s["tbill_change_12m"].corr(s["repo_change_12m"])
         row["interbank_minus_repo_mean"] = (s["interbank_rate"] - s["repo"]).mean()
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def cycles(p: pd.DataFrame) -> pd.DataFrame:
+    d = pd.read_csv(TABLES / "rbi_decisions.csv", parse_dates=["date"])
+    moves = d[d["decision"].isin(["hike", "cut"])].copy()
+    moves["cycle"] = (moves["decision"] != moves["decision"].shift()).cumsum()
+    bank = imf_series("MFS_IR_npl_interest_rates", lambda x: x["INDICATOR"] == "MFS166_RT_PT_A_PT")
+    series = {"interbank": p["interbank_rate"], "tbill_91d": p["tbill_91d"], "nrb_bank_rate": bank}
+    rows = []
+    for _, g in moves.groupby("cycle"):
+        a, b = pd.Period(g["date"].iloc[0], freq="M") - 1, pd.Period(g["date"].iloc[-1], freq="M") + 3
+        row = {"direction": g["decision"].iloc[0], "first_move": g["date"].iloc[0].date(),
+               "last_move": g["date"].iloc[-1].date(), "moves": len(g), "rbi_change": g["change_bp"].sum() / 100,
+               "complete": b <= p["interbank_rate"].last_valid_index()}
+        sign = 1 if row["direction"] == "hike" else -1
+        for k, s in series.items():
+            row[f"{k}_change"] = s.get(b, float("nan")) - s.get(a, float("nan"))
+            row[f"{k}_same_direction"] = row[f"{k}_change"] * sign > 0.1  # moved over 0.1 point the RBI's way
         rows.append(row)
     return pd.DataFrame(rows)
 
@@ -109,6 +134,11 @@ def main() -> int:
     p = panel()
     t = table(p).round(3)
     t.to_csv(TABLES / "peg_channels.csv", index=False)
+    c = cycles(p).round(2)
+    c.to_csv(TABLES / "peg_cycles.csv", index=False)
+    done = c[c["complete"]]
+    print(done.to_string(index=False))
+    print({k: f"{int(done[f'{k}_same_direction'].sum())} of {len(done)}" for k in ("interbank", "tbill_91d", "nrb_bank_rate")})
     chart(p)
     pd.set_option("display.width", 250)
     print(t.T.to_string())
