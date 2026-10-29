@@ -254,27 +254,158 @@ const meaningSlide = () => {
   });
   s.addNotes("The sealed forecast is from the frozen Nepal model at origin July 2026, three months ahead, recorded on 27 October before the outcome was public.");
 };
-// 3 Process
-pres.addSection({ title: "Method" });
-s = content("A process built to avoid fooling ourselves", "Method");
-const steps = [
-  ["Collect", "RBI, MOSPI, IMF, BIS, FRED and about 430 NRB workbooks; zero cost, every download logged with a hash"],
-  ["Point in time", "Each meeting sees only data published before it, with the true publication lags"],
-  ["Declare first", "52 logged decisions: every model, feature and test fixed before it was run; configs frozen by SHA256"],
-  ["Walk forward", "Refit at every decision on past data only, 2001 to October 2021; four month embargo for Nepal"],
-  ["Blind test", "November 2021 to October 2026 kept unseen until the end; Nepal forecasts sealed for later scoring"],
-];
-steps.forEach(([h, b], i) => {
-  const x = 0.5 + i * 1.84;
-  card(s, x, 1.35, 1.7, 3.35, `step${i}`);
-  dot(s, x + 0.2, 1.55, String(i + 1), i < 4 ? C.text2 : C.accent1, `stepdot${i}`);
-  txt(s, h, { x: x + 0.2, y: 2.1, w: 1.35, h: 0.5, fontSize: 15, bold: true, color: C.text2 });
-  txt(s, b, { x: x + 0.2, y: 2.6, w: 1.35, h: 2.0, fontSize: 12, valign: "top" });
-});
-txt(s, "Failures are kept on the record: news indices, geopolitical indices, random forests and extra liquidity drivers were tested and rejected.",
-  { x: 0.5, y: 4.85, w: 9.0, h: 0.35, fontSize: 12, color: C.accent4, italic: true });
-s.addNotes("The main threat in forecasting work is choosing a model after seeing how it scores. Every choice here was written into the decision log before it was run, the configuration is frozen by hash, and five years of decisions were kept unseen until the final test.");
+// ---------- Training process, seven slides, in the order of the dashboard pages
+pres.addSection({ title: "How the models were trained" });
+const tcard = (s, x, y, w, h, title, col, body, name, size = 11) => {
+  card(s, x, y, w, h, name);
+  txt(s, [{ text: title, options: { bold: true, color: col, breakLine: true } }, { text: body }],
+    { x: x + 0.15, y: y + 0.1, w: w - 0.3, h: h - 0.18, fontSize: size, valign: "top" });
+};
+const page = (s, label) => txt(s, `Dashboard page: ${label}`, { x: 5.5, y: 5.25, w: 3.4, h: 0.25, fontSize: 9, color: C.accent4, italic: true, align: "right" });
 
+// T1 pipeline
+s = content("How the models were trained: seven steps", "How the models were trained");
+const stages = [
+  ["Collect", "1,015 source files from RBI, MOSPI, IMF, BIS, FRED and NRB, each logged with a hash", "Data explorer"],
+  ["Choose variables", "64 candidates in a ledger; 25 used, each other one kept or dropped with a reason", "Variable ledger"],
+  ["Features at the cutoff", "Only what was published before each decision or month", "Data explorer"],
+  ["Targets", "India: cut, hold or hike. Nepal: moves over 0.5 point in 3 months", "Models"],
+  ["Walk forward", "Refit at every decision on past outcomes only, up to October 2021", "Models"],
+  ["Check the skill", "Permutation, stability, block accuracy, replication, ablations", "Models, stability"],
+  ["Freeze and blind test", "Configuration hashed, then scored once on 2021 to 2026", "Blind backtest"],
+];
+s.addShape(pres.shapes.LINE, { x: 0.85, y: 1.56, w: 8.3, h: 0, line: { color: HEX.line, width: 2 }, objectName: "flowline" });
+stages.forEach(([h, b, pg], i) => {
+  const x = 0.5 + i * 1.3;
+  dot(s, x + 0.14, 1.35, String(i + 1), i === 6 ? C.accent1 : C.text2, `tdot${i}`);
+  txt(s, h, { x, y: 1.9, w: 1.22, h: 0.55, fontSize: 12, bold: true, color: C.text2, valign: "top" });
+  txt(s, b, { x, y: 2.5, w: 1.22, h: 1.85, fontSize: 10.5, valign: "top" });
+  txt(s, pg, { x, y: 3.85, w: 1.22, h: 0.45, fontSize: 9.5, italic: true, color: C.accent4, valign: "top" });
+});
+txt(s, "Every choice from step 2 onward was written into the decision log before it was run, and failures stay on the record.", { x: 0.5, y: 4.5, w: 9.0, h: 0.4, fontSize: 13, italic: true, color: C.text2 });
+s.addNotes("The seven steps run in this order and each one feeds the next. The grey line under each step names the page of the Streamlit dashboard where it can be inspected. Every choice in steps 2 to 7 was written into the decision log before it was run.");
+
+// T2 data and ledger
+s = content("Steps 1 and 2: data, and a ledger of every variable", "How the models were trained");
+const src = [
+  ["RBI", "Policy statements, policy index, projections", "250"],
+  ["MOSPI", "CPI, industrial production", "8"],
+  ["IMF", "Nepal CPI, monetary surveys, interest rates", "7"],
+  ["BIS", "Policy rates of India and the US", "2"],
+  ["FRED", "Brent oil, rupee per dollar, VIX", "3"],
+  ["NRB", "Macro tables, time series database", "744"],
+  ["Caldara and Iacoviello", "Geopolitical risk index", "1"],
+];
+s.addTable([[head("Source"), head("What"), head("Files")]].concat(src.map(([a, b, c]) => [cell(a, { align: "left", bold: true }), cell(b, { align: "left" }), cell(c)])),
+  { x: 0.5, y: 1.15, w: 5.1, colW: [1.35, 3.0, 0.75], fontFace: THEME.bodyFontFace, fontSize: 10.5, color: C.text1,
+    border: { type: "solid", pt: 0.5, color: HEX.line }, rowH: 0.3, margin: 0.04 });
+txt(s, "Files that failed or were incomplete are logged, not silently dropped: 1,015 of 1,177 downloads are usable.",
+  { x: 0.5, y: 3.75, w: 5.1, h: 0.6, fontSize: 10.5, color: C.accent4, italic: true });
+s.addChart(pres.charts.BAR, [{ name: "Variables", labels: ["Used in the models", "Candidate, not used", "Robustness only", "Pending data", "Excluded"], values: [25, 22, 8, 4, 5] }], {
+  x: 5.85, y: 1.1, w: 3.65, h: 3.0, barDir: "bar", ...axis(), chartColors: [HEX.nepal, HEX.muted, HEX.muted, HEX.muted, HEX.muted],
+  catAxisOrientation: "maxMin", showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0", valAxisHidden: true,
+  showLegend: false, catAxisLabelFontSize: 10, valAxisMaxVal: 30,
+  showTitle: true, title: "The variable ledger, 64 variables", titleFontSize: 11, titleColor: HEX.ink,
+});
+txt(s, "Each variable has a role, a source, a publication lag and a reason for its status, so nothing enters a model unexplained.",
+  { x: 5.85, y: 4.2, w: 3.65, h: 0.85, fontSize: 11, valign: "top" });
+page(s, "Data explorer, Variable ledger");
+s.addNotes("The ledger is data/source_registry/variable_registry.csv. Used means core or in use; excluded includes one variable that was coded and then not used. Each download is in a manifest under data/source_registry/manifests with its address, time and SHA256 hash.");
+
+// T3 features and targets
+s = content("Steps 3 and 4: features at the cutoff, and targets", "How the models were trained");
+const lab = (x) => cell(x, { align: "left", bold: true, color: C.text2 });
+const l = (x) => cell(x, { align: "left" });
+s.addTable([
+  [head(""), head("India"), head("Nepal")],
+  [lab("One row per"), l("RBI decision: 146 since 2001, inter meeting moves included"), l("Month, from the mid 1990s")],
+  [lab("Target"), l("Cut, hold or hike"), l("Does the published interbank rate rise, or fall, by more than 0.5 point over the next three months?")],
+  [lab("What is known"), l("Data published at least 7 days before the decision (1 and 30 days as checks)"), l("Interbank and corridor rates lagged one month, monetary data two months, as published")],
+  [lab("Inputs"), l("Previous decision; revision to the RBI's inflation projection; inflation and projected inflation minus the anchor; industrial growth minus its five year mean; rupee move over three months"),
+                  l("Interbank level and momentum; distance to the corridor floor and ceiling; NRB and RBI rate changes; reserves to deposits; NRB foreign asset growth; government deposits at the NRB; credit minus deposit growth; calendar effect")],
+  [lab("Fixed in advance"), l("Nominal anchor by regime: 5 percent from 2001, 8 in 2014, 6 in 2015, 5 in 2016, then the 4 percent target"), l("The 0.5 point band, set before the classes were counted")],
+], { x: 0.5, y: 1.15, w: 9.0, colW: [1.5, 3.75, 3.75], fontFace: THEME.bodyFontFace, fontSize: 10.5, color: C.text1,
+  border: { type: "solid", pt: 0.5, color: HEX.line }, margin: 0.06 });
+txt(s, "The rule is enforced in code: features are joined on publication dates, and a test fails if any input is dated after its cutoff. RBI projections were hand coded from 223 policy statements and count only from the day they were published.", { x: 0.5, y: 4.3, w: 9.0, h: 0.7, fontSize: 12, italic: true, color: C.text2 });
+page(s, "Data explorer, Models");
+s.addNotes("The point in time rule is enforced in code: features are joined on publication dates, and tests fail if any value is dated after its cutoff. RBI projections were hand coded from the policy statements and count only from the day they were published.");
+
+// T4 walk forward
+s = content("Step 5: walk forward training, never looking ahead", "How the models were trained");
+const rowsWF = [[0, 2.4], [0, 3.0], [0, 3.6]];
+rowsWF.forEach(([x0, tr], i) => {
+  const y = 1.35 + i * 0.55;
+  txt(s, `Origin ${i + 1}`, { x: 0.5, y, w: 0.9, h: 0.35, fontSize: 10.5, color: C.accent4, valign: "middle" });
+  s.addShape(pres.shapes.RECTANGLE, { x: 1.45, y: y + 0.05, w: tr, h: 0.25, fill: { color: C.accent2 }, line: { type: "none" }, objectName: `wftr${i}` });
+  s.addShape(pres.shapes.RECTANGLE, { x: 1.45 + tr, y: y + 0.05, w: 0.5, h: 0.25, fill: { color: "D9DCE1" }, line: { type: "none" }, objectName: `wfemb${i}` });
+  s.addShape(pres.shapes.OVAL, { x: 1.45 + tr + 0.52, y: y + 0.04, w: 0.27, h: 0.27, fill: { color: C.accent1 }, line: { type: "none" }, objectName: `wfte${i}` });
+});
+txt(s, [
+  { text: "Train", options: { color: C.accent2, bold: true } }, { text: "  on public outcomes    " },
+  { text: "Gap", options: { color: C.accent4, bold: true } }, { text: "  Nepal labels not yet known    " },
+  { text: "Predict", options: { color: C.accent1, bold: true } }, { text: "  the next one" },
+], { x: 0.5, y: 3.05, w: 6.0, h: 0.3, fontSize: 10 });
+tcard(s, 0.5, 3.5, 2.9, 1.6, "Expanding window", C.accent2, "India from the 41st decision (January 2010); Nepal after 60 months. Rolling and recency weighted windows were tried for Nepal and did not do better overall.", "t4a", 10.5);
+tcard(s, 3.55, 3.5, 2.9, 1.6, "Refit every time", C.accent2, "Scaling, coefficients and the calendar effect are estimated inside each window only, so no future mean leaks in.", "t4b", 10.5);
+tcard(s, 6.6, 3.5, 2.9, 1.6, "Tuning without peeking", C.accent2, "Penalty strength picked by an inner walk forward on the last 15 training decisions, choosing the simplest within one standard error.", "t4c", 10.5);
+tcard(s, 6.6, 1.25, 2.9, 1.95, "Benchmarks, same rules", C.accent4, "Majority class, persistence (repeat the last decision) and simple rules are scored on exactly the same origins.", "t4d", 10.5);
+page(s, "Models");
+s.addNotes("The Nepal gap, or embargo, equals the three month horizon plus the publication lag, so a training label is never one that would still be unknown at the forecast origin. The random forest used fixed shallow settings so that it could not be tuned to the test period.");
+
+// T5 generations
+s = content("Step 5: three generations of the India model", "How the models were trained");
+s.addChart(pres.charts.BAR, [{
+  name: "Balanced accuracy",
+  labels: ["Majority class", "Persistence", "Gen 1: probit, 10 inputs", "Gen 1: Taylor rule probit", "Gen 1: random forest", "Gen 2: with RBI projections", "Gen 3: gaps from the anchor"],
+  values: [0.359, 0.532, 0.442, 0.520, 0.551, 0.588, 0.639],
+}], {
+  x: 0.4, y: 1.1, w: 5.6, h: 3.95, barDir: "bar", ...axis(), catAxisOrientation: "maxMin",
+  chartColors: [HEX.muted, HEX.muted, "BFC4CC", "BFC4CC", "BFC4CC", "F4B08E", HEX.india],
+  showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0.00", valAxisHidden: true, valAxisMinVal: 0, valAxisMaxVal: 0.8,
+  showLegend: false, catAxisLabelFontSize: 10,
+  showTitle: true, title: "Walk forward balanced accuracy, training years", titleFontSize: 11, titleColor: HEX.ink,
+});
+tcard(s, 6.3, 1.2, 3.2, 1.2, "Gen 1: realized data", C.accent4, "Inflation and growth as published. Complex versions overfit; none clearly beat persistence.", "t5a", 10.5);
+tcard(s, 6.3, 2.5, 3.2, 1.2, "Gen 2: the RBI's own forecast", C.accent1, "Adding its inflation projection and its revision: the RBI reacts to news in its forecast.", "t5b", 10.5);
+tcard(s, 6.3, 3.8, 3.2, 1.25, "Gen 3: distance to the anchor", C.accent1, "Inflation measured against the anchor of each regime. Six inputs. Chosen as the primary model.", "t5c", 10.5);
+page(s, "Models");
+s.addNotes("Generation 1 was scored on 80 decisions, generations 2 and 3 on 75, because RBI projections start later. Nepal went the same way: a policy style model (0.35) gave way to a liquidity model (0.42) and then to the two yes or no questions (0.64 for rises, 0.73 for falls in the training years). Every step up was declared before it was run, and the failures stay in the record.");
+
+// T6 skill checks
+s = content("Step 6: is the skill real, and is it stable?", "How the models were trained");
+s.addTable([
+  [head("Check"), head("Question it answers"), head("Result")],
+  [cell("Permutation test", { align: "left", bold: true }), cell("Could shuffled history score as well?", { align: "left" }), cell("Generation 2: 0.59 against 0.47 for the top 5 percent of 96 shifts; p 0.01", { align: "left" })],
+  [cell("Coefficient stability", { align: "left", bold: true }), cell("Does each effect keep its sign as the window grows?", { align: "left" }), cell("All 6 India inputs in at least 81 percent of 75 windows; all 8 Nepal inputs in at least 82 percent of 157", { align: "left" })],
+  [cell("Accuracy by period", { align: "left", bold: true }), cell("Is the gain spread over time, not one lucky spell?", { align: "left" }), cell("India beats persistence in 3 of 4 three year blocks; Nepal in 3 of 5", { align: "left" })],
+  [cell("Diebold Mariano", { align: "left", bold: true }), cell("Are probability scores better than the benchmark?", { align: "left" }), cell("Not significantly better than persistence (p 0.62 in training)", { align: "left", color: C.accent5 })],
+  [cell("Ablations", { align: "left", bold: true }), cell("Do news, geopolitical or election indices help?", { align: "left" }), cell("None improved the model; all rejected", { align: "left" })],
+  [cell("Replication", { align: "left", bold: true }), cell("Does a rebuild from raw files give the same output?", { align: "left" }), cell("Identical file hashes", { align: "left" })],
+], { x: 0.5, y: 1.15, w: 9.0, colW: [1.9, 3.3, 3.8], fontFace: THEME.bodyFontFace, fontSize: 10.5, color: C.text1,
+  border: { type: "solid", pt: 0.5, color: HEX.line }, rowH: 0.48, margin: 0.05 });
+page(s, "Models, stability and replication");
+s.addNotes("The permutation test shifts the decision labels in time while keeping their order, which keeps the persistence of policy but breaks the link to the inputs. A coefficient counts as learned only if its sign holds in at least 80 percent of windows, a rule set before the check (D031).");
+
+// T7 freeze and blind
+s = content("Step 7: freeze, then test once on unseen years", "How the models were trained");
+const fz = [
+  ["Freeze", C.text2, "Models, inputs and benchmarks written into a configuration and hashed with SHA256. The scoring script refuses to run if the hash changes."],
+  ["Blind test", C.accent1, "Scored once on November 2021 to October 2026: 31 RBI decisions and 57 Nepal months, still refitting at each origin on outcomes public by then."],
+  ["Seal", C.accent2, "Nepal forecasts whose outcomes are not yet public are stored now and scored when the NRB publishes."],
+  ["Use", C.accent3, "For the outlook the same model is refitted on all 146 decisions, with nothing added."],
+];
+fz.forEach(([h, col, b], i) => {
+  const x = 0.5 + i * 2.3;
+  card(s, x, 1.3, 2.1, 2.75, `fz${i}`);
+  dot(s, x + 0.15, 1.45, String(i + 1), col, `fzd${i}`);
+  txt(s, h, { x: x + 0.15, y: 1.95, w: 1.8, h: 0.4, fontSize: 14, bold: true, color: col });
+  txt(s, b, { x: x + 0.15, y: 2.35, w: 1.8, h: 1.65, fontSize: 10.5, valign: "top" });
+  if (i < 3) s.addShape(pres.shapes.CHEVRON, { x: x + 2.13, y: 2.55, w: 0.14, h: 0.3, fill: { color: C.accent4 }, line: { type: "none" }, objectName: `fza${i}` });
+});
+txt(s, "Result: India 0.69 balanced accuracy on the blind years, against 0.55 for persistence.",
+  { x: 0.5, y: 4.3, w: 9.0, h: 0.6, fontSize: 13, italic: true, color: C.text2 });
+page(s, "Blind backtest");
+s.addNotes("Results after the freeze that came from designs chosen later, such as the Nepal yes or no questions, are labelled post hoc rather than blind.");
 cyclesSlide();
 // 4 India reaction function
 s = content("What the RBI reacts to", "India");
