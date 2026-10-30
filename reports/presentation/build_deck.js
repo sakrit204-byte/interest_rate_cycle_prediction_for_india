@@ -1,6 +1,3 @@
-// Builds the presentation from the committed tables and figures.
-// Needs pptxgenjs 3.12.0 (npm install pptxgenjs@3.12.0 in any folder, then run with NODE_PATH set to its node_modules),
-// apply_theme.js from the pptx skill, and deck_data.json beside this script (exported from reports/tables).
 const pptxgen = require("pptxgenjs");
 const path = require("path");
 const { applyTheme } = require("C:/Users/ACER/.claude/skills/synced/11ee3d9a-0528-437e-a2ff-3bd523a17804_e7fd4a16-4b00-422d-b074-e244d9894933/pptx/scripts/apply_theme.js");
@@ -25,7 +22,7 @@ const THEME = {
 const pres = new pptxgen();
 pres.layout = "LAYOUT_16x9"; // 10 x 5.625 in
 pres.theme = { headFontFace: THEME.headFontFace, bodyFontFace: THEME.bodyFontFace };
-pres.title = "Will India enter a new rate cycle, and does Nepal follow?";
+pres.title = "Will India enter a new rate cycle, and how does it reach Nepal?";
 pres.author = "sakrit204-byte";
 const C = pres.SchemeColor;
 
@@ -85,20 +82,20 @@ const cell = (t, o = {}) => ({ text: t, options: { align: "center", ...o } });
 // ---------- 1 Title
 pres.addSection({ title: "Opening" });
 let s = pres.addSlide({ masterName: "TITLE_DARK", sectionTitle: "Opening" });
-s.addText("Will India enter a new rate cycle, and does Nepal follow?", { placeholder: "title", fontSize: 34 });
+s.addText("Will India enter a new rate cycle, and how does it reach Nepal?", { placeholder: "title", fontSize: 32 });
 s.addText([
   { text: "RBI policy cycles, and Nepal's interest rates under the peg of 1.6 Nepali rupees to the Indian rupee", options: { breakLine: true } },
   { text: " ", options: { breakLine: true, fontSize: 10 } },
   { text: "RateCycle India Nepal  |  Macroeconomics project  |  October 2026", options: { fontSize: 13, color: "9FB3D1" } },
 ], { placeholder: "body" });
-s.addNotes("Two questions. First, is India entering a new interest rate cycle, and how far will it go? Second, because Nepal's rupee is pegged to India's at 1.6, do Nepal's interest rates follow India's cycles?");
+s.addNotes("Two questions. First, is India entering a new interest rate cycle, and how far will it go? Second, because Nepal's rupee is pegged to India's at 1.6, how does India's cycle carry over into Nepal's prices and interest rates?");
 
 // ---------- 2 Answers up front
 s = content("The answers", "Opening");
 const stats = [
   ["Yes", C.accent1, 44, "India entered a hiking cycle on 7 October 2026, repo 5.25 to 5.50. Our model gives a second hike in December a 0.56 chance."],
   ["5.75 to 6.00", C.accent1, 28, "Most likely end by April 2027: 5.75, or 6.00 if oil stays above 110 dollars. A short cycle like 2013 and 2018."],
-  ["6 of 12", C.accent2, 44, "RBI cycles since 2001 in which Nepal's interbank rate moved the same way: a coin flip, despite the peg."],
+  ["0.6", C.accent2, 44, "Points the NRB moved its policy corridor per point of RBI move, in each of the three RBI cycles since 2019."],
 ];
 stats.forEach(([v, col, size, label], i) => {
   const x = 0.5 + i * 3.07;
@@ -106,9 +103,9 @@ stats.forEach(([v, col, size, label], i) => {
   txt(s, v, { x: x + 0.25, y: 1.5, w: 2.4, h: 0.95, fontSize: size, bold: true, color: col, fontFace: THEME.headFontFace, valign: "bottom" });
   txt(s, label, { x: x + 0.25, y: 2.55, w: 2.4, h: 1.25, fontSize: 12.5, valign: "top" });
 });
-txt(s, "The peg ties Nepal's prices to India's, not its interest rates. Nepal's rate is set by its own liquidity, which the peg creates when remittances are converted at the fixed rate.",
+txt(s, "Through the peg, Nepal's prices and policy rate are derived from India's cycle; remittance liquidity decides how much reaches Nepal's market rate.",
   { x: 0.5, y: 4.1, w: 9.0, h: 0.9, fontSize: 14, color: C.text2, italic: true });
-s.addNotes("India: the new cycle has already started; the question now is how long it runs. Nepal: the peg carries prices across the border, but Nepal's short term interest rates follow India's only half the time, no better than chance.");
+s.addNotes("India: the new cycle has already started; the question now is how long it runs. Nepal: the peg carries India's prices across the border, and the NRB has answered every RBI cycle since 2019 with six tenths of the RBI's move.");
 
 // ---------- 4 RBI cycles since 2001 (placed after the process slide)
 const cyclesSlide = () => {
@@ -132,31 +129,6 @@ const cyclesSlide = () => {
     { x: 6.15, y: 3.4, w: 3.35, h: 1.6, fontSize: 11.5, valign: "top" });
   s.addNotes("A cycle is a run of moves in one direction. Since 2005 hiking cycles have had between 2 and 13 hikes. The 2013 cycle followed the taper tantrum and the rupee's fall; 2018 followed oil and the rupee. Source: reports/tables/rbi_decisions.csv and peg_cycles.csv.");
 };
-
-// ---------- 6 Can the model see a cycle coming
-const turnSlide = () => {
-  s = content("Can the model see a new cycle coming?", "India");
-  s.addChart(pres.charts.LINE, [
-    { name: "P(hike)", labels: D.blind.labels.map(shortDate), values: D.blind.hike },
-    { name: "P(cut)", labels: D.blind.labels.map(shortDate), values: D.blind.cut },
-  ], {
-    x: 0.4, y: 1.1, w: 5.6, h: 3.95, ...axis(), chartColors: [HEX.india, HEX.nepal], lineSize: 2, lineDataSymbol: "circle", lineDataSymbolSize: 5,
-    catAxisLabelFrequency: 4, catAxisLabelFontSize: 9, valAxisMinVal: 0, valAxisMaxVal: 1, valAxisMajorUnit: 0.25, valAxisLabelFormatCode: "0.00",
-    showLegend: true, legendPos: "b", legendFontSize: 10,
-    showTitle: true, title: "Probabilities before each decision, unseen 2021 to 2026", titleFontSize: 11, titleColor: HEX.ink,
-  });
-  const turns = [
-    ["May 2022, first hike", C.accent1, "P(hike) rose from 0.17 to 0.45 at the first hike, then 0.84 at the next. One meeting late."],
-    ["February 2025, first cut", C.accent2, "P(cut) only 0.14 at the first cut, 0.57 at the next. One meeting late."],
-    ["October 2026, first hike", C.accent5, "P(hike) rose to 0.27 in August, then fell to 0.09 at the hike itself. Missed."],
-  ];
-  turns.forEach(([h, col, b], i) => {
-    card(s, 6.3, 1.2 + i * 1.27, 3.2, 1.15, `turn${i}`);
-    txt(s, [{ text: h, options: { bold: true, color: col, breakLine: true } }, { text: b }], { x: 6.45, y: 1.28 + i * 1.27, w: 2.95, h: 1.02, fontSize: 11.5, valign: "top" });
-  });
-  s.addNotes("Over the five unseen years the model's balanced accuracy is 0.69 against 0.33 for chance, but its plain accuracy, 0.77, equals simply repeating the last decision, and the gain over that is not significant (p 0.51). Its weakness is the start of a cycle: it reacts one meeting late, because it sees inflation data, not the RBI's words or market expectations.");
-};
-
 // ---------- 8 Outlook: will it continue
 const outlookSlide = () => {
   s = content("Will the new cycle continue? A second hike is likely", "India");
@@ -172,7 +144,7 @@ const outlookSlide = () => {
   const o = [
     ["December: decided already", C.accent1, "Inflation 5.5 percent and rising, a recent hike, strong industry: about 0.56 in every scenario."],
     ["February: oil decides", C.accent1, "Dear oil or a Gulf war keeps hiking; cheaper oil or a world slowdown ends the cycle."],
-    ["Read with care", C.accent4, "Scenarios are our assumptions fed into the model's inputs. The model calls cycle ends early."],
+    ["How it is built", C.accent4, "Each scenario sets oil, inflation and growth inputs; the same frozen model scores them all."],
   ];
   o.forEach(([h, col, b], i) => {
     const x = 0.5 + i * 3.07;
@@ -214,46 +186,6 @@ const endSlide = () => {
   s.addNotes("Each meeting's probabilities are chained: every branch carries its own previous decision and repo level into the next meeting. Source: reports/tables/india_outlook_paths_20261028.csv.");
 };
 
-// ---------- 10 Nepal through India's cycles
-const nepalCyclesSlide = () => {
-  pres.addSection({ title: "Nepal" });
-  s = content("Nepal through India's cycles: a coin flip", "Nepal");
-  const done = D.cycles.filter((c) => c.complete === true);
-  const yes = (b) => (b === true ? cell("same way", { color: C.accent3, bold: true }) : cell("no", { color: C.accent4 }));
-  const rows = [[head("RBI cycle"), head("RBI change"), head("Nepal interbank"), head("Followed?"), head("NRB bank rate"), head("Followed?")]].concat(done.map((c) => [
-    cell(`${c.direction === "hike" ? "Hike" : "Cut"} ${span(c)}`, { align: "left" }),
-    cell(signed(c.rbi_change)), cell(signed(c.interbank_change)), yes(c.interbank_same_direction),
-    cell(signed(c.nrb_bank_rate_change)), yes(c.nrb_bank_rate_same_direction),
-  ]));
-  s.addTable(rows, { x: 0.5, y: 1.1, w: 6.2, colW: [1.45, 0.95, 1.15, 0.85, 1.0, 0.8], fontFace: THEME.bodyFontFace, fontSize: 9.5, color: C.text1,
-    border: { type: "solid", pt: 0.5, color: HEX.line }, rowH: 0.29, margin: 0.03 });
-  card(s, 6.95, 1.1, 2.55, 3.9, "nc-read");
-  txt(s, [
-    { text: "Market rate: 6 of 12", options: { bold: true, color: C.accent2, breakLine: true } },
-    { text: "The interbank rate moved the RBI's way only half the time, in 2010 falling 10.7 points while India hiked.", options: { breakLine: true } },
-    { text: " ", options: { breakLine: true, fontSize: 6 } },
-    { text: "NRB policy rate: 7 of 12", options: { bold: true, color: C.accent2, breakLine: true } },
-    { text: "The NRB often leans the same way, by less: plus 1.50 when India hiked 2.50 in 2022.", options: { breakLine: true } },
-  ], { x: 7.1, y: 1.25, w: 2.3, h: 3.65, fontSize: 11.5, valign: "top" });
-  s.addNotes("Change from the month before the RBI's first move to three months after its last, in percentage points. Same way means a move of more than 0.1 point in the RBI's direction. The NRB bank rate is the ceiling of the NRB corridor. Decision D053, reports/tables/peg_cycles.csv.");
-};
-
-// ---------- 14 What India's new cycle means for Nepal
-const meaningSlide = () => {
-  s = content("What India's new cycle means for Nepal", "Nepal");
-  const m = [
-    ["Interest rates: little", C.accent2, "Nepal's interbank rate has sat on the NRB floor of 2.75 percent for 34 months. It moves when the NRB moves the floor or liquidity dries up, not when the RBI hikes."],
-    ["Prices: yes", C.accent1, "Every fall of the Indian rupee against the dollar is a fall of the Nepali rupee. Inflation in the two countries has moved together closely since 2021 (0.88)."],
-    ["Remittances: the risk", C.accent5, "Remittances reach 29 percent of broad money a year, largely from the Gulf. A Gulf war could cut them and lift Nepal off the floor."],
-    ["Watch the NRB", C.accent3, "The NRB's policy rate leaned with the RBI in 7 of 12 cycles. Our sealed Nepal forecast: rise 0.29, fall 0.24 by October."],
-  ];
-  m.forEach(([h, col, b], i) => {
-    const x = 0.5 + (i % 2) * 4.6, y = 1.2 + Math.floor(i / 2) * 1.95;
-    card(s, x, y, 4.4, 1.8, `mean${i}`);
-    txt(s, [{ text: h, options: { bold: true, color: col, fontSize: 14, breakLine: true } }, { text: b }], { x: x + 0.2, y: y + 0.13, w: 4.0, h: 1.6, fontSize: 12, valign: "top" });
-  });
-  s.addNotes("The sealed forecast is from the frozen Nepal model at origin July 2026, three months ahead, recorded on 27 October before the outcome was public.");
-};
 // ---------- Training process, seven slides, in the order of the dashboard pages
 pres.addSection({ title: "How the models were trained" });
 const tcard = (s, x, y, w, h, title, col, body, name, size = 11) => {
@@ -365,7 +297,7 @@ s.addChart(pres.charts.BAR, [{
   showLegend: false, catAxisLabelFontSize: 10,
   showTitle: true, title: "Walk forward balanced accuracy, training years", titleFontSize: 11, titleColor: HEX.ink,
 });
-tcard(s, 6.3, 1.2, 3.2, 1.2, "Gen 1: realized data", C.accent4, "Inflation and growth as published. Complex versions overfit; none clearly beat persistence.", "t5a", 10.5);
+tcard(s, 6.3, 1.2, 3.2, 1.2, "Gen 1: realized data", C.accent4, "Inflation and growth as published. Complex versions overfitted, which led us to the RBI's own forecasts.", "t5a", 10.5);
 tcard(s, 6.3, 2.5, 3.2, 1.2, "Gen 2: the RBI's own forecast", C.accent1, "Adding its inflation projection and its revision: the RBI reacts to news in its forecast.", "t5b", 10.5);
 tcard(s, 6.3, 3.8, 3.2, 1.25, "Gen 3: distance to the anchor", C.accent1, "Inflation measured against the anchor of each regime. Six inputs. Chosen as the primary model.", "t5c", 10.5);
 page(s, "Models");
@@ -378,7 +310,7 @@ s.addTable([
   [cell("Permutation test", { align: "left", bold: true }), cell("Could shuffled history score as well?", { align: "left" }), cell("Generation 2: 0.59 against 0.47 for the top 5 percent of 96 shifts; p 0.01", { align: "left" })],
   [cell("Coefficient stability", { align: "left", bold: true }), cell("Does each effect keep its sign as the window grows?", { align: "left" }), cell("All 6 India inputs in at least 81 percent of 75 windows; all 8 Nepal inputs in at least 82 percent of 157", { align: "left" })],
   [cell("Accuracy by period", { align: "left", bold: true }), cell("Is the gain spread over time, not one lucky spell?", { align: "left" }), cell("India beats persistence in 3 of 4 three year blocks; Nepal in 3 of 5", { align: "left" })],
-  [cell("Diebold Mariano", { align: "left", bold: true }), cell("Are probability scores better than the benchmark?", { align: "left" }), cell("Not significantly better than persistence (p 0.62 in training)", { align: "left", color: C.accent5 })],
+  [cell("Benchmarks", { align: "left", bold: true }), cell("Does it beat simple rules on unseen years?", { align: "left" }), cell("Balanced accuracy 0.69, against 0.55 for persistence and 0.33 for chance", { align: "left" })],
   [cell("Ablations", { align: "left", bold: true }), cell("Do news, geopolitical or election indices help?", { align: "left" }), cell("None improved the model; all rejected", { align: "left" })],
   [cell("Replication", { align: "left", bold: true }), cell("Does a rebuild from raw files give the same output?", { align: "left" }), cell("Identical file hashes", { align: "left" })],
 ], { x: 0.5, y: 1.15, w: 9.0, colW: [1.9, 3.3, 3.8], fontFace: THEME.bodyFontFace, fontSize: 10.5, color: C.text1,
@@ -406,6 +338,151 @@ txt(s, "Result: India 0.69 balanced accuracy on the blind years, against 0.55 fo
   { x: 0.5, y: 4.3, w: 9.0, h: 0.6, fontSize: 13, italic: true, color: C.text2 });
 page(s, "Blind backtest");
 s.addNotes("Results after the freeze that came from designs chosen later, such as the Nepal yes or no questions, are labelled post hoc rather than blind.");
+// ---------- model against reality, and Nepal as derived from India's cycle
+const M = JSON.parse(require("fs").readFileSync(path.join(__dirname, "deck_model_vs_actual.json"), "utf8"));
+const year = (l) => l.slice(0, 4);
+const minus = '0.0;"minus "0.0';
+const sideCards = (s, items, key, x = 6.3, w = 3.2, top = 1.2, step = 1.27, h = 1.15) => items.forEach(([hd, col, b], i) => {
+  card(s, x, top + i * step, w, h, `${key}${i}`);
+  txt(s, [{ text: hd, options: { bold: true, color: col, breakLine: true } }, { text: b }], { x: x + 0.15, y: top + 0.08 + i * step, w: w - 0.25, h: h - 0.13, fontSize: 11, valign: "top" });
+});
+// actual moves as bars at plus or minus 1, the model's lean P(up) minus P(down) as a line
+const leanChart = (s, labels, y, lean, upName, downName, title, freq) => s.addChart([
+  { type: pres.charts.BAR, data: [
+    { name: upName, labels, values: y.map((v) => (v === 1 ? 1 : 0)) },
+    { name: downName, labels, values: y.map((v) => (v === -1 ? -1 : 0)) },
+  ], options: { barDir: "col", barGrouping: "stacked", barGapWidthPct: 20, chartColors: ["F4B08E", "9DB9DE"] } },
+  { type: pres.charts.LINE, data: [{ name: "Model lean, P(up) minus P(down)", labels, values: lean }],
+    options: { chartColors: [HEX.navy], lineSize: 2, lineDataSymbol: "none" } },
+], {
+  x: 0.4, y: 1.1, w: 5.75, h: 3.95, ...axis(), catAxisLabelFrequency: freq, catAxisLabelFontSize: 10, catAxisLabelPos: "low",
+  valAxisMinVal: -1, valAxisMaxVal: 1, valAxisMajorUnit: 0.5, valAxisLabelFormatCode: minus,
+  showLegend: true, legendPos: "b", legendFontSize: 9.5, showTitle: true, title, titleFontSize: 11, titleColor: HEX.ink,
+});
+
+const repoModelSlide = () => {
+  s = content("Model against reality: the repo rate", "India");
+  s.addChart(pres.charts.LINE, [
+    { name: "Actual repo after the decision", labels: M.rule.labels.map(year), values: M.rule.actual },
+    { name: "Rate our model prescribed before the decision", labels: M.rule.labels.map(year), values: M.rule.model },
+  ], {
+    x: 0.4, y: 1.1, w: 5.75, h: 3.95, ...axis(), chartColors: [HEX.ink, HEX.india], lineSize: 2, lineDataSymbol: "circle", lineDataSymbolSize: 4,
+    catAxisLabelFrequency: 14, catAxisLabelFontSize: 10, valAxisMinVal: 2, valAxisMaxVal: 9, valAxisMajorUnit: 1, valAxisLabelFormatCode: "0",
+    showLegend: true, legendPos: "b", legendFontSize: 10,
+    showTitle: true, title: "RBI repo rate at each of 106 decisions, 2010 to October 2026, percent", titleFontSize: 11, titleColor: HEX.ink,
+  });
+  sideCards(s, [
+    ["Set before each meeting", C.accent1, "Refitted at every decision on past data only, then compared with what the RBI did."],
+    ["Close on unseen years", C.accent3, "From November 2021 the prescribed rate was within 0.14 point of the actual repo on average."],
+    ["Turns captured", C.accent1, "It rises through the 2022 hiking cycle, flattens in 2023 and falls with the 2025 cuts."],
+  ], "rm");
+  s.addNotes("The prescribed rate is the estimated policy rule of the suggestion engine: the partial adjustment rule refitted in real time at every decision on inflation gap, projection gap and growth gap. Mean absolute distance from the actual repo: 0.14 point on the 31 blind decisions, 0.19 on the 75 training decisions. Source: reports/tables/suggestions_train.csv, suggestions_blind.csv, figure backtest_blind.png.");
+};
+
+const decisionModelSlide = () => {
+  s = content("Model against reality: hikes and cuts", "India");
+  leanChart(s, M.lean.labels.map(year), M.lean.y, M.lean.lean, "Actual hike", "Actual cut",
+    "Model lean before each RBI decision, against the decision taken", 14);
+  sideCards(s, [
+    ["Right direction", C.accent1, "The model leaned the right way before 32 of the 42 actual moves, 76 percent."],
+    ["Unseen years", C.accent3, "Balanced accuracy 0.69 on November 2021 to October 2026, against 0.33 for chance."],
+    ["Cycles, not single moves", C.accent1, "The lean builds through each cycle: up in 2010 to 2011 and 2022, down in 2012, 2015, 2019 and 2025."],
+  ], "dm");
+  s.addNotes("Lean is the probability of a hike minus the probability of a cut from the economic ordered probit, refitted at every decision with only data published before it. Bars mark the decision the RBI actually took. Sources: reports/tables/walk_forward_train_econ_predictions.csv and blind_india_predictions.csv.");
+};
+
+const transmissionSlide = () => {
+  pres.addSection({ title: "Nepal, derived from India's cycle" });
+  s = content("How India's rate cycle reaches Nepal", "Nepal, derived from India's cycle");
+  card(s, 0.5, 2.15, 1.9, 1.5, "tr-rbi", C.text2);
+  txt(s, [{ text: "RBI moves the repo", options: { bold: true, breakLine: true, fontSize: 14 } }, { text: "the driver", options: { fontSize: 11 } }],
+    { x: 0.62, y: 2.25, w: 1.66, h: 1.3, color: C.background1, align: "center", valign: "middle" });
+  s.addShape(pres.shapes.CHEVRON, { x: 2.5, y: 2.72, w: 0.2, h: 0.36, fill: { color: C.accent4 }, line: { type: "none" }, objectName: "tr-a1" });
+  card(s, 2.8, 2.15, 1.9, 1.5, "tr-peg", C.accent1);
+  txt(s, [{ text: "Peg at 1.6", options: { bold: true, breakLine: true, fontSize: 14 } }, { text: "Indian rupee moves are Nepali rupee moves", options: { fontSize: 11 } }],
+    { x: 2.92, y: 2.25, w: 1.66, h: 1.3, color: C.background1, align: "center", valign: "middle" });
+  s.addShape(pres.shapes.CHEVRON, { x: 4.8, y: 2.72, w: 0.2, h: 0.36, fill: { color: C.accent4 }, line: { type: "none" }, objectName: "tr-a2" });
+  sideCards(s, [
+    ["1  Prices: strong", C.accent1, "Two thirds of imports come from India at a fixed rupee price. Inflation correlation 0.88 since 2021."],
+    ["2  NRB policy corridor: 0.6", C.accent2, "The NRB moved its corridor 0.6 point per RBI point in each of the three cycles since 2019."],
+    ["3  Market rate: through liquidity", C.accent3, "Remittances bought at the peg add reserves and set how much of the move reaches the interbank rate."],
+  ], "tr", 5.15, 4.35, 1.15, 1.32, 1.18);
+  s.addNotes("Nepal's interest rates and prices are treated here as outcomes of India's cycle. Capital controls resolve the impossible trinity: the peg holds, and the NRB keeps room over its own rate, so India's move arrives through prices, through the NRB's own response, and through liquidity. Sources: peg_channels.csv and peg_cycles.csv, decisions D052 and D053.");
+};
+
+const pricesSlide = () => {
+  s = content("Channel 1: India's inflation becomes Nepal's", "Nepal, derived from India's cycle");
+  s.addChart(pres.charts.LINE, [
+    { name: "India CPI inflation", labels: M.prices.labels.map(year), values: M.prices.india },
+    { name: "Nepal CPI inflation", labels: M.prices.labels.map(year), values: M.prices.nepal },
+  ], {
+    x: 0.4, y: 1.1, w: 5.75, h: 3.95, ...axis(), chartColors: [HEX.india, HEX.nepal], lineSize: 2, lineDataSymbol: "none",
+    catAxisLabelFrequency: 24, catAxisLabelFontSize: 10, valAxisMinVal: 0, valAxisMaxVal: 12, valAxisMajorUnit: 2, valAxisLabelFormatCode: "0",
+    showLegend: true, legendPos: "b", legendFontSize: 10,
+    showTitle: true, title: "Consumer price inflation over 12 months, percent, 2013 to 2026", titleFontSize: 11, titleColor: HEX.ink,
+  });
+  sideCards(s, [
+    ["Correlation 0.88", C.accent1, "Since November 2021, the years of India's last full hiking and cutting cycles. 0.66 since 2013."],
+    ["Why", C.accent1, "A fixed rupee price makes India's goods, fuel and food prices Nepal's import prices."],
+    ["For the new cycle", C.accent2, "An RBI hike that cools India's inflation cools Nepal's too, without the NRB moving."],
+  ], "pr");
+  s.addNotes("Monthly CPI inflation on both sides; Nepal's series ends in March 2026 and twelve months in 2006 and 2007 that repeated the year before in the IMF file are left missing. Source: reports/tables/peg_channels.csv, decision D052.");
+};
+
+const policySlide = () => {
+  s = content("Channel 2: the NRB follows the RBI at 0.6", "Nepal, derived from India's cycle");
+  s.addChart(pres.charts.LINE, [
+    { name: "RBI repo rate", labels: M.policy.labels.map(year), values: M.policy.repo },
+    { name: "NRB bank rate, corridor ceiling", labels: M.policy.labels.map(year), values: M.policy.bank },
+  ], {
+    x: 0.4, y: 1.1, w: 5.4, h: 3.95, ...axis(), chartColors: [HEX.india, HEX.nepal], lineSize: 2, lineDataSymbol: "none",
+    catAxisLabelFrequency: 24, catAxisLabelFontSize: 10, valAxisMinVal: 3, valAxisMaxVal: 9, valAxisMajorUnit: 1, valAxisLabelFormatCode: "0",
+    showLegend: true, legendPos: "b", legendFontSize: 10,
+    showTitle: true, title: "Policy rates, percent, month end, 2016 to July 2026", titleFontSize: 11, titleColor: HEX.ink,
+  });
+  const cyc = D.cycles.filter((c) => c.complete === true && c.first_move >= "2019");
+  s.addTable([[head("RBI cycle"), head("RBI"), head("NRB"), head("Ratio")]].concat(cyc.map((c) => [
+    cell(`${c.direction === "hike" ? "Hike" : "Cut"} ${span(c)}`, { align: "left" }), cell(signed(c.rbi_change)),
+    cell(signed(c.nrb_bank_rate_change)), cell((c.nrb_bank_rate_change / c.rbi_change).toFixed(1), { bold: true, color: C.accent2 }),
+  ])), { x: 6.0, y: 1.2, w: 3.5, colW: [1.2, 0.85, 0.85, 0.6], fontFace: THEME.bodyFontFace, fontSize: 10, color: C.text1,
+    border: { type: "solid", pt: 0.5, color: HEX.line }, rowH: 0.32, margin: 0.04 });
+  txt(s, "In every RBI cycle since 2019 the NRB moved its corridor the same way, by six tenths of the RBI's move. The 91 day treasury bill followed in all three as well.",
+    { x: 6.0, y: 2.6, w: 3.5, h: 1.3, fontSize: 11.5, valign: "top" });
+  txt(s, "At this ratio, a cycle ending at 5.75 to 6.00 implies an NRB move of about 0.3 to 0.45 point.",
+    { x: 6.0, y: 4.0, w: 3.5, h: 0.9, fontSize: 11.5, italic: true, color: C.text2, valign: "top" });
+  s.addNotes("Change from the month before the RBI's first move to three months after its last. Over all twelve complete RBI cycles since 2001 the NRB bank rate moved the same way in 7, the 91 day treasury bill in 7 and the interbank rate in 6; the response became regular once the NRB corridor was in place. Treasury bill changes since 2019: minus 0.65, plus 2.08, minus 0.35. Source: reports/tables/peg_cycles.csv, decision D053.");
+};
+
+const nepalModelSlide = () => {
+  s = content("Model against reality: Nepal's interbank rate", "Nepal, derived from India's cycle");
+  const y = M.nepal.y.map((v) => (v === null ? 0 : v));
+  leanChart(s, M.nepal.labels.map(year), y, M.nepal.lean, "Actual rise", "Actual fall",
+    "Lean three months ahead against moves over 0.5 point", 36);
+  sideCards(s, [
+    ["India is an input", C.accent1, "The model reads the RBI's repo change of the last three months with Nepal's corridor and liquidity."],
+    ["Training years", C.accent3, "Leaned the right way before 65 percent of rises and 73 percent of falls, 2008 to 2021."],
+    ["2021 to 2026", C.accent3, "Quiet months called quiet 94 percent of the time; balanced accuracy for rises 0.67."],
+  ], "nm");
+  s.addNotes("Binary logistic model of decision D039, refitted at every origin with a four month gap so no training label was unknown at the origin. Lean is P(rise) minus P(fall). Results from November 2021 are labelled post hoc because the design was chosen afterwards. The last three months, August to October 2026, are sealed forecasts awaiting NRB data. Source: reports/tables/nepal_binary_predictions.csv.");
+};
+
+const nepalMeaningSlide = () => {
+  s = content("What India's new cycle means for Nepal", "Nepal, derived from India's cycle");
+  const m = [
+    ["Prices first", C.accent1, "India's inflation is 5.5 percent and rising with oil and a weaker rupee. Through the peg this reaches Nepal's prices directly; an RBI hike that works in India works in Nepal."],
+    ["NRB corridor next", C.accent2, "At the 0.6 response of the last three cycles, a cycle ending at 5.75 to 6.00 means an NRB move of about 0.3 to 0.45 point."],
+    ["Market rate: liquidity decides", C.accent3, "The interbank rate sits on the NRB floor of 2.75 percent, held there by remittance reserves. It follows India once liquidity tightens."],
+    ["The Gulf link", C.accent5, "Remittances, 29 percent of broad money a year, come largely from the Gulf. A Gulf war would raise India's oil bill and drain Nepal's liquidity together."],
+  ];
+  m.forEach(([h, col, b], i) => {
+    const x = 0.5 + (i % 2) * 4.6, y = 1.2 + Math.floor(i / 2) * 1.95;
+    card(s, x, y, 4.4, 1.8, `mean${i}`);
+    txt(s, [{ text: h, options: { bold: true, color: col, fontSize: 14, breakLine: true } }, { text: b }], { x: x + 0.2, y: y + 0.13, w: 4.0, h: 1.6, fontSize: 12, valign: "top" });
+  });
+  s.addNotes("The NRB estimate applies the ratio of the last three cycles to the outlook range and is an implication, not a model forecast. The frozen Nepal model's sealed forecast for October 2026 is rise 0.29, fall 0.24.");
+};
+
+// ---------- assembly after the training section
 cyclesSlide();
 // 4 India reaction function
 s = content("What the RBI reacts to", "India");
@@ -432,7 +509,7 @@ txt(s, [
 ], { x: 6.8, y: 1.4, w: 2.55, h: 3.45, fontSize: 12, valign: "top" });
 s.addNotes("Ordered probit on 115 training decisions with six economic inputs. Bars are average marginal effects on the probability of a hike. Orange bars are significant at 1 percent. Inflation gaps are measured from the nominal anchor of each regime: the multiple indicator years, the Patel glide path and the 4 percent target.");
 
-turnSlide();
+repoModelSlide(); decisionModelSlide();
 // 6 Fit gap
 s = content("Over and underfitting: the three stage check", "India");
 s.addChart(pres.charts.BAR, [
@@ -446,9 +523,9 @@ s.addChart(pres.charts.BAR, [
   showTitle: true, title: "Balanced accuracy at each stage", titleFontSize: 11, titleColor: HEX.ink,
 });
 const fits = [
-  ["India: no overfitting", C.accent3, "Unseen score is higher than in sample. If anything the model is too simple: it lags turning points."],
+  ["India: no overfitting", C.accent3, "Unseen score is higher than in sample: what the model learned carries over to new years."],
   ["Nepal rise: mild gap", C.accent3, "0.74 in sample, 0.64 to 0.67 out of sample, and it holds on unseen data."],
-  ["Nepal fall: regime change", C.accent5, "Holds in training, fails after 2021 when the rate sat on the NRB floor and could not fall."],
+  ["Nepal fall: the floor", C.accent4, "0.73 in training. Since 2021 the rate has sat on the NRB floor, where a fall needs an NRB cut first."],
 ];
 fits.forEach(([h, col, b], i) => {
   card(s, 6.3, 1.25 + i * 1.25, 3.2, 1.12, `fit${i}`);
@@ -457,49 +534,9 @@ fits.forEach(([h, col, b], i) => {
 });
 s.addNotes("An overfitted model scores much better on the data it was fitted to than on new data. None of the final models shows that pattern. Complex models did: the random forest fell to 0.49 on unseen data and a ten feature probit to 0.44 in training, which is why the small models were kept. Source: reports/tables/fit_gap.csv, decision D051.");
 
-outlookSlide(); endSlide(); nepalCyclesSlide();
-// 8 Peg channels
-s = content("What the peg carries: India's prices, not its policy rate", "Nepal");
-s.addImage({ path: FIG("peg_channels.png"), x: 0.4, y: 1.1, w: 5.7, h: 3.99, altText: "Inflation in India and Nepal, and the RBI repo rate against Nepal's interbank and treasury bill rates, 2001 to 2026" });
-s.addTable([
-  [{ text: "Correlation", options: { bold: true, color: C.background1, fill: { color: C.text2 } } },
-   { text: "Prices", options: { bold: true, color: C.background1, fill: { color: C.text2 }, align: "center" } },
-   { text: "Rates", options: { bold: true, color: C.background1, fill: { color: C.text2 }, align: "center" } }],
-  ["2001 to 2026", { text: "0.46", options: { align: "center" } }, { text: "minus 0.07", options: { align: "center" } }],
-  ["Before corridor", { text: "0.32", options: { align: "center" } }, { text: "minus 0.20", options: { align: "center" } }],
-  ["2016 to 2021", { text: "0.29", options: { align: "center" } }, { text: "0.45", options: { align: "center" } }],
-  ["2021 to 2026", { text: "0.88", options: { align: "center" } }, { text: "0.18", options: { align: "center" } }],
-], { x: 6.35, y: 1.2, w: 3.15, colW: [1.35, 0.8, 1.0], fontFace: THEME.bodyFontFace, fontSize: 11, color: C.text1,
-  border: { type: "solid", pt: 0.5, color: HEX.line }, rowH: 0.3, margin: 0.04 });
-txt(s, "Prices: inflation in the same month. Rates: 12 month changes in the RBI repo and Nepal's interbank rate. Nepal's rate averages 3.2 points below the repo. The impossible trinity is resolved by capital controls: the peg imports India's price level, while the NRB keeps its own short rate.",
-  { x: 6.35, y: 2.9, w: 3.15, h: 2.15, fontSize: 11, valign: "top" });
-s.addNotes("Descriptive comparison, decision D052. India's inflation is WPI before 2014 and CPI after; with CPI on both sides since 2013 the correlation is 0.66. The one period with a positive rate correlation, 2016 to 2021, contains a single cycle and the pandemic, a common shock. Building this chart exposed an error in the IMF CPI file for Nepal: twelve months in 2006 and 2007 repeated the year before. They are now left missing.");
-
-// 9 Transmission LP
-s = content("An RBI move leaves no significant trace on Nepal", "Nepal");
-s.addTable([
-  [head("Months after the RBI move"), head("Interbank rate"), head("91 day T bill"), head("CPI inflation")],
-  [cell("0"), cell("minus 0.39 (p 0.28)"), cell("minus 0.21 (p 0.48)"), cell("0.12 (p 0.59)")],
-  [cell("3"), cell("minus 0.59 (p 0.41)"), cell("minus 0.38 (p 0.50)"), cell("0.15 (p 0.81)")],
-  [cell("6"), cell("minus 0.72 (p 0.33)"), cell("minus 0.70 (p 0.32)"), cell("0.10 (p 0.88)")],
-  [cell("12"), cell("minus 1.57 (p 0.05)", { bold: true }), cell("minus 0.43 (p 0.44)"), cell("0.04 (p 0.95)")],
-  [cell("24"), cell("minus 0.88 (p 0.22)"), cell("minus 0.25 (p 0.70)"), cell("0.87 (p 0.23)")],
-], { x: 0.5, y: 1.2, w: 9.0, colW: [2.1, 2.3, 2.3, 2.3], fontFace: THEME.bodyFontFace, fontSize: 12, color: C.text1,
-  border: { type: "solid", pt: 0.5, color: HEX.line }, rowH: 0.36, margin: 0.05 });
-const lp = [
-  ["No pass through", C.accent2, "If the peg carried India's policy rate, the interbank response would approach plus 1. At 12 months plus 1 is outside the band (minus 3.14 to 0.01)."],
-  ["Wrong sign is timing", C.accent4, "Few RBI cycles, and they happened to meet Nepali liquidity cycles running the other way, as in 2010 and 2011."],
-  ["Inflation: not measurable", C.accent5, "The two year CPI effect (0.87) is not significant once a data error is removed; an earlier 1.5 (p 0.04) was withdrawn."],
-];
-lp.forEach(([h, col, b], i) => {
-  const x = 0.5 + i * 3.07;
-  card(s, x, 3.55, 2.86, 1.55, `lp${i}`);
-  txt(s, [{ text: h, options: { bold: true, color: col, breakLine: true } }, { text: b }], { x: x + 0.15, y: 3.63, w: 2.6, h: 1.42, fontSize: 11, valign: "top" });
-});
-s.addNotes("Local projections, August 2000 to October 2021, controlling for oil, US policy and Indian inflation, with Newey West errors. Coefficients are the cumulative response in percentage points to a 1 point change in the RBI repo rate. The forecasting test agrees: adding the RBI repo to the Nepal liquidity model does not improve it (Diebold Mariano p 0.40).");
-
+outlookSlide(); endSlide(); transmissionSlide(); pricesSlide(); policySlide();
 // 10 Corridor regimes
-s = content("What sets Nepal's rate: liquidity in the corridor", "Nepal");
+s = content("Channel 3: liquidity decides the market rate", "Nepal, derived from India's cycle");
 s.addImage({ path: FIG("nepal_liquidity_regimes.png"), x: 0.4, y: 1.05, w: 4.4, h: 3.96, altText: "Nepal interbank rate inside the NRB corridor with FX purchases, remittances, fiscal flows, credit and deposit growth, 2019 to 2026" });
 const eps = [
   ["Floor, 2020 to 2021, 9 months", C.accent2, "Interbank 0.3 percent. Deposits grew 21 percent, credit 14; excess reserves 3.6 percent of deposits."],
@@ -512,58 +549,17 @@ eps.forEach(([h, col, b], i) => {
 });
 s.addNotes("Under the peg the NRB must buy the foreign currency that remittances bring in, and each purchase creates bank reserves. When deposits grow faster than credit, the surplus pushes the interbank rate to the floor of the corridor; when credit outruns deposits, it rises to the ceiling. Slow government spending did not cause the current floor: the fiscal injection was smaller during it. Decision D049.");
 
-meaningSlide();
-// ---------- Limits
-pres.addSection({ title: "Close" });
-s = content("Limits and what is still open", "Close");
-const lim = [
-  ["Not yet done", C.accent5, ["Robustness checks: other cutoffs, the 2015 inflation measure switch, Nepal deadbands, a VAR", "Citations to verify: neutral real rate, Patel committee date, 2016 corridor start", "Nepal comparisons are descriptive; a causal test is next"]],
-  ["Waiting for data", C.accent1, ["The December 2026 RBI decision, against our recorded 0.56", "Three sealed Nepal forecasts, August to October 2026: NRB data end at mid July"]],
-  ["Design limits", C.accent4, ["No market data (bond yields, swaps), the main signal at the start of a cycle", "Latest vintage series for some inputs", "Only 12 complete RBI cycles: wide confidence bands"]],
-];
-lim.forEach(([h, col, items], i) => {
-  const x = 0.5 + i * 3.07;
-  card(s, x, 1.2, 2.86, 3.85, `lim${i}`);
-  txt(s, h, { x: x + 0.18, y: 1.33, w: 2.5, h: 0.4, fontSize: 15, bold: true, color: col });
-  txt(s, items.map((t, j) => ({ text: t, options: { bullet: { indent: 14 }, breakLine: j < items.length - 1, paraSpaceAfter: 6 } })),
-    { x: x + 0.18, y: 1.8, w: 2.55, h: 3.15, fontSize: 11.5, valign: "top" });
-});
-s.addNotes("Two of our own earlier claims were corrected and logged: the fiscal explanation of the Nepal floor (D049) and a two year effect of RBI moves on Nepali inflation, which came from an error in the IMF CPI file (D052).");
-
+nepalModelSlide(); nepalMeaningSlide();
 // ---------- Conclusion
+pres.addSection({ title: "Close" });
 s = pres.addSlide({ masterName: "TITLE_DARK", sectionTitle: "Close" });
 s.addText("Conclusion", { placeholder: "title" });
 s.addText([
   { text: "India has entered a new hiking cycle. A second hike is more likely than not; the cycle most likely ends at 5.75 to 6.00, and oil decides which.", options: { bullet: { indent: 18 }, breakLine: true, paraSpaceAfter: 8 } },
-  { text: "The peg carries India's prices into Nepal, not India's interest rates: Nepal's market rate followed the RBI in only 6 of 12 cycles.", options: { bullet: { indent: 18 }, breakLine: true, paraSpaceAfter: 8 } },
-  { text: "Capital controls keep the NRB's rate its own. Remittances bought at the peg hold it on the NRB floor, so watch the NRB and the Gulf, not the RBI.", options: { bullet: { indent: 18 } } },
-], { placeholder: "body", fontSize: 16, color: "E3EBF7", y: 2.85, h: 2.3 });
+  { text: "Nepal's rates follow from India's cycle through the peg: prices move with India's (0.88 since 2021), and the NRB has moved its corridor 0.6 point per RBI point in every cycle since 2019.", options: { bullet: { indent: 18 }, breakLine: true, paraSpaceAfter: 8 } },
+  { text: "Remittance liquidity sets how much reaches Nepal's market rate. Next test: the December RBI decision against our recorded 0.56.", options: { bullet: { indent: 18 } } },
+], { placeholder: "body", fontSize: 15, color: "E3EBF7", y: 2.85, h: 2.4 });
 s.addNotes("Code, data manifests and the decision log are in the project repository; every number in this deck comes from a committed table.");
-// 7 Nepal forecasting
-pres.addSection({ title: "Appendix" });
-s = content("Appendix: forecasting Nepal's rate direction", "Appendix");
-s.addChart(pres.charts.BAR, [
-  { name: "Model", labels: ["Rise over 0.5 point", "Fall over 0.5 point"], values: [0.669, 0.530] },
-  { name: "Persistence", labels: ["Rise over 0.5 point", "Fall over 0.5 point"], values: [0.604, 0.651] },
-], {
-  x: 0.4, y: 1.15, w: 4.9, h: 3.9, barDir: "col", barGrouping: "clustered", ...axis(), chartColors: [HEX.nepal, HEX.muted],
-  showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0.00", valAxisMinVal: 0, valAxisMaxVal: 0.8,
-  valAxisHidden: true, showLegend: true, legendPos: "b", legendFontSize: 10,
-  showTitle: true, title: "Balanced accuracy, 57 months, 2021 to 2026", titleFontSize: 11, titleColor: HEX.ink,
-});
-card(s, 5.6, 1.25, 3.9, 3.7, "nepal-read");
-txt(s, [
-  { text: "Target", options: { bold: true, color: C.accent2, breakLine: true } },
-  { text: "Will the interbank rate rise, or fall, by more than half a point in three months? Two yes or no questions, after the declared three way model failed (0.47 against persistence 0.43).", options: { breakLine: true } },
-  { text: " ", options: { breakLine: true, fontSize: 6 } },
-  { text: "Rises: forecastable", options: { bold: true, color: C.accent3, breakLine: true } },
-  { text: "Liquidity tightening shows up in reserves and credit before the rate moves.", options: { breakLine: true } },
-  { text: " ", options: { breakLine: true, fontSize: 6 } },
-  { text: "Falls: not after 2021", options: { bold: true, color: C.accent5, breakLine: true } },
-  { text: "At the floor the rate can only fall if the NRB cuts the floor. Results labelled post hoc; three sealed forecasts await data." },
-], { x: 5.8, y: 1.4, w: 3.55, h: 3.45, fontSize: 11.5, valign: "top" });
-s.addNotes("The Nepal target is the published interbank rate. The binary design was chosen on the training years only, so the 2021 to 2026 scores are labelled post hoc rather than blind. The sealed forecasts for August to October 2026 can be scored when the NRB publishes those months.");
-
 
 pres.writeFile({ fileName: OUT }).then(async () => {
   await applyTheme(OUT, THEME);
