@@ -394,6 +394,31 @@ const decisionModelSlide = () => {
   s.addNotes("Lean is the probability of a hike minus the probability of a cut from the economic ordered probit, refitted at every decision with only data published before it. Bars mark the decision the RBI actually took. Sources: reports/tables/walk_forward_train_econ_predictions.csv and blind_india_predictions.csv.");
 };
 
+
+const twoYearSlide = () => {
+  pres.addSection({ title: "Next two years" });
+  s = content("Next two years: a short cycle, then a slow easing", "Next two years");
+  const lab = M.two_year.labels.map(shortDate);
+  s.addChart(pres.charts.LINE, [
+    { name: "RBI repo, expected", labels: lab, values: M.two_year.expected },
+    { name: "RBI repo, 90 percent bound", labels: lab, values: M.two_year.p90 },
+    { name: "RBI repo, 10 percent bound", labels: lab, values: M.two_year.p10 },
+    { name: "NRB bank rate implied", labels: lab, values: M.two_year.nrb },
+  ], {
+    x: 0.4, y: 1.1, w: 5.75, h: 3.95, ...axis(), chartColors: [HEX.india, "F4B08E", "F4B08E", HEX.nepal], lineSize: 2,
+    lineDataSymbol: "circle", lineDataSymbolSize: 4, catAxisLabelFrequency: 2, catAxisLabelFontSize: 10,
+    valAxisMinVal: 4, valAxisMaxVal: 6.5, valAxisMajorUnit: 0.5, valAxisLabelFormatCode: "0.00",
+    showLegend: true, legendPos: "b", legendFontSize: 9.5,
+    showTitle: true, title: "After each RBI meeting, December 2026 to October 2028, percent", titleFontSize: 11, titleColor: HEX.ink,
+  });
+  sideCards(s, [
+    ["Peak by April 2027", C.accent1, "Expected repo 5.71 if oil stays near 112, 5.81 if the Gulf escalates: one or two more hikes."],
+    ["Easing from mid 2027", C.accent2, "Cuts overtake hikes from June 2027 as the oil shock leaves yearly inflation. October 2028: about 5.25, range 4.25 to 6.25."],
+    ["Nepal follows at half", C.accent3, "At the 0.49 response, the NRB bank rate rises from 5.75 to about 6.0, then drifts back to 5.75 by late 2028."],
+  ], "ty", 6.3, 3.2, 1.2, 1.27, 1.17);
+  s.addNotes("Decisions D057 and D058: the frozen model chained through 12 meetings, shown for the premium persists scenario; the other four peak between 5.63 and 5.81 and all end near 5.2 to 5.26. The first three meetings use the news based inputs of D050. After April 2027 inputs follow declared assumptions: inflation returns to its 2021 to 2026 average of 4.7, the oil effect leaves twelve month inflation from December 2027, and each point of repo above 5.50 lowers inflation by 0.4 point. Beyond a year the assumptions drive the path more than the news, so this is a conditional outlook, not a forecast.");
+};
+
 const transmissionSlide = () => {
   pres.addSection({ title: "Nepal, derived from India's cycle" });
   s = content("How India's rate cycle reaches Nepal", "Nepal, derived from India's cycle");
@@ -560,7 +585,7 @@ fits.forEach(([h, col, b], i) => {
 });
 s.addNotes("An overfitted model scores much better on the data it was fitted to than on new data. None of the final models shows that pattern. Complex models did: the random forest fell to 0.49 on unseen data and a ten feature probit to 0.44 in training, which is why the small models were kept. Source: reports/tables/fit_gap.csv, decision D051.");
 
-outlookSlide(); endSlide(); transmissionSlide(); coinSlide(); pricesSlide(); policySlide();
+outlookSlide(); endSlide(); twoYearSlide(); transmissionSlide(); coinSlide(); pricesSlide(); policySlide();
 // 10 Corridor regimes
 s = content("Channel 3: liquidity decides the market rate", "Nepal, derived from India's cycle");
 s.addImage({ path: FIG("nepal_liquidity_regimes.png"), x: 0.4, y: 1.05, w: 4.4, h: 3.96, altText: "Nepal interbank rate inside the NRB corridor with FX purchases, remittances, fiscal flows, credit and deposit growth, 2019 to 2026" });
@@ -583,8 +608,8 @@ s.addText("Conclusion", { placeholder: "title" });
 s.addText([
   { text: "India has entered a new hiking cycle. A second hike is more likely than not; the cycle most likely ends at 5.75 to 6.00, and oil decides which.", options: { bullet: { indent: 18 }, breakLine: true, paraSpaceAfter: 8 } },
   { text: "The peg carries India's prices into Nepal (0.88 since 2021). Nepal's market rate followed the RBI in only 6 of 12 cycles, but since the 2016 corridor the NRB moves about 0.5 point per RBI point.", options: { bullet: { indent: 18 }, breakLine: true, paraSpaceAfter: 8 } },
-  { text: "Remittance liquidity sets how much reaches Nepal's market rate. Next test: the December RBI decision against our recorded 0.56.", options: { bullet: { indent: 18 } } },
-], { placeholder: "body", fontSize: 15, color: "E3EBF7", y: 2.85, h: 2.4 });
+  { text: "Over two years the model sees a short cycle peaking near 5.75 by April 2027, then easing back towards 5.25 by late 2028, with the NRB following at half strength. First test: December, against our recorded 0.56.", options: { bullet: { indent: 18 } } },
+], { placeholder: "body", fontSize: 14, color: "E3EBF7", y: 2.8, h: 2.5 });
 s.addNotes("Code, data manifests and the decision log are in the project repository; every number in this deck comes from a committed table.");
 
 pres.writeFile({ fileName: OUT }).then(async () => {

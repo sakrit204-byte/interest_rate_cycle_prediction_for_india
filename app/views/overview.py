@@ -33,7 +33,7 @@ st.table({
                  "RQ4 Peg and transmission", "RQ5 Regime differences", "RQ6 Policy scenarios"],
     "Status": ["Done: blind test run", "Done: no added value (H2 not rejected)",
                "Done: no significant gain (H3 not supported)",
-               "Done: no short rate pass through; slow price channel",
+               "Done: market rate a coin flip; NRB rate 0.5 per RBI point since 2016; prices follow",
                "Partly: stability by block and liquidity states", "Done: conditional scenario page"],
 })
 

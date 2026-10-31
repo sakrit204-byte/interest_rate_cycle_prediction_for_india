@@ -13,6 +13,7 @@ pages = [
     st.Page("views/blind.py", title="Blind backtest"),
     st.Page("views/transmission.py", title="India to Nepal transmission"),
     st.Page("views/scenarios.py", title="Scenarios"),
+    st.Page("views/outlook.py", title="Next two years"),
     st.Page("views/methods.py", title="Methods and limitations"),
 ]
 st.navigation(pages).run()
