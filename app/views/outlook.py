@@ -44,11 +44,11 @@ c[2].metric("NRB bank rate at the peak", f"{peak['nrb_bank_rate_mid']:.2f}",
 c[3].metric("NRB bank rate, October 2028", f"{end['nrb_bank_rate_mid']:.2f}", "today 5.75", delta_color="off")
 
 fig = go.Figure()
-for k in ("cut", "hike"):
+for k in ("cut", "hold", "hike"):
     fig.add_bar(x=g["meeting"], y=g[f"p_{k}"], name=f"P({k})", marker_color=DECISION[k])
-fig.update_yaxes(range=[0, 0.7], tickformat=".0%")
-st.plotly_chart(style(fig, height=300, title="Probability of a hike and of a cut at each meeting", barmode="group"),
-                use_container_width=True, theme=None)
+fig.update_yaxes(range=[0, 1], tickformat=".0%")
+st.plotly_chart(style(fig, height=320, title="Probability of a cut, a hold and a hike at each meeting (they add to 100 percent)",
+                      barmode="stack"), use_container_width=True, theme=None)
 
 st.subheader("All scenarios")
 show = t.assign(scenario=t["scenario"].map(NAMES), meeting=t["meeting"].dt.strftime("%b %Y"))
