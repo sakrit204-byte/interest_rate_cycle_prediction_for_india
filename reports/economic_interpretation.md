@@ -146,6 +146,17 @@ Side by side, from `peg_channels.csv` and `reports/figures/peg_channels.png`:
 
 Prices follow India: average inflation is close in the two countries (5.5 percent in India, 6.4 in Nepal since 2001) and, once India's CPI is used on both sides, the two rates move together closely, most of all since 2021 when both were driven by the same food and fuel shocks. Interest rates do not: over 25 years the change in Nepal's interbank rate is unrelated to the change in the RBI repo rate, and Nepal's rate sits on average three points below it. The positive correlation in 2016 to 2021 covers a single cycle (both fell in 2020 with the pandemic, a common shock rather than transmission). This is the impossible trinity resolved through capital controls: the peg fixes the exchange rate and so imports India's price level, while the closed capital account leaves the NRB its own short rate, which is set by the liquidity that the peg creates when remittances are converted at the fixed rate (D049).
 
+### 5.5 Through India's cycles: the market rate and the NRB's own rate (D053, D055, D056)
+
+Cycle by cycle (`peg_cycles.csv`), Nepal's interbank rate moved the RBI's way in only 6 of 12 complete RBI cycles since 2001, a coin flip. A monthly test declared before it was run (`peg_policy_response.csv`) regresses the 6 month change in each Nepali rate on the RBI's 6 month change three months earlier, separately before and during the NRB corridor, with Newey West errors:
+
+| Outcome | Before the corridor, 2001 to July 2016 | Corridor years, August 2016 to 2026 |
+|---|---|---|
+| NRB bank rate | 0.02 (p 0.58) | 0.49 (95 percent interval 0.14 to 0.85, p 0.007) |
+| Interbank rate | minus 0.34 (p 0.50) | 0.43 (p 0.51) |
+
+The difference between the two NRB slopes has p 0.012. The two results belong together. The peg alone does not import India's interest rate: the market rate follows the RBI no better than chance, because capital controls stop arbitrage and remittance liquidity sets it. Since the corridor, however, the NRB's own policy rate has responded at about half the RBI's move, and the three RBI cycles since 2019 all fit (minus 1.50 against minus 2.50, plus 1.50 against plus 2.50, minus 0.75 against minus 1.25). India's interest rate cycle therefore reaches Nepal through the NRB's decision rather than through the market. A plausible reason is that a central bank defending a peg leans with the anchor to keep the interest gap from straining reserves, and the corridor gave the NRB an instrument to do so. Applied to the outlook of D050, a cycle ending at 5.75 to 6.00 implies an NRB move of about 0.25 to 0.37 point, an implication rather than a forecast.
+
 ## 6. What this means for the paper
 
 * India: the RBI behaves like a forecast targeting, inertial central bank whose anchor changed in steps; the policy signal is news about its own forecast and the gap from the prevailing anchor.

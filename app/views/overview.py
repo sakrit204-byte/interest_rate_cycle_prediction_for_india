@@ -23,7 +23,7 @@ st.subheader("What we found")
 st.markdown("""
 * **The RBI is inertial and forecast targeting.** It moves on revisions to its own inflation projection and on the gap from its nominal anchor; the previous decision is the strongest single predictor. The reaction function learned on 2002 to 2021 called 77 percent of decisions from 2022 to 2026.
 * **Turning points are the hard part.** The model calls each new cycle one meeting late, in training and out of sample: the signature of interest rate smoothing.
-* **Under the peg, Nepal's interbank rate is a liquidity price.** Reserve inflows lower it and government deposits at the NRB raise it. India's repo adds no reliable short horizon information; the peg carries India's prices, not its policy rate.
+* **Under the peg, Nepal's interbank rate is a liquidity price.** Reserve inflows lower it and government deposits at the NRB raise it. It followed the RBI in only 6 of 12 cycles, a coin flip. India's cycle reaches Nepal instead through prices, which the peg imports, and through the NRB's own policy rate, which since the 2016 corridor moves about 0.5 point per RBI point (p 0.007, decision D056).
 * **Political events add nothing** beyond the fiscal and liquidity variables already in the models.
 """)
 

@@ -1,0 +1,3 @@
+outcome,months,before_corridor,before_ci_low,before_ci_high,before_p,corridor,corridor_ci_low,corridor_ci_high,corridor_p,difference_p
+nrb_bank_rate,298,0.023,-0.06,0.106,0.582,0.492,0.136,0.848,0.007,0.012
+interbank,298,-0.338,-1.33,0.653,0.504,0.434,-0.867,1.734,0.513,0.355

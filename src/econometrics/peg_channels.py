@@ -18,7 +18,11 @@ Cycle by cycle (D053): for every RBI cycle (a run of moves in one direction in t
 table), the change in Nepal's interbank rate, 91 day treasury bill rate and NRB bank rate from
 the month before the first move to three months after the last one.
 
-Outputs: reports/tables/peg_channels.csv, peg_cycles.csv, reports/figures/peg_channels.png and .svg
+Policy response (D055): monthly regression of the 6 month change in the NRB bank rate, and in the
+interbank rate, on the RBI's 6 month change three months earlier, separately before and during the
+NRB corridor, with Newey West errors.
+
+Outputs: reports/tables/peg_channels.csv, peg_cycles.csv, peg_policy_response.csv, reports/figures/peg_channels.png and .svg
 Usage: python -m src.econometrics.peg_channels
 """
 
@@ -32,6 +36,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
+import statsmodels.api as sm
 
 from src.econometrics.local_projections import monthly_panel
 from src.features.build_nepal_features import imf_series
@@ -93,6 +98,28 @@ def cycles(p: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def policy_response(p: pd.DataFrame) -> pd.DataFrame:
+    """Response of Nepal's rates to the RBI before and during the NRB corridor (decision D055)."""
+    bank = imf_series("MFS_IR_npl_interest_rates", lambda x: x["INDICATOR"] == "MFS166_RT_PT_A_PT")
+    d = pd.DataFrame({"repo": p["repo"], "nrb_bank_rate": bank, "interbank": p["interbank_rate"]})
+    d = d.loc[pd.Period("2001-01", freq="M"):pd.Period("2026-07", freq="M")]
+    d["rbi"] = (d["repo"] - d["repo"].shift(6)).shift(3)  # RBI's 6 month change, three months earlier
+    d["corridor"] = (d.index >= pd.Period("2016-08", freq="M")).astype(float)
+    rows = []
+    for k in ("nrb_bank_rate", "interbank"):
+        s = d.assign(y=d[k] - d[k].shift(6)).dropna(subset=["y", "rbi"])
+        x = sm.add_constant(pd.DataFrame({"rbi": s["rbi"], "corridor": s["corridor"], "rbi_corridor": s["rbi"] * s["corridor"]}))
+        fit = sm.OLS(s["y"], x).fit(cov_type="HAC", cov_kwds={"maxlags": 12})
+        both = fit.t_test("rbi + rbi_corridor = 0")
+        lo, hi = both.conf_int()[0]
+        rows.append({"outcome": k, "months": int(fit.nobs),
+                     "before_corridor": fit.params["rbi"], "before_ci_low": fit.conf_int().loc["rbi", 0],
+                     "before_ci_high": fit.conf_int().loc["rbi", 1], "before_p": fit.pvalues["rbi"],
+                     "corridor": float(both.effect[0]), "corridor_ci_low": lo, "corridor_ci_high": hi,
+                     "corridor_p": float(both.pvalue), "difference_p": fit.pvalues["rbi_corridor"]})
+    return pd.DataFrame(rows)
+
+
 def chart(p: pd.DataFrame) -> None:
     s = p.loc[pd.Period("2001-01", freq="M"):pd.Period("2026-07", freq="M")]
     x = s.index.to_timestamp()
@@ -139,6 +166,9 @@ def main() -> int:
     done = c[c["complete"]]
     print(done.to_string(index=False))
     print({k: f"{int(done[f'{k}_same_direction'].sum())} of {len(done)}" for k in ("interbank", "tbill_91d", "nrb_bank_rate")})
+    r = policy_response(p).round(3)
+    r.to_csv(TABLES / "peg_policy_response.csv", index=False)
+    print(r.T.to_string())
     chart(p)
     pd.set_option("display.width", 250)
     print(t.T.to_string())

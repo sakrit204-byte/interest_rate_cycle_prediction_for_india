@@ -1,3 +1,6 @@
+// Builds the presentation from the committed tables and figures.
+// Needs pptxgenjs 3.12.0 (npm install pptxgenjs@3.12.0 in any folder, then run with NODE_PATH set to its node_modules),
+// apply_theme.js from the pptx skill, and deck_data.json and deck_model_vs_actual.json beside this script (exported from reports/tables).
 const pptxgen = require("pptxgenjs");
 const path = require("path");
 const { applyTheme } = require("C:/Users/ACER/.claude/skills/synced/11ee3d9a-0528-437e-a2ff-3bd523a17804_e7fd4a16-4b00-422d-b074-e244d9894933/pptx/scripts/apply_theme.js");
@@ -95,7 +98,7 @@ s = content("The answers", "Opening");
 const stats = [
   ["Yes", C.accent1, 44, "India entered a hiking cycle on 7 October 2026, repo 5.25 to 5.50. Our model gives a second hike in December a 0.56 chance."],
   ["5.75 to 6.00", C.accent1, 28, "Most likely end by April 2027: 5.75, or 6.00 if oil stays above 110 dollars. A short cycle like 2013 and 2018."],
-  ["0.6", C.accent2, 44, "Points the NRB moved its policy corridor per point of RBI move, in each of the three RBI cycles since 2019."],
+  ["6 of 12, then 0.5", C.accent2, 21, "Nepal's market rate followed only 6 of 12 RBI cycles. Since the 2016 corridor the NRB moves 0.5 point per RBI point (p 0.007)."],
 ];
 stats.forEach(([v, col, size, label], i) => {
   const x = 0.5 + i * 3.07;
@@ -103,9 +106,9 @@ stats.forEach(([v, col, size, label], i) => {
   txt(s, v, { x: x + 0.25, y: 1.5, w: 2.4, h: 0.95, fontSize: size, bold: true, color: col, fontFace: THEME.headFontFace, valign: "bottom" });
   txt(s, label, { x: x + 0.25, y: 2.55, w: 2.4, h: 1.25, fontSize: 12.5, valign: "top" });
 });
-txt(s, "Through the peg, Nepal's prices and policy rate are derived from India's cycle; remittance liquidity decides how much reaches Nepal's market rate.",
+txt(s, "The peg imports India's prices. India's interest rate cycle reaches Nepal through the NRB's own corridor since 2016, while remittance liquidity keeps the market rate on its own path.",
   { x: 0.5, y: 4.1, w: 9.0, h: 0.9, fontSize: 14, color: C.text2, italic: true });
-s.addNotes("India: the new cycle has already started; the question now is how long it runs. Nepal: the peg carries India's prices across the border, and the NRB has answered every RBI cycle since 2019 with six tenths of the RBI's move.");
+s.addNotes("India: the new cycle has already started; the question now is how long it runs. Nepal: the peg carries India's prices across the border. The market rate follows the RBI only half the time, a coin flip, but since the NRB corridor began in 2016 the NRB's own rate has responded at about half the RBI's move, a significant result in a test declared beforehand (D055).");
 
 // ---------- 4 RBI cycles since 2001 (placed after the process slide)
 const cyclesSlide = () => {
@@ -404,10 +407,33 @@ const transmissionSlide = () => {
   s.addShape(pres.shapes.CHEVRON, { x: 4.8, y: 2.72, w: 0.2, h: 0.36, fill: { color: C.accent4 }, line: { type: "none" }, objectName: "tr-a2" });
   sideCards(s, [
     ["1  Prices: strong", C.accent1, "Two thirds of imports come from India at a fixed rupee price. Inflation correlation 0.88 since 2021."],
-    ["2  NRB policy corridor: 0.6", C.accent2, "The NRB moved its corridor 0.6 point per RBI point in each of the three cycles since 2019."],
-    ["3  Market rate: through liquidity", C.accent3, "Remittances bought at the peg add reserves and set how much of the move reaches the interbank rate."],
+    ["2  NRB policy corridor: 0.5 since 2016", C.accent2, "About 0.5 point per RBI point since the corridor began (p 0.007); no response before it."],
+    ["3  Market rate: a coin flip", C.accent3, "Followed the RBI in 6 of 12 cycles. Remittances bought at the peg add reserves and keep it on its own path."],
   ], "tr", 5.15, 4.35, 1.15, 1.32, 1.18);
   s.addNotes("Nepal's interest rates and prices are treated here as outcomes of India's cycle. Capital controls resolve the impossible trinity: the peg holds, and the NRB keeps room over its own rate, so India's move arrives through prices, through the NRB's own response, and through liquidity. Sources: peg_channels.csv and peg_cycles.csv, decisions D052 and D053.");
+};
+
+
+const coinSlide = () => {
+  s = content("The market rate: India's cycles are a coin flip", "Nepal, derived from India's cycle");
+  const done = D.cycles.filter((c) => c.complete === true);
+  const yes = (b) => (b === true ? cell("same way", { color: C.accent3, bold: true }) : cell("no", { color: C.accent4 }));
+  const rows = [[head("RBI cycle"), head("RBI change"), head("Nepal interbank"), head("Followed?"), head("NRB bank rate"), head("Followed?")]].concat(done.map((c) => [
+    cell(`${c.direction === "hike" ? "Hike" : "Cut"} ${span(c)}`, { align: "left" }),
+    cell(signed(c.rbi_change)), cell(signed(c.interbank_change)), yes(c.interbank_same_direction),
+    cell(signed(c.nrb_bank_rate_change)), yes(c.nrb_bank_rate_same_direction),
+  ]));
+  s.addTable(rows, { x: 0.5, y: 1.1, w: 6.2, colW: [1.45, 0.95, 1.15, 0.85, 1.0, 0.8], fontFace: THEME.bodyFontFace, fontSize: 9.5, color: C.text1,
+    border: { type: "solid", pt: 0.5, color: HEX.line }, rowH: 0.29, margin: 0.03 });
+  card(s, 6.95, 1.1, 2.55, 3.9, "nc-read");
+  txt(s, [
+    { text: "Market rate: 6 of 12", options: { bold: true, color: C.accent2, breakLine: true } },
+    { text: "Nepal's interbank rate moved the RBI's way only half the time: in 2010 it fell 10.7 points while India hiked.", options: { breakLine: true } },
+    { text: " ", options: { breakLine: true, fontSize: 6 } },
+    { text: "Why it matters", options: { bold: true, color: C.accent1, breakLine: true } },
+    { text: "Textbook theory says a peg imports the anchor's interest rate. Capital controls stop that: the peg alone does not carry India's rate.", options: { breakLine: true } },
+  ], { x: 7.1, y: 1.25, w: 2.3, h: 3.65, fontSize: 11, valign: "top" });
+  s.addNotes("Change from the month before the RBI's first move to three months after its last, in percentage points. Same way means a move of more than 0.1 point in the RBI's direction. The monthly test of decision D055 agrees: no significant response of the interbank rate before or during the corridor (p 0.50 and 0.51). Decision D053, reports/tables/peg_cycles.csv.");
 };
 
 const pricesSlide = () => {
@@ -430,7 +456,7 @@ const pricesSlide = () => {
 };
 
 const policySlide = () => {
-  s = content("Channel 2: the NRB follows the RBI at 0.6", "Nepal, derived from India's cycle");
+  s = content("Channel 2: since 2016 the NRB follows the RBI at 0.5", "Nepal, derived from India's cycle");
   s.addChart(pres.charts.LINE, [
     { name: "RBI repo rate", labels: M.policy.labels.map(year), values: M.policy.repo },
     { name: "NRB bank rate, corridor ceiling", labels: M.policy.labels.map(year), values: M.policy.bank },
@@ -446,11 +472,11 @@ const policySlide = () => {
     cell(signed(c.nrb_bank_rate_change)), cell((c.nrb_bank_rate_change / c.rbi_change).toFixed(1), { bold: true, color: C.accent2 }),
   ])), { x: 6.0, y: 1.2, w: 3.5, colW: [1.2, 0.85, 0.85, 0.6], fontFace: THEME.bodyFontFace, fontSize: 10, color: C.text1,
     border: { type: "solid", pt: 0.5, color: HEX.line }, rowH: 0.32, margin: 0.04 });
-  txt(s, "In every RBI cycle since 2019 the NRB moved its corridor the same way, by six tenths of the RBI's move. The 91 day treasury bill followed in all three as well.",
+  txt(s, "Monthly test, 2001 to 2026: 0.49 per RBI point in the corridor years (95 percent interval 0.14 to 0.85, p 0.007), 0.02 before (p 0.58). The last three cycles all fit.",
     { x: 6.0, y: 2.6, w: 3.5, h: 1.3, fontSize: 11.5, valign: "top" });
-  txt(s, "At this ratio, a cycle ending at 5.75 to 6.00 implies an NRB move of about 0.3 to 0.45 point.",
+  txt(s, "At this response, a cycle ending at 5.75 to 6.00 implies an NRB move of about 0.25 to 0.37 point.",
     { x: 6.0, y: 4.0, w: 3.5, h: 0.9, fontSize: 11.5, italic: true, color: C.text2, valign: "top" });
-  s.addNotes("Change from the month before the RBI's first move to three months after its last. Over all twelve complete RBI cycles since 2001 the NRB bank rate moved the same way in 7, the 91 day treasury bill in 7 and the interbank rate in 6; the response became regular once the NRB corridor was in place. Treasury bill changes since 2019: minus 0.65, plus 2.08, minus 0.35. Source: reports/tables/peg_cycles.csv, decision D053.");
+  s.addNotes("Change from the month before the RBI's first move to three months after its last. Over all twelve complete RBI cycles since 2001 the NRB bank rate moved the same way in 7, the 91 day treasury bill in 7 and the interbank rate in 6; the response became regular once the NRB corridor was in place. Treasury bill changes since 2019: minus 0.65, plus 2.08, minus 0.35. Sources: reports/tables/peg_cycles.csv and peg_policy_response.csv, decisions D053, D055 and D056.");
 };
 
 const nepalModelSlide = () => {
@@ -470,7 +496,7 @@ const nepalMeaningSlide = () => {
   s = content("What India's new cycle means for Nepal", "Nepal, derived from India's cycle");
   const m = [
     ["Prices first", C.accent1, "India's inflation is 5.5 percent and rising with oil and a weaker rupee. Through the peg this reaches Nepal's prices directly; an RBI hike that works in India works in Nepal."],
-    ["NRB corridor next", C.accent2, "At the 0.6 response of the last three cycles, a cycle ending at 5.75 to 6.00 means an NRB move of about 0.3 to 0.45 point."],
+    ["NRB corridor next", C.accent2, "At the 0.5 response measured since 2016, a cycle ending at 5.75 to 6.00 means an NRB move of about 0.25 to 0.37 point."],
     ["Market rate: liquidity decides", C.accent3, "The interbank rate sits on the NRB floor of 2.75 percent, held there by remittance reserves. It follows India once liquidity tightens."],
     ["The Gulf link", C.accent5, "Remittances, 29 percent of broad money a year, come largely from the Gulf. A Gulf war would raise India's oil bill and drain Nepal's liquidity together."],
   ];
@@ -479,7 +505,7 @@ const nepalMeaningSlide = () => {
     card(s, x, y, 4.4, 1.8, `mean${i}`);
     txt(s, [{ text: h, options: { bold: true, color: col, fontSize: 14, breakLine: true } }, { text: b }], { x: x + 0.2, y: y + 0.13, w: 4.0, h: 1.6, fontSize: 12, valign: "top" });
   });
-  s.addNotes("The NRB estimate applies the ratio of the last three cycles to the outlook range and is an implication, not a model forecast. The frozen Nepal model's sealed forecast for October 2026 is rise 0.29, fall 0.24.");
+  s.addNotes("The NRB estimate applies the corridor era response of decision D056 to the outlook range and is an implication, not a model forecast. The frozen Nepal model's sealed forecast for October 2026 is rise 0.29, fall 0.24.");
 };
 
 // ---------- assembly after the training section
@@ -534,7 +560,7 @@ fits.forEach(([h, col, b], i) => {
 });
 s.addNotes("An overfitted model scores much better on the data it was fitted to than on new data. None of the final models shows that pattern. Complex models did: the random forest fell to 0.49 on unseen data and a ten feature probit to 0.44 in training, which is why the small models were kept. Source: reports/tables/fit_gap.csv, decision D051.");
 
-outlookSlide(); endSlide(); transmissionSlide(); pricesSlide(); policySlide();
+outlookSlide(); endSlide(); transmissionSlide(); coinSlide(); pricesSlide(); policySlide();
 // 10 Corridor regimes
 s = content("Channel 3: liquidity decides the market rate", "Nepal, derived from India's cycle");
 s.addImage({ path: FIG("nepal_liquidity_regimes.png"), x: 0.4, y: 1.05, w: 4.4, h: 3.96, altText: "Nepal interbank rate inside the NRB corridor with FX purchases, remittances, fiscal flows, credit and deposit growth, 2019 to 2026" });
@@ -556,7 +582,7 @@ s = pres.addSlide({ masterName: "TITLE_DARK", sectionTitle: "Close" });
 s.addText("Conclusion", { placeholder: "title" });
 s.addText([
   { text: "India has entered a new hiking cycle. A second hike is more likely than not; the cycle most likely ends at 5.75 to 6.00, and oil decides which.", options: { bullet: { indent: 18 }, breakLine: true, paraSpaceAfter: 8 } },
-  { text: "Nepal's rates follow from India's cycle through the peg: prices move with India's (0.88 since 2021), and the NRB has moved its corridor 0.6 point per RBI point in every cycle since 2019.", options: { bullet: { indent: 18 }, breakLine: true, paraSpaceAfter: 8 } },
+  { text: "The peg carries India's prices into Nepal (0.88 since 2021). Nepal's market rate followed the RBI in only 6 of 12 cycles, but since the 2016 corridor the NRB moves about 0.5 point per RBI point.", options: { bullet: { indent: 18 }, breakLine: true, paraSpaceAfter: 8 } },
   { text: "Remittance liquidity sets how much reaches Nepal's market rate. Next test: the December RBI decision against our recorded 0.56.", options: { bullet: { indent: 18 } } },
 ], { placeholder: "body", fontSize: 15, color: "E3EBF7", y: 2.85, h: 2.4 });
 s.addNotes("Code, data manifests and the decision log are in the project repository; every number in this deck comes from a committed table.");
