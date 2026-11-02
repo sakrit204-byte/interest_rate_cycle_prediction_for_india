@@ -6,7 +6,8 @@ venv/
 .ipynb_checkpoints/
 .pytest_cache/
 
-# Data: raw and derived files are not committed until licences are checked
+# Data: raw and derived files are not committed until licences are checked.
+# Exception: six files the hosted dashboard needs are force added, listed in data/HOSTED_DATA.md
 data/raw/**
 !data/raw/**/
 !data/raw/**/.gitkeep

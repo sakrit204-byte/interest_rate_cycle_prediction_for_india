@@ -1,0 +1,12 @@
+# Render blueprint for the Streamlit dashboard (free web service).
+# Deploy: https://render.com/deploy?repo=https://github.com/sakrit204-byte/interest_rate_cycle_prediction_for_india
+services:
+  - type: web
+    name: ratecycle-india-nepal
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run app/main.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
